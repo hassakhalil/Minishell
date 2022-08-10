@@ -21,43 +21,53 @@ void errors(char *msg)
 
 void    executor(void *tree)
 {
-    int fd[2];
-    int
+    int p[2];
+    int id1;
+    int id2;
 
-    if (/*treetype == pipe*/)
+    if (tree->type == PIPE)
     {
-        if (pipe(fd) < 0)
+        if (pipe(p) < 0)
             errors("pipe error");
-
-        if (fork() == 0)
+        id1 = fork();
+        if (id1 < 0)
+            errors("fork error");
+        if (id1 == 0)
         {
             close(1);
-            dup(fd[1]);
-            close(fd[0]);
-            close(fd[1]);
-            //if redirection 
-            //redirect
-            execve();
-        }
-        wait();
-        if (/*pipe->left == pipe*/)
-            //executor recursive call
-        if (fork() == 0)
-        {
-            close(0);
-            dup(fd[0]);
-            close(fd[0]);
-            close(fd[1]);
-            if (/*redirection*/)
+            dup(p[1]);
+            close(p[0]);
+            close(p[1]);
+            if (tree->left == REDIR) 
                 //redirect
             execve();
         }
-        close(fd[0]);
-        close(fd[1]);
+        if (tree->right->type == PIPE)
+            //executor recursive call
+        if (id1 != 0)
+        {
+            id2 = fork();
+            if (id2 < 0)
+                errors("fork error");
+            if (id2 == 0)
+            {
+                close(0);
+                dup(p[0]);
+                close(p[0]);
+                close(p[1]);
+                if (tree->right->type == REDIR)
+                    //redirect
+                execve();
+            }
+        }
+        close(p[0]);
+        close(p[1]);
         wait();
-    }
+     }
     else
-        //search for redirections
+        if (tree->type == REDIR)
+            //do redir
+            //search for other redir
         //exec cmd
         
 }
