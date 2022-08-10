@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/09 23:58:59 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/10 22:34:47 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void    executor(void *tree)
     int id1;
     int id2;
 
+    //cast tree to cmd to access tree->type
     if (tree->type == PIPE)
     {
         if (pipe(p) < 0)
@@ -43,7 +44,12 @@ void    executor(void *tree)
             execve();
         }
         if (tree->right->type == PIPE)
-            //executor recursive call
+        {
+            close(0);
+            dup(p[0]);
+            close(p[0]);
+            executor(tree->right);
+        }
         if (id1 != 0)
         {
             id2 = fork();
@@ -65,9 +71,10 @@ void    executor(void *tree)
         wait();
      }
     else
+    {
         if (tree->type == REDIR)
             //do redir
-            //search for other redir
-        //exec cmd
+        execve();
+    }
         
 }
