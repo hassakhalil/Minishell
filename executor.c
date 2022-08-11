@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/11 19:39:42 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/11 19:58:44 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,9 @@ void    executor(void *result_tree)
             dup(p[1]);
             close(p[0]);
             close(p[1]);
-            if (tree1->left == REDIR)
-                //redirect
-            execve();
-            errors("execve error");
+            executor(tree1->left);
         }
-        else if (tree1->right->type == PIPE)
-        {
-            close(0);
-            dup(p[0]);
-            close(p[0]);
-            executor(tree1->right);
-        }
-        if (id1 != 0)
+        else
         {
             id2 = fork();
             if (id2 < 0)
@@ -73,13 +63,10 @@ void    executor(void *result_tree)
                 dup(p[0]);
                 close(p[0]);
                 close(p[1]);
-                if (tree1->right->type == REDIR)
-                    //redirect
-                execve();
-                errors("execve error");
+                executor(tree1->right);
             }
         }
-        else
+        if (id1 && id2)
         {
             close(p[0]);
             close(p[1]);
@@ -89,14 +76,12 @@ void    executor(void *result_tree)
     else if (tree2)
     {
         //do redir
-        execve();
-        errors("execve error");
+        executor(/*send next node*/);
     }
     else
     {
         //exec tree3
         execve();
         errors("execve error");
-    }
-        
+    }       
 }
