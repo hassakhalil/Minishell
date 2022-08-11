@@ -6,11 +6,16 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/12 00:39:48 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/12 00:45:41 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//SOME NOTES TO HEEEER
+//how to execute struct *cmd
+//ask elyas about exec struct
+//what about env arg in execve?
 
 void errors(char *msg)
 {
