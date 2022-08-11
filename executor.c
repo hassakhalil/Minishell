@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/11 19:14:49 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/11 19:39:42 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,25 @@ void errors(char *msg)
     exit(1);
 }
 
-void    executor(void *tree)
+void    executor(void *result_tree)
 {
     int p[2];
     int id1;
     int id2;
+    cmd *tree_check;
+    pip *tree1 == NULL;
+    redir *tree2 == NULL;
+    exec *tree3 == NULL;
 
     //cast tree to cmd to access tree->type
-    if (tree->type == PIPE)
+    tree_check = (cmd *)result_tree;
+    if (tree_check->type == PIPE)
+        tree1 = (pip *)result_tree;
+    else if (tree_check->type == REDIR)
+        tree2 = (redir *)result_tree;
+    else if (tree_check->type == EXEC)
+        tree3 = (exec *)result_tree;        
+    if (tree1)
     {
         if (pipe(p) < 0)
             errors("pipe error");
@@ -39,17 +50,17 @@ void    executor(void *tree)
             dup(p[1]);
             close(p[0]);
             close(p[1]);
-            if (tree->left == REDIR) 
+            if (tree1->left == REDIR)
                 //redirect
             execve();
             errors("execve error");
         }
-        else if (tree->right->type == PIPE)
+        else if (tree1->right->type == PIPE)
         {
             close(0);
             dup(p[0]);
             close(p[0]);
-            executor(tree->right);
+            executor(tree1->right);
         }
         if (id1 != 0)
         {
@@ -62,7 +73,7 @@ void    executor(void *tree)
                 dup(p[0]);
                 close(p[0]);
                 close(p[1]);
-                if (tree->right->type == REDIR)
+                if (tree1->right->type == REDIR)
                     //redirect
                 execve();
                 errors("execve error");
@@ -75,10 +86,15 @@ void    executor(void *tree)
             wait();
         }
      }
+    else if (tree2)
+    {
+        //do redir
+        execve();
+        errors("execve error");
+    }
     else
     {
-        if (tree->type == REDIR)
-            //do redir
+        //exec tree3
         execve();
         errors("execve error");
     }
