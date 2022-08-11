@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/11 19:58:44 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/12 00:30:21 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void    executor(void *result_tree)
     int p[2];
     int id1;
     int id2;
+    int open_fd;
     cmd *tree_check;
     pip *tree1 == NULL;
     redir *tree2 == NULL;
@@ -75,13 +76,17 @@ void    executor(void *result_tree)
      }
     else if (tree2)
     {
-        //do redir
-        executor(/*send next node*/);
+        open_fd = open(tree2->file, tree->mode);
+        if (open_fd < 0)
+            errors("open error");
+        dup2(open_fd, tree->fd);
+        close(open_fd);
+        executor(tree2->cmd);
     }
     else
     {
         //exec tree3
-        execve();
+        execve(/*path ?*/, );
         errors("execve error");
     }       
 }
