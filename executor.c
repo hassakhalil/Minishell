@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/10 22:34:47 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/11 01:25:19 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void    executor(void *tree)
                 //redirect
             execve();
         }
-        if (tree->right->type == PIPE)
+        else if (tree->right->type == PIPE)
         {
             close(0);
             dup(p[0]);
@@ -66,9 +66,12 @@ void    executor(void *tree)
                 execve();
             }
         }
-        close(p[0]);
-        close(p[1]);
-        wait();
+        else
+        {
+            close(p[0]);
+            close(p[1]);
+            wait();
+        }
      }
     else
     {
