@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/12 00:30:21 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/12 00:39:48 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void    executor(void *result_tree)
     redir *tree2 == NULL;
     exec *tree3 == NULL;
 
-    //cast tree to cmd to access tree->type
     tree_check = (cmd *)result_tree;
     if (tree_check->type == PIPE)
         tree1 = (pip *)result_tree;
@@ -85,8 +84,7 @@ void    executor(void *result_tree)
     }
     else
     {
-        //exec tree3
-        execve(/*path ?*/, );
+        execve((tree3->argv)[0], tree3->argv, /*char *const envp[]*/);
         errors("execve error");
     }       
 }
