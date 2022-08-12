@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/12 14:31:37 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/12 15:58:01 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,19 @@ void errors(char *msg)
     exit(1);
 }
 
-void    executor(void *result_tree, env *env)
+void    executor(cmd *result_tree, env *env)
 {
     int p[2];
     int id1;
     int id2;
     int open_fd;
-    cmd *tree_check;
-    pip *tree1 == NULL;
-    redir *tree2 == NULL;
-    exec *tree3 == NULL;
+    pip *tree1;
+    redir *tree2;
+    exec *tree3;
 
-    tree_check = (cmd *)result_tree;
-    if (tree_check->type == PIPE)
-        tree1 = (pip *)result_tree;
-    else if (tree_check->type == REDIR)
-        tree2 = (redir *)result_tree;
-    else if (tree_check->type == EXEC)
-        tree3 = (exec *)result_tree;
-    if (tree1)
+    if (result_tree->type == PIPE)
     {
+        tree1 = (pip *)result_tree;
         if (pipe(p) < 0)
             errors("pipe error");
         id1 = fork();
@@ -81,8 +74,9 @@ void    executor(void *result_tree, env *env)
             wait();
         }
      }
-    else if (tree2)
+    else if (result_tree->type == REDIR)
     {
+        tree2 = (redir *)result_tree;
         open_fd = open(tree2->file, tree->mode);
         if (open_fd < 0)
             errors("open error");
@@ -92,6 +86,7 @@ void    executor(void *result_tree, env *env)
     }
     else
     {
+        tree3 = (exec *)result_tree;
         execve((tree3->argv)[0], tree3->argv, env->path);
         errors("execve error");
     }       
