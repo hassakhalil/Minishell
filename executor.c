@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/12 00:45:41 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/12 01:57:01 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 //SOME NOTES TO HEEEER
 //how to execute struct *cmd
 //ask elyas about exec struct
-//what about env arg in execve?
 
 void errors(char *msg)
 {
@@ -24,7 +23,7 @@ void errors(char *msg)
     exit(1);
 }
 
-void    executor(void *result_tree)
+void    executor(void *result_tree, env *env)
 {
     int p[2];
     int id1;
@@ -41,7 +40,7 @@ void    executor(void *result_tree)
     else if (tree_check->type == REDIR)
         tree2 = (redir *)result_tree;
     else if (tree_check->type == EXEC)
-        tree3 = (exec *)result_tree;        
+        tree3 = (exec *)result_tree;
     if (tree1)
     {
         if (pipe(p) < 0)
@@ -89,7 +88,7 @@ void    executor(void *result_tree)
     }
     else
     {
-        execve((tree3->argv)[0], tree3->argv, /*char *const envp[]*/);
+        execve((tree3->argv)[0], tree3->argv, env->path);
         errors("execve error");
     }       
 }
