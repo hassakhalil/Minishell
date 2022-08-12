@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/12 01:57:01 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/12 14:31:37 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 //SOME NOTES TO HEEEER
 //how to execute struct *cmd
 //ask elyas about exec struct
+
+#define EXEC 1
+#define REDIR 2
+#define PIPE 3
 
 void errors(char *msg)
 {
