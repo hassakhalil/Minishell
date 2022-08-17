@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/13 22:23:51 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/17 14:54:34 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void errors(char *msg)
     exit(1);
 }
 
-void    executor(cmd *result_tree, env *env)
+void    executor(cmd *result_tree, env *env, int flag)
 {
     int p[2];
     int id;
@@ -46,19 +46,17 @@ void    executor(cmd *result_tree, env *env)
             errors("fork error");
         if (id == 0)
         {
-            close(p[1]);
-            dup2(p[0], 0);
-            close(p[0]);
-            executor(tree1->right,env);
-        }
-        else
-        {
             close(p[0]);
             dup2(p[1],1);
             close(p[1]);
-            executor(tree1->left, env);
-            wait(0);
+            executor(tree1->left, env, flag);
+            return ;
         }
+        close(p[1]);
+        dup2(p[0], 0);
+        close(p[0]);
+        executor(tree1->right,env, flag);
+        wait(0);
      }
     else if (result_tree->type == '<')
     {
@@ -68,11 +66,10 @@ void    executor(cmd *result_tree, env *env)
             errors("open error");
         dup2(open_fd, tree2->fd);
         close(open_fd);
-        executor(tree2->cmd, env);
+        executor(tree2->cmd, env, flag);
     }
     else
     {
-        printf("passed from heeeeeere\n");
         tree3 = (exec *)result_tree;
        // execve((tree3->argv)[0], tree3->argv, env->path);
        // errors("execve error");
