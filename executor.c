@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/18 20:37:57 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/18 21:47:11 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void    executor(cmd *result_tree, env *env, int flag)
         int i = -1;
         while (env->path[++i])
         {
-            p = ft_strjoin(ft_strjoin(env->path[i], "/"), tree3->argv[0]);
+            p  = ft_strjoin(ft_strjoin(env->path[i], "/"), tree3->argv[0]);
             if (access(p, F_OK) != -1)
             {
                 execve(p, tree3->argv, env->path);

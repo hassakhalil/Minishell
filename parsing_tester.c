@@ -29,7 +29,7 @@ void    parsing_tester(cmd *result_tree, env *env, int flag)
         }
         write (2, "-----pipe->right-----\n", 22);
         parsing_tester(tree1->right,env, flag);
-        //wait(0);
+        wait(0);
         return ;
      }
     else if (result_tree->type == '>')
