@@ -1,27 +1,51 @@
-#include "minishell"
-#include "stdio.h"
- 
-#define EXEC 1
-#define REDIR 2
-#define PIPE 3
+#include "minishell.h"
 
-void    parsing_tester(cmd *tree)
+void errors(char *msg)
 {
+    printf("%s\n", msg);
+    //clean everything
+    exit(1);
+}
+
+void    parsing_tester(cmd *result_tree, env *env, int flag)
+{
+    int id;
     pip *tree1;
     redir *tree2;
     exec *tree3;
 
-    if (tree->type == PIPE)
+    if (result_tree->type == '|')
     {
-        tree1 = (pip *)tree;
-        printf(" | \n");
-        parsing_tester(tree->left);
-        parsing_tester(tree->right);
-    }
-    else if (tree->type == REDIR)
+        write (2, "-----pipe-----\n", 16);
+        tree1 = (pip *)result_tree;
+        id = fork();
+        if (id < 0)
+            errors("fork error");
+        if (id == 0)
+        {
+            write (2, "-----pipe->left-----\n", 22);
+            parsing_tester(tree1->left,env, flag);
+            return ;
+        }
+        write (2, "-----pipe->right-----\n", 22);
+        parsing_tester(tree1->right,env, flag);
+        //wait(0);
+        return ;
+     }
+    else if (result_tree->type == '>')
     {
-        tree2 = (redir *)tree;
-        if ()
-        printf(" redir \n");
+        write (2, "-----redir-----\n", 17);
+        tree2 = (redir *)result_tree;
+        parsing_tester(tree2->cmd, env, flag);
+        return ;
     }
+    else
+    {
+        write (2, "-----exec-----\n", 16);
+        //printf("%s\n", env->path[6]);
+        //execve("/usr/local/bin/grep", tree3->argv, env->path);
+        //errors("execve error");
+        //
+        return ;
+    } 
 }
