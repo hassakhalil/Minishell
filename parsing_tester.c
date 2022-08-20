@@ -29,5 +29,5 @@ void    parsing_tester(cmd *result_tree)
     {
         write (2, "|||-----exec-----|||\n", 22);
         tree3 = (exec *)result_tree;
-    } 
+    }
 }

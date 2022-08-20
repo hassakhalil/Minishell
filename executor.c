@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/18 21:47:11 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/20 18:31:04 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void errors(char *msg)
     exit(1);
 }
 
-void    executor(cmd *result_tree, env *env, int flag)
+void    executor(cmd *result_tree, env *env)
 {
     int p[2];
     int id;
@@ -37,10 +37,9 @@ void    executor(cmd *result_tree, env *env, int flag)
     redir *tree2;
     exec *tree3;
 
-    if (result_tree->type == '|')
+    if (result_tree->type == PIPE)
     {
-        write (2, "-----pipe-----\n", 16);
-        tree1 = (pip *)result_tree;
+        tree1 = (t_pipe *)result_tree;
         if (pipe(p) < 0)
             errors("pipe error");
         id = fork();
@@ -50,51 +49,38 @@ void    executor(cmd *result_tree, env *env, int flag)
         {
             close(p[0]);
             dup2(p[1], 1);
-            write (2, "-----pipe->left-----\n", 22);
-            executor(tree1->left,env, flag);
             close(p[1]);
-            return ;
+            executor(tree1->left,env);
         }
-        close(p[1]);
-        dup2(p[0], 0);
-        write (2, "-----pipe->right-----\n", 22);
-        executor(tree1->right,env, flag);
-        close(p[0]);
-        wait(0);
-        return ;
-     }
-    else if (result_tree->type == '>')
+        else
+        {
+            close(p[1]);
+            dup2(p[0], 0);
+            close(p[0]);
+            executor(tree1->right,env);
+            wait(0);
+        }
+    }
+    else if (result_tree->type == REDIR)
     {
-        write (2, "-----redir-----\n", 17);
-        tree2 = (redir *)result_tree;
+        tree2 = (t_redir *)result_tree;
         open_fd = open(tree2->file, tree2->mode);
         if (open_fd < 0)
             errors("open error");
         dup2(open_fd, tree2->fd);
         close(open_fd);
         executor(tree2->cmd, env, flag);
-        return ;
     }
     else
     {
-        write (2, "-----exec-----\n", 16);
-        tree3 = (exec *)result_tree;
-        //printf("%s\n", env->path[6]);
-        //execve("/usr/local/bin/grep", tree3->argv, env->path);
-        //errors("execve error");
-        //
+        tree3 = (t_exec *)result_tree;
         char *p;
         int i = -1;
         while (env->path[++i])
         {
             p  = ft_strjoin(ft_strjoin(env->path[i], "/"), tree3->argv[0]);
             if (access(p, F_OK) != -1)
-            {
                 execve(p, tree3->argv, env->path);
-                return ;
-            }
         }
-        
-        return ;
     } 
 }
