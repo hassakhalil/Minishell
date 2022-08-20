@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/20 18:33:22 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/20 19:11:15 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void    executor(cmd *result_tree, env *env)
     else if (result_tree->type == REDIR)
     {
         tree2 = (t_redir *)result_tree;
-        open_fd = open(tree2->file, tree2->mode);
+        open_fd = open(tree2->file, tree2->mode , 0666);
         if (open_fd < 0)
             errors("open error");
         dup2(open_fd, tree2->fd);
