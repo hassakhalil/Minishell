@@ -1,0 +1,11 @@
+*************************
+
+# pipes:
+    - 
+
+# redirections:
+    -hello ther
+how are you
+
+holaaa
+que pasa
