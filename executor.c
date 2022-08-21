@@ -6,15 +6,15 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/21 17:55:49 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/21 18:04:51 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //SOME NOTES TO HEEEER
-//how to execute struct *cmd
-//ask elyas about exec struct
+//fix multiple out redir + in redir
+//fix compatibility problem
 
 #define EXEC 1
 #define REDIR 2
