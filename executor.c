@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/20 19:11:15 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/21 17:55:49 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void    executor(cmd *result_tree, env *env)
     redir *tree2;
     exec *tree3;
 
-    if (result_tree->type == PIPE)
+    if (result_tree->type == '|')
     {
-        tree1 = (t_pipe *)result_tree;
+        tree1 = (pip *)result_tree;
         if (pipe(p) < 0)
             errors("pipe error");
         id = fork();
@@ -61,19 +61,19 @@ void    executor(cmd *result_tree, env *env)
             wait(0);
         }
     }
-    else if (result_tree->type == REDIR)
+    else if (result_tree->type == '>' || result_tree->type == '<')
     {
-        tree2 = (t_redir *)result_tree;
+        tree2 = (redir *)result_tree;
         open_fd = open(tree2->file, tree2->mode , 0666);
         if (open_fd < 0)
             errors("open error");
         dup2(open_fd, tree2->fd);
         close(open_fd);
-        executor(tree2->cmd, env, flag);
+        executor(tree2->cmd, env);
     }
     else
     {
-        tree3 = (t_exec *)result_tree;
+        tree3 = (exec *)result_tree;
         char *p;
         int i = -1;
         while (env->path[++i])
