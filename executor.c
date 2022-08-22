@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/21 18:04:51 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/22 15:42:55 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,30 @@
 
 void errors(char *msg)
 {
-    printf("%s\n", msg);
+    write(2, msg, ft_strlen(msg));
     //clean everything
     exit(1);
 }
 
 void    executor(cmd *result_tree, env *env)
 {
-    int p[2];
-    int id;
-    int open_fd;
-    pip *tree1;
-    redir *tree2;
-    exec *tree3;
+    char    *s;
+    int     p[2];
+    int     id;
+    int     i;
+    int     open_fd;
+    pip     *tree1;
+    redir   *tree2;
+    exec    *tree3;
 
     if (result_tree->type == '|')
     {
         tree1 = (pip *)result_tree;
         if (pipe(p) < 0)
-            errors("pipe error");
+            errors("pipe error\n");
         id = fork();
         if (id < 0)
-            errors("fork error");
+            errors("fork error\n");
         if (id == 0)
         {
             close(p[0]);
@@ -66,7 +68,7 @@ void    executor(cmd *result_tree, env *env)
         tree2 = (redir *)result_tree;
         open_fd = open(tree2->file, tree2->mode , 0666);
         if (open_fd < 0)
-            errors("open error");
+            errors("open error\n");
         dup2(open_fd, tree2->fd);
         close(open_fd);
         executor(tree2->cmd, env);
@@ -74,13 +76,12 @@ void    executor(cmd *result_tree, env *env)
     else
     {
         tree3 = (exec *)result_tree;
-        char *p;
-        int i = -1;
+        i = -1;
         while (env->path[++i])
         {
-            p  = ft_strjoin(ft_strjoin(env->path[i], "/"), tree3->argv[0]);
-            if (access(p, F_OK) != -1)
-                execve(p, tree3->argv, env->path);
+            s  = ft_strjoin(ft_strjoin(env->path[i], "/"), tree3->argv[0]);
+            if (access(s, F_OK) != -1)
+                execve(s, tree3->argv, env->path);
         }
     } 
 }
