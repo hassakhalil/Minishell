@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/21 17:51:13 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/23 01:11:35 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int      cd(char *buff);
 void      runcmd(struct cmd *cmd, struct env *envp);
 int       run(struct execcmd *ecmd, struct env *envp);
 void    executor(cmd *result_tree, env *envp);
+void    parsing_tester(cmd *result_tree);
 
 // lexer
 struct cmd* parsepipe(char **ps, char *es);
