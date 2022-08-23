@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/23 01:11:05 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/23 01:21:33 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int main(int ac, char **av, char **env)
             //runcmd((parsecmd(buff)), envp);
             //int flag = 0;
             //int backup = dup(1);
-            parsing_tester(parsecmd(buff));
+            executor(parsecmd(buff), envp);
         }
         wait(0);
     }
