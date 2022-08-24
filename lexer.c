@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 15:26:58 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/19 14:43:20 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/24 01:19:18 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ struct cmd* parseredirs(struct cmd *cmd, char **ss, char *es)
         }
         if (tok == '>')
         {
+            write(2, "we got redirection here\n", 25);
             cmd = redircmd(cmd, mkcopy(q, eq), O_WRONLY|O_CREAT|O_TRUNC, tok);
             break;
         }

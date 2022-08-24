@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/22 15:42:55 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/23 19:36:06 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ void    executor(cmd *result_tree, env *env)
         {
             s  = ft_strjoin(ft_strjoin(env->path[i], "/"), tree3->argv[0]);
             if (access(s, F_OK) != -1)
+            {
                 execve(s, tree3->argv, env->path);
+                write(2, "execve error\n", 14);
+            }
         }
     } 
 }
