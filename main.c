@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/24 01:05:04 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/25 02:03:27 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ struct cmd* parsecmd(char *s)
 
     es = s + ft_strlen(s);
     cmd = parseline(&s, es);
-    //signal(SIGINT, handle_sig);
     peek(&s, es, "");
     if(s != es)
     {
@@ -52,32 +51,6 @@ int is_alpha(char c)
     return 0;
 }
 
-// char **variable(char *buff, char **var){
-//     int i  = 0;
-//     char *s = buff;
-
-//     while (s[i])
-//         if (is_alpha(s[i]) && s[i+1] = '=')
-//             break;
-//     while (is_alpha(s[i]))
-//         i--;
-//     while (s[i])
-//     {
-//         var = 
-//     }
-// }
-
-// void builtins(static char *buff)
-// {
-//     if ()
-// }
-
-// void	signals(void)
-// {
-// 	signal(SIGQUIT, SIG_IGN);
-// 	signal(SIGINT, handle_sig);
-// }
-
 int main(int ac, char **av, char **env)
 {
     static char *buff;
@@ -85,12 +58,9 @@ int main(int ac, char **av, char **env)
     struct env *envp;
 
     system("clear");
-    //printheader();
-    //signals();
     envp = envpath(env);
     while ((buff = getcmd()))
     {
-        //variable(buff, var);
         if (buff && *buff)
             add_history(buff);
         if (!cd(buff))
@@ -98,12 +68,7 @@ int main(int ac, char **av, char **env)
         if (!strcmp(buff, "exit"))
             exit(0);
         if (forkk() == 0)
-        {
-            //runcmd((parsecmd(buff)), envp);
-            //int flag = 0;
-            //int backup = dup(1);
-            parsing_tester(parsecmd(buff));
-        }
+            executor(parsecmd(buff), envp);
         wait(0);
     }
     return(0);

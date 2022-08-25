@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 15:26:58 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/24 01:19:18 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/25 02:09:55 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,13 +114,6 @@ struct cmd* parsepipe(char **ss, char *es)
     if(peek(ss, es, "|"))
     {
         gettoken(ss, es, 0, 0);
-        // if (*ss == es){
-        //     while (pipeerr)
-        //         readline("pipe> ");
-        //     cmd = pipecmd(cmd, parsepipe(&pipeerr, pipeerr + ft_strlen(pipeerr)));
-        //     // free(pipeerr);
-        // }
-        // else
             cmd = pipecmd(cmd, parsepipe(ss, es));
     }
     return cmd;
@@ -132,14 +125,6 @@ struct cmd* parseline(char **ss, char *es)
     
     cmd = parsepipe(ss, es);
     while (peek(ss, es, "&"))
-    {
         gettoken(ss, es, 0, 0);
-        //cmd = backcmd(cmd); //Backgroundcmd to do
-    }
-    // if (peek(ss, es, ";"))
-    // {
-    //     gettoken(ss, es, 0, 0);
-    //     //cmd = listcmd(cmd, parseline(ss, es)); //Listcmd to do
-    // }
     return cmd;
 }

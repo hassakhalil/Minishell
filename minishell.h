@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/23 01:11:35 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/25 02:08:45 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,8 @@ char    *ft_strchr(const char *s, int c);
 void	  err_putchar(char *s);
 int     forkk(void);
 char    *mkcopy(char *s, char *es);
+void    errors(char *msg);
 
-// utils2
-void    printheader();
-//void	  handle_sig(int sig);
 
 // path
 struct env *envpath(char **env);
@@ -84,8 +82,6 @@ char    *getpath(char *buff);
 int      cd(char *buff);
 
 // execution
-void      runcmd(struct cmd *cmd, struct env *envp);
-int       run(struct execcmd *ecmd, struct env *envp);
 void    executor(cmd *result_tree, env *envp);
 void    parsing_tester(cmd *result_tree);
 

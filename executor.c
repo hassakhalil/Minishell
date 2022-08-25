@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/23 19:36:06 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/25 02:01:52 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ void    executor(cmd *result_tree, env *env)
         tree1 = (pip *)result_tree;
         if (pipe(p) < 0)
             errors("pipe error\n");
-        id = fork();
-        if (id < 0)
-            errors("fork error\n");
+        id = forkk();
         if (id == 0)
         {
             close(p[0]);
@@ -83,7 +81,7 @@ void    executor(cmd *result_tree, env *env)
             if (access(s, F_OK) != -1)
             {
                 execve(s, tree3->argv, env->path);
-                write(2, "execve error\n", 14);
+                errors("execve error\n");
             }
         }
     } 

@@ -6,13 +6,13 @@
 #    By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/23 11:34:27 by iakry             #+#    #+#              #
-#    Updated: 2022/08/23 01:12:18 by hkhalil          ###   ########.fr        #
+#    Updated: 2022/08/25 02:05:16 by hkhalil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 
-MINISHELL_SRCS	= parsing_tester.c executor.c main.c utils.c  lexer.c parser.c tokenizer.c path.c execution.c builtins.c\
+MINISHELL_SRCS	= parsing_tester.c executor.c main.c utils.c  lexer.c parser.c tokenizer.c path.c  builtins.c\
 					libft/ft_strnstr.c libft/ft_split.c libft/ft_strjoin.c libft/ft_strdup.c\
 
 MINISHELL_OBJS	= $(MINISHELL_SRCS:.c=.o)
