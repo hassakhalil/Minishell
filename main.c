@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/25 02:03:27 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/25 02:51:41 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,9 @@
 char *getcmd()
 {
     char *buff;
-    char cwd[100];
-    char str[100] = "\033[1;31m➜\033[0;34m";
 
-    getcwd(cwd, 100);
     if (isatty(fileno(stdin)))
-        buff = readline(strcat(strcat(str, cwd), "\033[0m"));
+        buff = readline("$ ");
     if (buff)
         return buff;
     return NULL;
