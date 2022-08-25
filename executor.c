@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/25 02:01:52 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/25 02:21:06 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@
 //fix multiple out redir + in redir
 //fix compatibility problem
 
-#define EXEC 1
-#define REDIR 2
-#define PIPE 3
-
-
 void errors(char *msg)
 {
     write(2, msg, ft_strlen(msg));
@@ -28,7 +23,7 @@ void errors(char *msg)
     exit(1);
 }
 
-void    executor(cmd *result_tree, env *env)
+void    executor(cmd *tree, env *env)
 {
     char    *s;
     int     p[2];
@@ -39,9 +34,9 @@ void    executor(cmd *result_tree, env *env)
     redir   *tree2;
     exec    *tree3;
 
-    if (result_tree->type == '|')
+    if (tree->type == PIPE)
     {
-        tree1 = (pip *)result_tree;
+        tree1 = (pip *)tree;
         if (pipe(p) < 0)
             errors("pipe error\n");
         id = forkk();
@@ -61,9 +56,9 @@ void    executor(cmd *result_tree, env *env)
             wait(0);
         }
     }
-    else if (result_tree->type == '>' || result_tree->type == '<')
+    else if (tree->type == REDIR)
     {
-        tree2 = (redir *)result_tree;
+        tree2 = (redir *)tree;
         open_fd = open(tree2->file, tree2->mode , 0666);
         if (open_fd < 0)
             errors("open error\n");
@@ -73,7 +68,7 @@ void    executor(cmd *result_tree, env *env)
     }
     else
     {
-        tree3 = (exec *)result_tree;
+        tree3 = (exec *)tree;
         i = -1;
         while (env->path[++i])
         {

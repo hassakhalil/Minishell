@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/21 18:51:47 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/25 02:18:50 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ struct cmd* redircmd(struct cmd *subcmd, char *file, int mode, int type)
     if (!cmd)
         exit(EXIT_FAILURE);
     memset(cmd, 0, sizeof(*cmd));
-    cmd->type = type;
+    cmd->type = REDIR;
     cmd->cmd = subcmd;
     cmd->file = file;
     cmd->mode = mode; //(type == '<') ?  O_RDONLY : O_WRONLY|O_CREAT|O_TRUNC;
@@ -34,7 +34,7 @@ struct cmd* execcmd(void)
     
     cmd = malloc(sizeof(*cmd));
     memset(cmd, 0, sizeof(*cmd));
-    cmd->type = ' ';
+    cmd->type = EXEC;
     return (struct cmd*)cmd;
 }
 
@@ -44,7 +44,7 @@ struct cmd* pipecmd(struct cmd *left, struct cmd *right)
     
     cmd = malloc(sizeof(*cmd));
     memset(cmd, 0, sizeof(*cmd));
-    cmd->type = '|';
+    cmd->type = PIPE;
     cmd->left = left;
     cmd->right = right;
     return ((struct cmd*)cmd);

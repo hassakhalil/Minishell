@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/25 02:08:45 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/25 02:21:24 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 # include <readline/history.h>
 
 # define MAXARGS 10
+#define EXEC 1
+#define REDIR 2
+#define PIPE 3
 
 typedef struct env
 {
@@ -82,7 +85,7 @@ char    *getpath(char *buff);
 int      cd(char *buff);
 
 // execution
-void    executor(cmd *result_tree, env *envp);
+void    executor(cmd *tree, env *envp);
 void    parsing_tester(cmd *result_tree);
 
 // lexer
