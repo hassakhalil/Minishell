@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iakry <iakry@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/01 13:05:05 by iakry            ###   ########.fr       */
+/*   Updated: 2022/08/25 02:24:20 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	forkk(void)
 	
 	pid = fork();
 	if(pid == -1)
-		perror("fork");
+		errors("fork error\n");
 	return pid;
 }
 
