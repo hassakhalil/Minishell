@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/25 02:57:16 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/26 22:19:44 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int main(int ac, char **av, char **env)
     static char *buff;
     static char **var;
     struct env *envp;
+    int        flag = 0;
 
     system("clear");
     envp = envpath(env);
@@ -64,7 +65,7 @@ int main(int ac, char **av, char **env)
         if (!strcmp(buff, "exit"))
             exit(0);
         if (forkk() == 0)
-            executor(parsecmd(buff), envp);
+            executor(parsecmd(buff), envp, &flag);
         wait(0);
     }
     return(0);

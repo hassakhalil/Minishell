@@ -1,0 +1,16 @@
+Makefile
+builtins.c
+executor.c
+f1
+f2
+lexer.c
+libft
+main.c
+minishell
+minishell.h
+notes
+parser.c
+parsing_tester.c
+path.c
+tokenizer.c
+utils.c

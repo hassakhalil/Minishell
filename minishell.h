@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/25 02:21:24 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/26 22:19:34 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char    *getpath(char *buff);
 int      cd(char *buff);
 
 // execution
-void    executor(cmd *tree, env *envp);
+void    executor(cmd *tree, env *envp, int *flag);
 void    parsing_tester(cmd *result_tree);
 
 // lexer
