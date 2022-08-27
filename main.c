@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/27 05:26:36 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/27 19:10:09 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int main(int ac, char **av, char **env)
         if (!strcmp(buff, "exit"))
             exit(0);
         if (forkk() == 0)
-            executor(parsecmd(buff), envp, &flag);
+            parsing_tester(parsecmd(buff));//, envp, &flag);
         wait(0);
     }
     return(0);

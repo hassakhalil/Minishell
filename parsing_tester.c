@@ -6,7 +6,7 @@ void    parsing_tester(cmd *result_tree)
     redir *tree2;
     exec *tree3;
 
-    if (result_tree->type == '|')
+    if (result_tree->type == PIPE)
     {
         write (2, "-----|pipe|-----\n", 18);
         tree1 = (pip *)result_tree;
@@ -19,10 +19,12 @@ void    parsing_tester(cmd *result_tree)
             write(2, "(((((((null node)))))))\n", 25);
         parsing_tester(tree1->right);
     }
-    else if (result_tree->type == '>')
+    else if (result_tree->type == REDIR)
     {
-        write (2, "<><><>|redir|<><><>\n", 21);
+        write (2, "<><><>|redir|<><><> :", 22);
         tree2 = (redir *)result_tree;
+        write(2, tree2->file, ft_strlen(tree2->file));
+        write(2, "\n", 1);
         parsing_tester(tree2->cmd);
     }
     else
