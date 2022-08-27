@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/26 22:19:34 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/27 02:57:06 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,6 @@ int       peek(char **ps, char *es, char *toks);
 struct cmd* redircmd(struct cmd *subcmd, char *file, int mode, int type);
 struct cmd* pipecmd(struct cmd *left, struct cmd *right);
 struct cmd* execcmd(void);
+struct cmd* parsecmd(char *s);
 
 #endif
