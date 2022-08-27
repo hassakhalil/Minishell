@@ -5,4 +5,4 @@
 //cat | cat | cat | ls
 
 //<< fix the here doc
-//fix the case when 'filename<' error msg
+// fix f< f grep c
