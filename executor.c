@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/27 22:37:35 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/27 22:41:05 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void errors(char *msg)
 //find_in_redir(); heeeere
 cmd **find_in_redir(cmd *tree)
 {
+    
     //if you find an IN redir return the first one you find
 
     //else return NULL;
@@ -30,7 +31,7 @@ cmd **find_in_redir(cmd *tree)
 
 int check_in_files(cmd **first_redir)
 {
-    redir   *tmp;
+    t_redir   *tmp;
     char    **table;
     int     i = 1;
     int     k;
@@ -38,21 +39,21 @@ int check_in_files(cmd **first_redir)
 
     if (!first_redir)
        return (0);
-    tmp = (redir *)(*first_redir);
+    tmp = (t_redir *)(*first_redir);
     while (tmp->cmd->type == REDIR)
     {
-        tmp = (redir *)(tmp->cmd);
+        tmp = (t_redir *)(tmp->cmd);
         if (tmp->fd != 0)
             break;     
         i++;
     }
-    tmp = (redir *)(*first_redir);
+    tmp = (t_redir *)(*first_redir);
     while (i)
     {
         k = 0;
         while (k < i)
         {
-            tmp = (redir *)(tmp->cmd);
+            tmp = (t_redir *)(tmp->cmd);
             k++;
         }
         if (open(tmp->file, tmp->mode) < 0)
@@ -69,13 +70,13 @@ void    executor(cmd *tree, env *env, int *flag)
     int     id;
     int     i;
     int     open_fd;
-    pip     *tree1;
-    redir   *tree2;
-    exec    *tree3;
+    t_pip     *tree1;
+    t_redir   *tree2;
+    t_exec    *tree3;
 
     if (tree->type == PIPE)
     {
-        tree1 = (pip *)tree;
+        tree1 = (t_pip *)tree;
         if (pipe(p) < 0)
             errors("pipe error\n");
         id = forkk();
@@ -97,7 +98,7 @@ void    executor(cmd *tree, env *env, int *flag)
     }
     else if (tree->type == REDIR)
     {
-        tree2 = (redir *)tree;
+        tree2 = (t_redir *)tree;
         open_fd = open(tree2->file, tree2->mode, 0666);
         if (!(*flag))
         {
@@ -109,7 +110,7 @@ void    executor(cmd *tree, env *env, int *flag)
     }
     else
     {
-        tree3 = (exec *)tree;
+        tree3 = (t_exec *)tree;
         i = -1;
         while (env->path[++i])
         {

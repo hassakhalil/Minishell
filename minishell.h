@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/27 22:38:00 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/27 22:41:05 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,20 @@ typedef struct redircmd
   char *file;
   int mode;
   int fd;
-} redir;
+} t_redir;
 
 typedef struct pipecmd
 {
   int type;
   struct cmd *left;
   struct cmd *right;
-} pip;
+} t_pip;
 
 typedef struct execcmd
 {
   int type;              // ' '
   char *argv[MAXARGS];
-} exec;
+} t_exec;
 
 
 // libft
