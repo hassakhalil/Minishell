@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/27 19:21:08 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/27 19:54:10 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,46 @@ void errors(char *msg)
     write(2, msg, ft_strlen(msg));
     //clean everything
     exit(1);
+}
+
+int check_in_files(cmd **first_redir)
+{
+    redir   *tmp;
+    char    **table;
+    int     i = 0;
+    int     j= 0;
+    int     k = 0;
+    int     fd;
+
+    tmp = (redir *)(*first_redir);
+    while (tmp->cmd == REDIR)
+    {
+        tmp = (redir *)(tmp->cmd);
+        if (tmp->fd == 0)     
+            i++;
+        j++;
+    }
+    if (!i)
+        return (0);
+    else
+    {
+        tmp = (redir *)(*first_redir);
+        j++;
+        while (i)
+        {
+            j--;
+            k = 0;
+            while (k!= j)
+            {
+                tmp = (redir *)(tmp->cmd);
+                k++;
+            }
+            if (open(tmp->file, tmp->mode) < 0)
+                return (1);
+            i--;
+        }
+    }
+    return (0);
 }
 
 void    executor(cmd *tree, env *env, int *flag)
