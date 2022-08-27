@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/27 22:34:40 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/27 22:37:35 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ void errors(char *msg)
 }
 
 //find_in_redir(); heeeere
+cmd **find_in_redir(cmd *tree)
+{
+    //if you find an IN redir return the first one you find
+
+    //else return NULL;
+}
 
 int check_in_files(cmd **first_redir)
 {
