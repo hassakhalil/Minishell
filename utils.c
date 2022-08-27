@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/27 02:54:53 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/27 05:33:36 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,6 @@ int	forkk(void)
 	if(pid == -1)
 		errors("fork error\n");
 	return pid;
-}
-
-void	err_putchar(char *s)
-{
-	int i;
-
-	i = -1;
-	while(s[++i])
-		write(2, &s[i], 1);
 }
 
 char	*mkcopy(char *s, char *es)

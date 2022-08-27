@@ -6,15 +6,12 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/27 05:16:22 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/27 05:29:45 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//SOME NOTES TO HEEEER
-//fix multiple out redir + in redir
-//fix compatibility problem
 
 void errors(char *msg)
 {

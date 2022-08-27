@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/27 05:11:54 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/27 05:33:08 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,8 @@ struct cmd* parsecmd(char *s)
     peek(&s, es, "");
     if(s != es)
     {
-        err_putchar("Leftovers: ");
-        err_putchar(s);
+        write(2, "Leftovers: ", 12);
+        write(2, s, ft_strlen(s));
         exit(EXIT_FAILURE);
     }
     return cmd;

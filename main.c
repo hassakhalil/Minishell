@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/27 02:56:46 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/27 05:26:36 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,6 @@ char *getcmd()
     if (buff)
         return buff;
     return NULL;
-}
-
-int is_alpha(char c)
-{
-    if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-        return 1;
-    return 0;
 }
 
 int main(int ac, char **av, char **env)

@@ -1,6 +1,5 @@
 //notes
-//the parser parse the in redir like his parsing an executing node
-//the parser parse the 2 out redir like there is only one
+//fix multiple out redir + in redir
 
 //cat | cat | cat | ls
 

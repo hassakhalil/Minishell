@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/27 02:57:06 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/27 05:33:49 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ char	  *ft_strdup(const char *str);
 // utils
 size_t  ft_strlen(char *s);
 char    *ft_strchr(const char *s, int c);
-void	  err_putchar(char *s);
 int     forkk(void);
 char    *mkcopy(char *s, char *es);
 void    errors(char *msg);
