@@ -5,3 +5,4 @@
 
 //<< fix the here doc
 // fix file_name< file_name grep c
+//fix <x00<x01 grep m > x1 > x2

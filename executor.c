@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/27 05:29:45 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/27 18:50:38 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void    executor(cmd *tree, env *env, int *flag)
     else if (tree->type == REDIR)
     {
         tree2 = (redir *)tree;
+        write(2, tree2->file, ft_strlen(tree2->file));
+        write(2, "\n", 1);
         open_fd = open(tree2->file, tree2->mode, 0666);
         if (open_fd < 0)
             errors("No such file or directory\n");
