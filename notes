@@ -5,4 +5,4 @@
 //cat | cat | cat | ls
 
 //<< fix the here doc
-// fix f< f grep c
+// fix file_name< file_name grep c
