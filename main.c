@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/27 19:10:09 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/27 22:21:52 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ int main(int ac, char **av, char **env)
 {
     static char *buff;
     static char **var;
-    struct env *envp;
-    int        flag = 0;
+    struct env  *envp;
+    cmd        *tree;
+    int         flag = 0;
 
     system("clear");
     envp = envpath(env);
@@ -41,7 +42,12 @@ int main(int ac, char **av, char **env)
         if (!strcmp(buff, "exit"))
             exit(0);
         if (forkk() == 0)
-            parsing_tester(parsecmd(buff));//, envp, &flag);
+        {
+            tree = parsecmd(buff);
+            if (check_in_files(find_in_redir(tree)))
+                errors("No such file or directory\n");
+            executor(tree, envp, &flag);
+        }
         wait(0);
     }
     return(0);

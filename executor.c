@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/27 19:54:10 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/27 22:34:40 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,42 +20,38 @@ void errors(char *msg)
     exit(1);
 }
 
+//find_in_redir(); heeeere
+
 int check_in_files(cmd **first_redir)
 {
     redir   *tmp;
     char    **table;
-    int     i = 0;
-    int     j= 0;
-    int     k = 0;
+    int     i = 1;
+    int     k;
     int     fd;
 
+    if (!first_redir)
+       return (0);
     tmp = (redir *)(*first_redir);
-    while (tmp->cmd == REDIR)
+    while (tmp->cmd->type == REDIR)
     {
         tmp = (redir *)(tmp->cmd);
-        if (tmp->fd == 0)     
-            i++;
-        j++;
+        if (tmp->fd != 0)
+            break;     
+        i++;
     }
-    if (!i)
-        return (0);
-    else
+    tmp = (redir *)(*first_redir);
+    while (i)
     {
-        tmp = (redir *)(*first_redir);
-        j++;
-        while (i)
+        k = 0;
+        while (k < i)
         {
-            j--;
-            k = 0;
-            while (k!= j)
-            {
-                tmp = (redir *)(tmp->cmd);
-                k++;
-            }
-            if (open(tmp->file, tmp->mode) < 0)
-                return (1);
-            i--;
+            tmp = (redir *)(tmp->cmd);
+            k++;
         }
+        if (open(tmp->file, tmp->mode) < 0)
+            return (1);
+        i--;
     }
     return (0);
 }
@@ -96,15 +92,10 @@ void    executor(cmd *tree, env *env, int *flag)
     else if (tree->type == REDIR)
     {
         tree2 = (redir *)tree;
-        write(2, tree2->file, ft_strlen(tree2->file));
-        write(2, "\n", 1);
         open_fd = open(tree2->file, tree2->mode, 0666);
         if (!(*flag))
         {
-            *flag = 1;
-            /*check for in files existence 
-            if (int check_in_files(redir node))
-                errors("No such file or directory\n")*/
+            *flag = 1; 
             dup2(open_fd, tree2->fd);
         }
         close(open_fd);
