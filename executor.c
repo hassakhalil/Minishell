@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/27 22:41:05 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/27 22:52:44 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,37 @@ void errors(char *msg)
 }
 
 //find_in_redir(); heeeere
-cmd **find_in_redir(cmd *tree)
+cmd *find_in_redir(cmd *tree)
 {
-    
+    t_pip *tree1;
+    t_redir  *tree2;
     //if you find an IN redir return the first one you find
-
-    //else return NULL;
+    if (tree->type == PIPE)
+    {
+        tree1 = (t_pip *)tree;
+        find_in_redir(tree1->left);
+        find_in_redir(tree1->right);
+    }
+    else if (tree->type == REDIR)
+    {
+        tree2 = (t_redir *)tree;
+        if (tree2->fd == 0)
+            return (tree);
+        find_in_redir(tree2->cmd);
+    }
+    return (NULL);
 }
 
-int check_in_files(cmd **first_redir)
+int check_in_files(cmd *first_redir)
 {
     t_redir   *tmp;
-    char    **table;
     int     i = 1;
     int     k;
     int     fd;
 
     if (!first_redir)
        return (0);
-    tmp = (t_redir *)(*first_redir);
+    tmp = (t_redir *)first_redir;
     while (tmp->cmd->type == REDIR)
     {
         tmp = (t_redir *)(tmp->cmd);
@@ -47,7 +59,7 @@ int check_in_files(cmd **first_redir)
             break;     
         i++;
     }
-    tmp = (t_redir *)(*first_redir);
+    tmp = (t_redir *)first_redir;
     while (i)
     {
         k = 0;
