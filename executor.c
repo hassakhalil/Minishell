@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/27 22:52:44 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/28 14:52:24 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,51 @@ void errors(char *msg)
     exit(1);
 }
 
+int check_in_files(cmd *first_redir)
+{
+    t_redir   *tmp;
+    int     i = 1;
+    int     k;
+    int     fd;
+
+    if (!first_redir)
+    {
+        printf("returning 00000000000001\n");
+       return (0);
+    }
+    tmp = (t_redir *)first_redir;
+    while (tmp->cmd->type == REDIR)
+    {
+        tmp = (t_redir *)(tmp->cmd);
+        if (tmp->fd != 0)
+            break;     
+        i++;
+    }
+    tmp = (t_redir *)first_redir;
+    while (i)
+    { 
+        k = 1;
+        while (k < i)
+        {
+            tmp = (t_redir *)(tmp->cmd);
+            k++;
+        }
+        fd = open(tmp->file, tmp->mode);
+        if (fd < 0)
+        {
+            printf("returning 111111111111111\n");
+            close(fd);
+            return (1);
+        }
+        close(fd);
+        i--;
+    }
+    printf("returning 00000000000002\n");
+    return (0);
+}
+
 //find_in_redir(); heeeere
-cmd *find_in_redir(cmd *tree)
+int find_in_redir(cmd *tree)
 {
     t_pip *tree1;
     t_redir  *tree2;
@@ -36,41 +79,8 @@ cmd *find_in_redir(cmd *tree)
     {
         tree2 = (t_redir *)tree;
         if (tree2->fd == 0)
-            return (tree);
+            return (check_in_files(tree));
         find_in_redir(tree2->cmd);
-    }
-    return (NULL);
-}
-
-int check_in_files(cmd *first_redir)
-{
-    t_redir   *tmp;
-    int     i = 1;
-    int     k;
-    int     fd;
-
-    if (!first_redir)
-       return (0);
-    tmp = (t_redir *)first_redir;
-    while (tmp->cmd->type == REDIR)
-    {
-        tmp = (t_redir *)(tmp->cmd);
-        if (tmp->fd != 0)
-            break;     
-        i++;
-    }
-    tmp = (t_redir *)first_redir;
-    while (i)
-    {
-        k = 0;
-        while (k < i)
-        {
-            tmp = (t_redir *)(tmp->cmd);
-            k++;
-        }
-        if (open(tmp->file, tmp->mode) < 0)
-            return (1);
-        i--;
     }
     return (0);
 }
@@ -88,6 +98,7 @@ void    executor(cmd *tree, env *env, int *flag)
 
     if (tree->type == PIPE)
     {
+        write(2, "buuuuuuuuuuuuuuuug111\n", 23);
         tree1 = (t_pip *)tree;
         if (pipe(p) < 0)
             errors("pipe error\n");
@@ -110,8 +121,11 @@ void    executor(cmd *tree, env *env, int *flag)
     }
     else if (tree->type == REDIR)
     {
+        write(2, "buuuuuuuuuuuuuuuug222\n", 23);
         tree2 = (t_redir *)tree;
         open_fd = open(tree2->file, tree2->mode, 0666);
+        if (open_fd < 0)
+            exit (1);
         if (!(*flag))
         {
             *flag = 1; 
@@ -122,6 +136,7 @@ void    executor(cmd *tree, env *env, int *flag)
     }
     else
     {
+        write(2, "buuuuuuuuuuuuuuuug333\n", 23);
         tree3 = (t_exec *)tree;
         i = -1;
         while (env->path[++i])

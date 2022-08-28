@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/27 22:53:04 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/28 14:49:49 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,12 @@ int main(int ac, char **av, char **env)
         if (forkk() == 0)
         {
             tree = parsecmd(buff);
-            if (check_in_files(find_in_redir(tree)))
+            if (find_in_redir(tree) == 1)
+            {
+                printf("hello bitch\n");
                 errors("No such file or directory\n");
+                exit (1);
+            }
             executor(tree, envp, &flag);
         }
         wait(0);
