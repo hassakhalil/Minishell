@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/02 21:13:24 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/02 21:24:40 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,13 @@ int main(int ac, char **av, char **env)
 
     system("clear");
     envp = envpath(env);
-    signal(SIGHUP, handler);
+    signal(SIGQUIT,SIG_IGN);
 	signal(SIGINT, handler);
     while (buff)
     {
         buff = getcmd();
+        if (!buff)
+            exit (0);
         if (buff && *buff)
             add_history(buff);
         if (!cd(buff))
