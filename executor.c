@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/28 15:02:39 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/30 17:13:17 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void    executor(cmd *tree, env *env, int *flag)
     t_redir   *tree2;
     t_exec    *tree3;
 
+   //signal(SIGHUP, handler);
     if (tree->type == PIPE)
     {
         tree1 = (t_pip *)tree;

@@ -6,7 +6,7 @@
 #    By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/23 11:34:27 by iakry             #+#    #+#              #
-#    Updated: 2022/08/27 02:59:31 by hkhalil          ###   ########.fr        #
+#    Updated: 2022/09/02 20:58:51 by hkhalil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,10 @@ MINISHELL_SRCS	= parsing_tester.c executor.c main.c utils.c lexer.c parser.c pat
 
 MINISHELL_OBJS	= $(MINISHELL_SRCS:.c=.o)
 
-FLAGS			= -lreadline
-
-
 all:			$(NAME)
 
 $(NAME):		$(MINISHELL_SRCS)
-				gcc  $(FLAGS) $(MINISHELL_SRCS) -o $(NAME)
+				gcc  $(CFLAGS) $(MINISHELL_SRCS) -o $(NAME) -lreadline  -L /Users/hkhalil/.brew/opt/readline/lib -I /Users/hkhalil/.brew/opt/readline/include
 
 clean:
 				rm -f $(MINISHELL_OBJS)

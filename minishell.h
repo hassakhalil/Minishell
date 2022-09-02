@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/28 14:57:12 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/08/30 17:12:18 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <stdlib.h>
+# include <signal.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
@@ -107,4 +108,6 @@ struct cmd* pipecmd(struct cmd *left, struct cmd *right);
 struct cmd* execcmd(void);
 struct cmd* parsecmd(char *s);
 
+//signals
+void    handler(int sig);
 #endif
