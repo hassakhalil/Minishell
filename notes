@@ -1,25 +1,16 @@
-//notes
-
 //fix multiple out redir + in redir
 
 
-
-//cat | cat | cat | ls 
+//-------------cat | cat | cat | ls 
 
 
 //add here doc
 
 
-
-
 //(single quote) / " (double quote) 
 
 
-
-
 //• Handle environment variables ($ followed by a sequence of characters) whichshould expand to their values.
-
-
 
 
 /*• Handle $? which should expand to the exit status of the most recently executedforeground pipeline.*/
