@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/02 21:24:40 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/03 16:00:40 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void    handler(int sig)
         rl_replace_line("", 0);
         rl_on_new_line();
         rl_redisplay();
-        return ;
     }
 }
 
