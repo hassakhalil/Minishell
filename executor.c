@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/08/30 17:13:17 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/06 13:12:33 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,17 +96,18 @@ void    executor(cmd *tree, env *env, int *flag)
         id = forkk();
         if (id == 0)
         {
-            close(p[0]);
-            dup2(p[1], 1);
-            close(p[1]);
-            executor(tree1->left, env, flag);
-        }
-        else
-        {
             close(p[1]);
             dup2(p[0], 0);
             close(p[0]);
             executor(tree1->right, env, flag);
+        }
+        else
+        {
+            close(p[0]);
+            dup2(p[1], 1);
+            close(p[1]);
+            executor(tree1->left, env, flag);
+            write(2, "buuuuuuuuug\n", 13);
             wait(0);
         }
     }
