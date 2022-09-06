@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/06 12:59:25 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/06 18:29:31 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ int main(int ac, char **av, char **env)
         if (forkk() == 0)
         {
             tree = parsecmd(buff);
-            find_in_redir(tree, &flag);
-            executor(tree, envp, &flag);
+            //find_in_redir(tree, &flag);
+            //executor(tree, envp, &flag);
+            parsing_tester(tree);
         }
-        write(2, "i waiteeeeeed \n", 16);
         wait(0);
     }
     return(0);
