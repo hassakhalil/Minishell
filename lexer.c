@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iakry <iakry@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:26:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/07 13:01:13 by iakry            ###   ########.fr       */
+/*   Updated: 2022/09/09 17:14:27 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int gettoken(char **ss, char *es, char **q, char **eq)
     ret = *s;
     if (*s == 0)
         return ret;
-    else if (*s == '|' || *s == '(' || *s == ')' || *s == ';' || *s == '&' || *s == '<')
+    else if (*s == '|')
         s++;
     else if (*s == '>')
     {
@@ -33,10 +33,16 @@ int gettoken(char **ss, char *es, char **q, char **eq)
         if (*s++ == '>')
             ret = '+';
     }
+    else if (*s == '<')
+    {
+        s++;
+        if (*s++ == '<')
+            ret = '*';
+    }
     else
     {
         ret = 'a';
-        while (s < es && !strchr(" \t\r\n\v", *s) && !strchr("(<|&;>)", *s))
+        while (s < es && !strchr(" \t\r\n\v", *s) && !strchr("<|>", *s))
             s++;
     }
     if(eq)
