@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/27 05:33:36 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/10 20:52:34 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ struct cmd* redircmd(struct cmd *subcmd, char *file, int mode, int type)
     struct redircmd *cmd;
     
     cmd = malloc(sizeof(*cmd));
-    if (!cmd)
-        exit(EXIT_FAILURE);
-    memset(cmd, 0, sizeof(*cmd));
+    //memset(cmd, 0, sizeof(*cmd));
     cmd->type = REDIR;
     cmd->cmd = subcmd;
-    cmd->file = file;
+    write(2, file, strlen(file));
+    write(2, "\n", 1);
+    cmd->file = strdup(file);
     cmd->mode = mode; //(type == '<') ?  O_RDONLY : O_WRONLY|O_CREAT|O_TRUNC;
     cmd->fd = (type == '<') ? 0 : 1;
     return ((struct cmd*)cmd);
@@ -79,7 +79,7 @@ struct cmd* execcmd(void)
     struct execcmd *cmd;
     
     cmd = malloc(sizeof(*cmd));
-    memset(cmd, 0, sizeof(*cmd));
+    //memset(cmd, 0, sizeof(*cmd));
     cmd->type = EXEC;
     return (struct cmd*)cmd;
 }
@@ -89,7 +89,7 @@ struct cmd* pipecmd(struct cmd *left, struct cmd *right)
     struct pipecmd *cmd;
     
     cmd = malloc(sizeof(*cmd));
-    memset(cmd, 0, sizeof(*cmd));
+   // memset(cmd, 0, sizeof(*cmd));
     cmd->type = PIPE;
     cmd->left = left;
     cmd->right = right;

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/10 13:49:57 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/10 21:41:51 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int main(int ac, char **av, char **env)
     static char **var;
     struct env  *envp;
     cmd        *tree;
-    int         flag = 0;
+    int         flag_in = 0;
+    int         flag_out = 0;
 
     system("clear");
     envp = envpath(env);
@@ -66,9 +67,9 @@ int main(int ac, char **av, char **env)
         if (forkk() == 0)
         {
             tree = parsecmd(buff);
-            find_in_redir(tree, &flag);
-            //executor(tree, envp, &flag);
-            parsing_tester(tree);
+            find_in_redir(tree, &flag_in);
+            executor(tree, envp, &flag_out, &flag_in);
+            //parsing_tester(tree);
         }
         wait(0);
     }

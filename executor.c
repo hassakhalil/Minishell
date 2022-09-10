@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/10 13:10:02 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/10 21:46:39 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,8 @@ int check_in_files(cmd *first_redir)
     int     fd;
 
     tmp = (t_redir *)first_redir;
-    while (tmp->cmd->type == REDIR)
+    while (tmp->cmd->type == REDIR && tmp->fd == 0)
     {
-        tmp = (t_redir *)(tmp->cmd);
-        if (tmp->fd != 0)
-            break;     
-        i++;
-    }
-    tmp = (t_redir *)first_redir;
-    while (i)
-    { 
-        k = 1;
-        while (k < i)
-        {
-            tmp = (t_redir *)(tmp->cmd);
-            k++;
-        }
         fd = open(tmp->file, tmp->mode);
         if (fd < 0)
         {
@@ -51,7 +37,8 @@ int check_in_files(cmd *first_redir)
             return (1);
         }
         close(fd);
-        i--;
+        tmp = (t_redir *)(tmp->cmd);    
+        i++;
     }
     return (0);
 }
@@ -76,7 +63,7 @@ void find_in_redir(cmd *tree, int *flag)
     }
 }
 
-void    executor(cmd *tree, env *env, int *flag)
+void    executor(cmd *tree, env *env, int *flag_out, int *flag_in)
 {
     char    *s;
     int     p[2];
@@ -87,7 +74,6 @@ void    executor(cmd *tree, env *env, int *flag)
     t_redir   *tree2;
     t_exec    *tree3;
 
-   //signal(SIGHUP, handler);
     if (tree->type == PIPE)
     {
         tree1 = (t_pip *)tree;
@@ -99,32 +85,35 @@ void    executor(cmd *tree, env *env, int *flag)
             close(p[1]);
             dup2(p[0], 0);
             close(p[0]);
-            executor(tree1->right, env, flag);
+            executor(tree1->right, env, flag_out, flag_in);
         }
         else
         {
             close(p[0]);
             dup2(p[1], 1);
             close(p[1]);
-            executor(tree1->left, env, flag);
+            executor(tree1->left, env, flag_out, flag_in);
             wait(0);
         }
     }
     else if (tree->type == REDIR)
     {
         tree2 = (t_redir *)tree;
-        if (*flag == 2 && tree2->fd == 1)
+        if (*flag_in == 2)
             errors("no such file or directory\n");
         open_fd = open(tree2->file, tree2->mode, 0666);
         if (open_fd < 0)
             exit (1);
-        if (!(*flag))
+        if ((!(*flag_in) && tree2->fd == 0) || (!(*flag_out) && tree2->fd == 1))
         {
-            *flag = 1;
+            if (tree2->fd == 0)
+                *flag_in = 1;
+            else
+                *flag_out = 1;
             dup2(open_fd, tree2->fd);
         }
         close(open_fd);
-        executor(tree2->cmd, env, flag);
+        executor(tree2->cmd, env, flag_out, flag_in);
     }
     else
     {
