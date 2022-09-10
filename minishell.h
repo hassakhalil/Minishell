@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/30 17:12:18 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/10 13:56:43 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,7 @@ void     find_in_redir(cmd *tree, int *flag);
 // lexer
 struct cmd* parsepipe(char **ps, char *es);
 struct cmd* parsecmd(char *s);
-struct cmd* parseline(char **ss, char *es);
 struct cmd* parseexec(char **ss, char *es);
-struct cmd* parseblock(char **ss, char *es);
 struct cmd* parseredirs(struct cmd *cmd, char **ss, char *es);
 
 // tokenizer
