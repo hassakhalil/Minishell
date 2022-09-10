@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/09 15:03:50 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/10 13:10:02 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,13 +118,11 @@ void    executor(cmd *tree, env *env, int *flag)
         open_fd = open(tree2->file, tree2->mode, 0666);
         if (open_fd < 0)
             exit (1);
-        if ((!(*flag) && tree2->fd == 1) || (tree2->fd == 0 && tree2->cmd->type == EXEC))
+        if (!(*flag))
         {
             *flag = 1;
             dup2(open_fd, tree2->fd);
         }
-        /*else if (tree2->fd == 0 && tree2->cmd->type == EXEC)
-        {}*/
         close(open_fd);
         executor(tree2->cmd, env, flag);
     }

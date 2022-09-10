@@ -23,7 +23,7 @@ void    parsing_tester(cmd *result_tree)
     {
         write (2, "<><><>|redir|<><><> :", 22);
         tree2 = (t_redir *)result_tree;
-        write(2, tree2->file, ft_strlen(tree2->file));
+        write(2, tree2->file, ft_strlen(tree2->file) +1);
         write(2, "\n", 1);
         parsing_tester(tree2->cmd);
     }

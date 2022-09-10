@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:26:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/09 17:14:27 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/10 13:49:14 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int gettoken(char **ss, char *es, char **q, char **eq)
 int peek(char **ss, char *es, char *toks)
 {
     char *s;
-    
+
     s = *ss;
     while(s < es && strchr(" \t\r\n\v", *s))
         s++;

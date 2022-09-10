@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/09 15:48:54 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/10 13:49:57 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,6 @@ char *getcmd()
     if (buff)
         return buff;
     return NULL;
-}
-
-struct cmd* parsecmd(char *s)
-{
-    struct cmd *cmd;
-    char *es;
-
-    es = s + ft_strlen(s);
-    cmd = parseline(&s, es);
-    //signal(SIGINT, handle_sig);
-    peek(&s, es, "");
-    if(s != es)
-    {
-        // err_putchar("Leftovers: ");
-        // err_putchar(s);
-        perror("cmd");
-        exit(EXIT_FAILURE);
-    }
-    return cmd;
 }
 
 int main(int ac, char **av, char **env)

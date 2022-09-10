@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/27 05:33:08 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/10 13:16:14 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,49 +45,26 @@ struct cmd* parseredirs(struct cmd *cmd, char **ss, char *es)
     return cmd;
 }
 
-struct cmd* parseblock(char **ss, char *es)
-{
-    struct cmd *cmd;
-    
-    if (!peek(ss, es, "("))
-    {
-        perror("parseblock");
-        exit(EXIT_FAILURE);
-    }
-    gettoken(ss, es, 0, 0);
-    cmd = parseline(ss, es);
-    if (!peek(ss, es, ")"))
-    {
-        perror("syntax - missing ) ");
-        exit(EXIT_FAILURE);
-    }
-    gettoken(ss, es, 0, 0);
-    cmd = parseredirs(cmd, ss, es);
-    return cmd;
-}
-
 struct cmd* parseexec(char **ss, char *es)
 {
     char *q, *eq;
     int tok, argc;
     struct execcmd *cmd;
     struct cmd *ret;
-    
-    if (peek(ss, es, "("))
-        return (parseblock(ss, es));
 
     ret = execcmd();
     cmd = (struct execcmd*)ret;
     
     argc = 0;
-    ret = parseredirs(ret, ss, es);
+    while (peek(ss, es, "<"))
+            ret = parseredirs(ret, ss, es);
     while (!peek(ss, es, "|"))
     {
-        ret = parseredirs(ret, ss, es);
         tok = gettoken(ss, es, &q, &eq);
         if (tok == 0)
             break;
-        ret = parseredirs(ret, ss, es);
+        while (peek(ss, es, ">"))
+            ret = parseredirs(ret, ss, es);
         if (tok != 'a')
         {
             perror("syntax error");
@@ -100,7 +77,6 @@ struct cmd* parseexec(char **ss, char *es)
             perror("Too many args");
             exit(EXIT_FAILURE);
         }
-        ret = parseredirs(ret, ss, es);
     }
     cmd->argv[argc] = 0;
     return ret;
@@ -120,23 +96,13 @@ struct cmd* parsepipe(char **ss, char *es)
     return cmd;
 }
 
-struct cmd* parseline(char **ss, char *es)
-{
-    struct cmd *cmd;
-
-    cmd = parsepipe(ss, es);
-    while (peek(ss, es, "&"))
-        gettoken(ss, es, 0, 0);
-    return cmd;
-}
-
 struct cmd* parsecmd(char *s)
 {
     struct cmd *cmd;
     char *es;
 
     es = s + ft_strlen(s);
-    cmd = parseline(&s, es);
+    cmd = parsepipe(&s, es);
     peek(&s, es, "");
     if(s != es)
     {
