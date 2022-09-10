@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/10 20:52:34 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/10 22:31:25 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ struct cmd* redircmd(struct cmd *subcmd, char *file, int mode, int type)
     //memset(cmd, 0, sizeof(*cmd));
     cmd->type = REDIR;
     cmd->cmd = subcmd;
-    write(2, file, strlen(file));
-    write(2, "\n", 1);
     cmd->file = strdup(file);
     cmd->mode = mode; //(type == '<') ?  O_RDONLY : O_WRONLY|O_CREAT|O_TRUNC;
     cmd->fd = (type == '<') ? 0 : 1;

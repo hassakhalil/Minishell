@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/10 20:54:57 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/10 22:31:44 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ struct cmd* parseredirs(struct cmd *cmd, char **ss, char *es)
     int tok;
     char *q;
     char *eq;
-    //debug
-    int  n;
-    //end debug
 
     while (peek(ss, es, "<>"))
     {
@@ -36,10 +33,6 @@ struct cmd* parseredirs(struct cmd *cmd, char **ss, char *es)
         }
         if (tok == '>')
         {
-            //debug
-            n = eq - q;
-            printf("%d\n", n);
-            //end debug
             cmd = redircmd(cmd, mkcopy(q, eq), O_WRONLY|O_CREAT|O_TRUNC, tok);
             break;
         }
