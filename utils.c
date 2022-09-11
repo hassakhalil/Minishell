@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/11 17:35:04 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/11 18:38:30 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,15 @@ char    *create_heredoc(char *delimiter)
     char *path;
 
     path = ft_strjoin("/tmp/", delimiter);
-    deli = ft_strjoin(delimiter, "\n");
     fd = open(path, O_WRONLY|O_CREAT|O_TRUNC, 0666);
-    buff = get_next_line(0);
-    while(buff && strcmp(deli, buff))
+    buff = readline("> ");
+    while(buff)
     {
+        if (!strcmp(buff, delimiter))
+            break; 
         write(fd, buff, strlen(buff));
-        free(buff);
-        buff = get_next_line(0);
+        write(fd, "\n", 1);
+        buff = readline("> ");
     }
     close(fd);
     return (path);
