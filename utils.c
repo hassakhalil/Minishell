@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/10 22:31:25 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/11 15:18:52 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,11 @@ struct cmd* redircmd(struct cmd *subcmd, char *file, int mode, int type)
     cmd->type = REDIR;
     cmd->cmd = subcmd;
     cmd->file = strdup(file);
-    cmd->mode = mode; //(type == '<') ?  O_RDONLY : O_WRONLY|O_CREAT|O_TRUNC;
-    cmd->fd = (type == '<') ? 0 : 1;
+    cmd->mode = mode;
+    if (type == '<' || type == '*')
+        cmd->fd = 0;
+    else
+        cmd->fd = 1;
     return ((struct cmd*)cmd);
 }
 
