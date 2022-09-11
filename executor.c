@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/10 22:34:52 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/11 12:49:43 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int check_in_files(cmd *first_redir)
     int     fd;
 
     tmp = (t_redir *)first_redir;
-    while (tmp->cmd->type == REDIR && tmp->fd == 0)
+    while (tmp->type == REDIR && tmp->fd == 0)
     {
         fd = open(tmp->file, tmp->mode);
         if (fd < 0)
@@ -58,7 +58,10 @@ void find_in_redir(cmd *tree, int *flag)
     {
         tree2 = (t_redir *)tree;
         if (tree2->fd == 0 && check_in_files(tree))
+        {
             *flag = 2;
+            return ;
+        }
         find_in_redir(tree2->cmd, flag);
     }
 }

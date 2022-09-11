@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/10 22:35:00 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/11 12:45:09 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void    handler(int sig)
 {
     if (sig == SIGHUP)
     {
-
         write(2, "passed from here 1\n", 20);
         exit(0);
     }

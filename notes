@@ -4,7 +4,7 @@
 
 //fix grep m < file0 error (when there is no file0)
 
-//(single quote) / " (double quote) 
+//(single quote) / " (double quote)
 
 
 //• Handle environment variables ($ followed by a sequence of characters) whichshould expand to their values.
