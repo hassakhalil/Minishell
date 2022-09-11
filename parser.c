@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/11 15:47:11 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/11 16:09:43 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ struct cmd* parseredirs(struct cmd *cmd, char **ss, char *es)
     int tok;
     char *q;
     char *eq;
+    int  fd;
+    char *buff = "";
+    char *delimiter;
 
     while (peek(ss, es, "<>"))
     {
@@ -44,8 +47,15 @@ struct cmd* parseredirs(struct cmd *cmd, char **ss, char *es)
         if (tok == '*')
         {
             //here doc here
-            //mkcopy(q,eq) is the dilimeter
-            cmd = redircmd(cmd, "/tmp/heredocument", O_WRONLY|O_CREAT|O_TRUNC, tok);
+            delimiter = strdup(mkcopy(q,eq));
+            fd = open("/tmp/heredocument", O_WRONLY|O_CREAT|O_TRUNC, 0666);
+            while(!strcmp(delimiter, buff))
+            {
+                buff == get_next_line(fd);
+                write(fd, buff, strlen(buff));
+            }
+            close(fd);
+            cmd = redircmd(cmd, "/tmp/heredocument", O_RDONLY, tok);
             break;
         }
     }
