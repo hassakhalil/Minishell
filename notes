@@ -1,8 +1,5 @@
 //fix "<>filename" (without any space after redir)
 
-//> file0 ls | grep m
-// grep m < file0
-
 //add here doc
 
 
