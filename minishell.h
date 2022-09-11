@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/11 17:11:48 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/11 17:35:13 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,6 @@ int       peek(char **ps, char *es, char *toks);
 void    handler(int sig);
 
 //heredoc
-char    *create_heredoc(char *delimiter, char *heredoc_path);
+char    *create_heredoc(char *delimiter);
 
 #endif
