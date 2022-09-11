@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/11 15:39:24 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/11 15:47:11 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ struct cmd* parseredirs(struct cmd *cmd, char **ss, char *es)
         {
             //here doc here
             //mkcopy(q,eq) is the dilimeter
-            cmd = redircmd(cmd, "heredocument", O_WRONLY|O_CREAT|O_TRUNC, tok);
+            cmd = redircmd(cmd, "/tmp/heredocument", O_WRONLY|O_CREAT|O_TRUNC, tok);
             break;
         }
     }
