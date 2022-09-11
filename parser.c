@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/11 11:43:34 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/11 14:27:26 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ struct cmd* parseredirs(struct cmd *cmd, char **ss, char *es)
         }
         if (tok == '+')
         {
-            cmd = redircmd(cmd, mkcopy(q, eq), O_WRONLY|O_CREAT, tok);
+            cmd = redircmd(cmd, mkcopy(q, eq), O_WRONLY|O_CREAT|O_APPEND, tok);
             break;
         }
     }
