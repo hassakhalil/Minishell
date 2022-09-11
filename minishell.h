@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/10 21:47:57 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/11 17:11:48 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ struct cmd* redircmd(struct cmd *subcmd, char *file, int mode, int type);
 struct cmd* pipecmd(struct cmd *left, struct cmd *right);
 struct cmd* execcmd(void);
 struct cmd* parsecmd(char *s);
+char	*get_next_line(int fd);
 
 // path
 struct env *envpath(char **env);
@@ -103,4 +104,8 @@ int       peek(char **ps, char *es, char *toks);
 
 //signals
 void    handler(int sig);
+
+//heredoc
+char    *create_heredoc(char *delimiter, char *heredoc_path);
+
 #endif

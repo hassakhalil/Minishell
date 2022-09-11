@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/11 16:09:43 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/11 17:06:45 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,7 @@ struct cmd* parseredirs(struct cmd *cmd, char **ss, char *es)
         if (tok == '*')
         {
             //here doc here
-            delimiter = strdup(mkcopy(q,eq));
-            fd = open("/tmp/heredocument", O_WRONLY|O_CREAT|O_TRUNC, 0666);
-            while(!strcmp(delimiter, buff))
-            {
-                buff == get_next_line(fd);
-                write(fd, buff, strlen(buff));
-            }
-            close(fd);
-            cmd = redircmd(cmd, "/tmp/heredocument", O_RDONLY, tok);
+            cmd = redircmd(cmd, create_heredoc(mkcopy(q, eq), "/tmp/heredocument"), O_RDONLY, tok);
             break;
         }
     }

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/11 15:18:52 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/11 17:22:48 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,22 @@ struct cmd* pipecmd(struct cmd *left, struct cmd *right)
     cmd->left = left;
     cmd->right = right;
     return ((struct cmd*)cmd);
+}
+
+char    *create_heredoc(char *delimiter, char *heredoc_path)
+{
+    int fd;
+    char *deli;
+    char *buff;
+
+    deli = ft_strjoin(delimiter, "\n");
+    fd = open(heredoc_path, O_WRONLY|O_CREAT|O_TRUNC, 0666);
+    buff = get_next_line(0);
+    while(buff && strcmp(deli, buff))
+    {
+        buff = get_next_line(0);
+        write(fd, buff, strlen(buff));
+    }
+    close(fd);
+    return (heredoc_path);
 }

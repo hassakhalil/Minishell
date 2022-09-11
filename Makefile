@@ -6,21 +6,21 @@
 #    By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/23 11:34:27 by iakry             #+#    #+#              #
-#    Updated: 2022/09/09 17:28:32 by hkhalil          ###   ########.fr        #
+#    Updated: 2022/09/11 17:12:22 by hkhalil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 
 MINISHELL_SRCS	= parsing_tester.c executor.c main.c utils.c lexer.c parser.c path.c builtins.c\
-					libft/ft_strnstr.c libft/ft_split.c libft/ft_strjoin.c libft/ft_strdup.c\
+					libft/ft_strnstr.c libft/ft_split.c libft/ft_strjoin.c libft/ft_strdup.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c\
 
 MINISHELL_OBJS	= $(MINISHELL_SRCS:.c=.o)
 
 all:			$(NAME)
 
 $(NAME):		$(MINISHELL_SRCS)
-				gcc  $(CFLAGS) $(MINISHELL_SRCS) -o $(NAME) -lreadline  -L /Users/hkhalil/.brew/opt/readline/lib -I /Users/hkhalil/.brew/opt/readline/include
+				gcc  $(CFLAGS) $(MINISHELL_SRCS) -o $(NAME) -lreadline  -L /Users/hkhalil/.brew/opt/readline/lib -I /Users/hkhalil/.brew/opt/readline/include -D BUFFER_SIZE=10
 
 clean:
 				rm -f $(MINISHELL_OBJS)
