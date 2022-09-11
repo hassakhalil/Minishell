@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/10 22:31:44 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/11 11:43:34 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ struct cmd* parseexec(char **ss, char *es)
     ret = execcmd();
     cmd = (struct execcmd*)ret;
     argc = 0;
-    while (peek(ss, es, "<"))
+    while (peek(ss, es, "<>"))
         ret = parseredirs(ret, ss, es);
     while (!peek(ss, es, "|"))
     {
         tok = gettoken(ss, es, &q, &eq);
         if (tok == 0)
             break;
-        while (peek(ss, es, ">"))
+        while (peek(ss, es, "<>"))
             ret = parseredirs(ret, ss, es);
         if (tok != 'a')
         {
