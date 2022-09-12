@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/11 20:08:34 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/12 14:40:59 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void    executor(cmd *tree, env *env, int *flag_out, int *flag_in)
     char    *s;
     int     p[2];
     int     id;
+    int     left_exec_id;
     int     i;
     int     open_fd;
     t_pip     *tree1;
@@ -95,7 +96,10 @@ void    executor(cmd *tree, env *env, int *flag_out, int *flag_in)
             close(p[0]);
             dup2(p[1], 1);
             close(p[1]);
-            executor(tree1->left, env, flag_out, flag_in);
+            left_exec_id = forkk();
+            if (left_exec_id == 0)
+                executor(tree1->left, env, flag_out, flag_in);
+            wait(0);
             wait(0);
         }
     }
@@ -120,11 +124,15 @@ void    executor(cmd *tree, env *env, int *flag_out, int *flag_in)
     {
         tree3 = (t_exec *)tree;
         i = -1;
+        
         while (env->path[++i])
         {
             s  = ft_strjoin(ft_strjoin(env->path[i], "/"), tree3->argv[0]);
             if (access(s, F_OK) != -1)
             {
+                //debug
+                write(2, "exeeeeeeeeeeeeeeeeeeeec\n", 25);
+                //end debug
                 execve(s, tree3->argv, env->path);
                 errors("execve error\n");
             }
