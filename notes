@@ -1,5 +1,4 @@
-//add here doc
-->>>>>>ls | grep m << kkk
+//fix hang problem
 
 //(single quote) / " (double quote)
 
