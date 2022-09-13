@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/12 14:51:24 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/13 16:39:23 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,6 @@ char *getcmd()
 
     if (isatty(fileno(stdin)))
         buff = readline("$ ");
-    //debug 
-    write(2, "got command secsessfully\n", 26);
-    //end debug
     return buff;
 }
 
@@ -48,6 +45,8 @@ int main(int ac, char **av, char **env)
     cmd        *tree;
     int         flag_in = 0;
     int         flag_out = 0;
+    int         flag_pipe = 0;
+    int status;
 
     system("clear");
     envp = envpath(env);
@@ -64,22 +63,21 @@ int main(int ac, char **av, char **env)
             continue;
         if (!strcmp(buff, "exit"))
             exit(0);
-        if (forkk() == 0)
+        int pid = forkk();
+        if (pid == 0)
         {
             tree = parsecmd(buff);
             find_in_redir(tree, &flag_in);
             if (flag_in == 2)
                 errors("no such file or directory\n");
-            executor(tree, envp, &flag_out, &flag_in);
+            executor(tree, envp, &flag_out, &flag_in, &flag_pipe);
             //parsing_tester(tree);
         }
-        //debug 
-        write(2, "next command before wait\n",26);
-        //end debug
         wait(0);
-        //debug 
-        write(2, "next command after wait\n",25);
-        //end debug
+        //while (waitpid(-1, &status, 0x0) > 0)
+                //dprintf(2, "%d/n", status);;
+        //waitpid(pid, &status, 0x0);
+        //dprintf(2, "%d/n", status);
     }
     return(0);
 }
