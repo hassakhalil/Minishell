@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/14 23:10:38 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/14 23:39:11 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,32 +93,40 @@ void    executor(cmd *tree, env *env, int *flag_out, int *flag_in)
             close(p[1]);
             executor(tree1->left, env, flag_out, flag_in);
         }
-        else if(tree1->right->type == EXEC)
-        {
+        //if(tree1->right->type == EXEC)
+       // {
             id2 = forkk();
             if (id2 == 0)
             {
-            close(p[1]);
-            dup2(p[0], 0);
-            close(p[0]);
-            executor(tree1->right, env, flag_out, flag_in);
+                close(p[1]);
+                dup2(p[0], 0);
+                close(p[0]);
+                executor(tree1->right, env, flag_out, flag_in);
             }
             close(p[1]);
             close(p[0]);
-            while(waitpid(-1, NULL ,0)>0);
-        }
-        else
-        {
-            close(p[1]);
-            dup2(p[0], 0);
-            close(p[0]);
-            executor(tree1->right, env, flag_out, flag_in);
-        }
+            while(wait(0)>0);
+            exit(0);
+       // }
+        // close(p[1]);
+        // dup2(p[0], 0);
+        // close(p[0]);
+        // executor(tree1->right, env, flag_out, flag_in);
     }
     else if (tree->type == REDIR)
     {
         tree2 = (t_redir *)tree;
-        open_fd = open(tree2->file, tree2->mode, 0666);
+       
+        open_fd = open(tree2->file, tree2->mode, 0666); 
+        if (!tree2->fd)
+        {
+            if(open_fd < 0)
+            {
+                dprintf(2, "no such file or directory\n");
+                exit(1);
+            }
+        }
+            
         if (open_fd < 0)
             exit (1);
         if ((!(*flag_in) && tree2->fd == 0) || (!(*flag_out) && tree2->fd == 1))
@@ -146,5 +154,4 @@ void    executor(cmd *tree, env *env, int *flag_out, int *flag_in)
             }
         }
     }
-    exit(0);
 }
