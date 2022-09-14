@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/13 16:39:23 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/14 21:27:08 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int main(int ac, char **av, char **env)
     cmd        *tree;
     int         flag_in = 0;
     int         flag_out = 0;
-    int         flag_pipe = 0;
     int status;
 
     system("clear");
@@ -70,7 +69,7 @@ int main(int ac, char **av, char **env)
             find_in_redir(tree, &flag_in);
             if (flag_in == 2)
                 errors("no such file or directory\n");
-            executor(tree, envp, &flag_out, &flag_in, &flag_pipe);
+            executor(tree, envp, &flag_out, &flag_in);
             //parsing_tester(tree);
         }
         wait(0);

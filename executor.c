@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/13 17:42:02 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/14 21:49:20 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void find_in_redir(cmd *tree, int *flag)
     }
 }
 
-void    executor(cmd *tree, env *env, int *flag_out, int *flag_in, int *flag_pipe)
+void    executor(cmd *tree, env *env, int *flag_out, int *flag_in)
 {
     char    *s;
     int     p[2];
@@ -88,40 +88,30 @@ void    executor(cmd *tree, env *env, int *flag_out, int *flag_in, int *flag_pip
         id1 = forkk();
         if (id1 == 0)
         {
-            //debug 
-            dprintf(2, "this is child id1111111111111\n");
-            //end debug
-            close(p[1]);
-            dup2(p[0], 0);
-            close(p[0]);
-            executor(tree1->right, env, flag_out, flag_in, flag_pipe);
-        }
-        else if ((*flag_pipe) == 0)
-        {
-            //debug 
-            dprintf(2, "this is a parent\n");
-            //end debug 
-            *flag_pipe = 1;
-            id2 = forkk();
-            if (id2 == 0)
-            {
-                //debug 
-                dprintf(2, "this is child id22222222222\n");
-                //end debug
-                close(p[0]);
-                dup2(p[1], 1);
-                close(p[1]);
-                executor(tree1->left, env, flag_out, flag_in, flag_pipe);
-            }
-            wait(0);
-            wait(0);
-        }
-        else
-        {
             close(p[0]);
             dup2(p[1], 1);
             close(p[1]);
-            executor(tree1->left, env, flag_out, flag_in, flag_pipe);
+            executor(tree1->left, env, flag_out, flag_in);
+        }
+        else if(tree1->right->type == EXEC)
+        {
+            id2 = forkk();
+            if (id2 == 0)
+            {
+            close(p[1]);
+            dup2(p[0], 0);
+            close(p[0]);
+            executor(tree1->right, env, flag_out, flag_in);
+            }
+            while(waitpid(-1, NULL ,0))
+                dprintf(2, "got one heeeeere\n");;
+        }
+        else
+        {
+            close(p[1]);
+            dup2(p[0], 0);
+            close(p[0]);
+            executor(tree1->right, env, flag_out, flag_in);
         }
     }
     else if (tree->type == REDIR)
@@ -139,7 +129,7 @@ void    executor(cmd *tree, env *env, int *flag_out, int *flag_in, int *flag_pip
             dup2(open_fd, tree2->fd);
         }
         close(open_fd);
-        executor(tree2->cmd, env, flag_out, flag_in, flag_pipe);
+        executor(tree2->cmd, env, flag_out, flag_in);
     }
     else
     {
