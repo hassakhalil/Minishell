@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/14 23:39:11 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/14 23:47:29 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,25 +93,18 @@ void    executor(cmd *tree, env *env, int *flag_out, int *flag_in)
             close(p[1]);
             executor(tree1->left, env, flag_out, flag_in);
         }
-        //if(tree1->right->type == EXEC)
-       // {
-            id2 = forkk();
-            if (id2 == 0)
-            {
-                close(p[1]);
-                dup2(p[0], 0);
-                close(p[0]);
-                executor(tree1->right, env, flag_out, flag_in);
-            }
+        id2 = forkk();
+        if (id2 == 0)
+        {
             close(p[1]);
+            dup2(p[0], 0);
             close(p[0]);
-            while(wait(0)>0);
-            exit(0);
-       // }
-        // close(p[1]);
-        // dup2(p[0], 0);
-        // close(p[0]);
-        // executor(tree1->right, env, flag_out, flag_in);
+            executor(tree1->right, env, flag_out, flag_in);
+        }
+        close(p[1]);
+        close(p[0]);
+        while(wait(0)>0);
+        exit(0);
     }
     else if (tree->type == REDIR)
     {

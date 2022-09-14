@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/14 23:35:20 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/14 23:46:56 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,6 @@ int main(int ac, char **av, char **env)
             //parsing_tester(tree);
         }
         wait(0);
-        //while (waitpid(-1, &status, 0x0) > 0)
-                //dprintf(2, "%d/n", status);;
-        //waitpid(pid, &status, 0x0);
-        //dprintf(2, "%d/n", status);
     }
     return(0);
 }
