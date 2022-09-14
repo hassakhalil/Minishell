@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/14 21:49:20 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/14 23:10:38 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,9 @@ void    executor(cmd *tree, env *env, int *flag_out, int *flag_in)
             close(p[0]);
             executor(tree1->right, env, flag_out, flag_in);
             }
-            while(waitpid(-1, NULL ,0))
-                dprintf(2, "got one heeeeere\n");;
+            close(p[1]);
+            close(p[0]);
+            while(waitpid(-1, NULL ,0)>0);
         }
         else
         {
