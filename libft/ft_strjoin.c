@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iakry <iakry@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 10:51:44 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/05 11:11:22 by iakry            ###   ########.fr       */
+/*   Updated: 2022/09/15 00:05:49 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,31 @@ char	*ft_strjoin(char *s1, char *s2)
 	join(p, s1);
 	join(p, s2);
 	return (p);
+}
+
+char	*ft_strjoin2(char const *s1, char *s2)
+{
+	size_t	i;
+	size_t	j;
+	char	*str;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	str = malloc (sizeof(char) * (ft_strlen((char *)s1) + ft_strlen((char *)s2) + 2));
+	if (!str)
+		return (NULL);
+	while (s1[i] != '\0')
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	str[i] = '/';
+	j = 0;
+	while (s2[j] != '\0')
+	{
+		str[++i] = s2[j++];
+	}
+	str[++i] = '\0';
+	return (str);
 }

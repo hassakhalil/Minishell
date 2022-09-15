@@ -1,10 +1,8 @@
+/*• Handle $? which should expand to the exit status of the most recently executedforeground pipeline.*/
+
 //(single quote) / " (double quote)
 
-
 //• Handle environment variables ($ followed by a sequence of characters) whichshould expand to their values.
-
-
-/*• Handle $? which should expand to the exit status of the most recently executedforeground pipeline.*/
 
 
 /*• Your shell must implement the following builtins:
@@ -16,4 +14,3 @@
 ◦ env with no options or arguments
 ◦ exit with no options*/+
 
- < file cat | ls > file

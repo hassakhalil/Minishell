@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/14 21:27:15 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/15 14:10:04 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,16 @@ typedef struct execcmd
 char    *ft_strnstr(char	**big, char *little, size_t l);
 char	  **ft_split(char const *s, char c);
 char	  *ft_strjoin(char *s1, char *s2);
+char	*ft_strjoin2(char const *s1, char *s2);
 char	  *ft_strdup(const char *str);
 size_t  ft_strlen(char *s);
 char    *ft_strchr(const char *s, int c);
 int     forkk(void);
 char    *mkcopy(char *s, char *es);
-void    errors(char *msg);
+void    errors(char * name, char *msg);
 struct cmd* redircmd(struct cmd *subcmd, char *file, int mode, int type);
 struct cmd* pipecmd(struct cmd *left, struct cmd *right);
 struct cmd* execcmd(void);
-struct cmd* parsecmd(char *s);
-char	*get_next_line(int fd);
 
 // path
 struct env *envpath(char **env);

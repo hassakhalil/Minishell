@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/12 13:37:58 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/15 00:28:18 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ int	forkk(void)
 	
 	pid = fork();
 	if(pid == -1)
-		errors("fork error\n");
+    {
+        printf("fork failed !");
+        exit(1);
+    }
+		
 	return pid;
 }
 
