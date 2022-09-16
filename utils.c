@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/15 00:28:18 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/16 23:14:35 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,22 +101,43 @@ struct cmd* pipecmd(struct cmd *left, struct cmd *right)
     return ((struct cmd*)cmd);
 }
 
+void    hd_handler(int sig)
+{
+    if (sig == SIGINT)
+    {
+        write(1, "\n" ,1);
+        rl_replace_line("", 0);
+        rl_on_new_line();
+        rl_redisplay();
+        exit(0);
+    }
+}
+
 char    *create_heredoc(char *delimiter)
 {
     int fd;
+    int id;
     char *deli;
     char *buff;
     char *path;
 
     path = ft_strjoin("/tmp/", delimiter);
-    fd = open(path, O_WRONLY|O_CREAT|O_TRUNC, 0666);
-    buff = readline("> ");
-    while(buff && strcmp(buff, delimiter))
+    id  = forkk();
+    if (id == 0)
     {
-        write(fd, buff, strlen(buff));
-        write(fd, "\n", 1);
+        signal(SIGQUIT,SIG_IGN);
+	    signal(SIGINT, hd_handler);
+        fd = open(path, O_WRONLY|O_CREAT|O_TRUNC, 0666);
         buff = readline("> ");
+        while(buff && strcmp(buff, delimiter))
+        {
+            write(fd, buff, strlen(buff));
+            write(fd, "\n", 1);
+            buff = readline("> ");
+        }
+        close(fd);
+        exit(0);
     }
-    close(fd);
+    wait(0);
     return (path);
 }
