@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/15 14:27:59 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/16 19:37:40 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int main(int ac, char **av, char **env)
             executor(tree, envp, &flag_out, &flag_in);
             //parsing_tester(tree);
         }
-         waitpid(pid, &exits, 0);
+        waitpid(pid, &exits, 0);
         int exit_status = WEXITSTATUS(exits);
         printf("%d\n",exit_status);
     }

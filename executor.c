@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/15 16:49:58 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/16 19:39:50 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 void errors(char *name, char *msg)
 {
-     write(2,name, ft_strlen(name));
-     write(2,":",1);
+    write(2,name, ft_strlen(name));
+    write(2,":",1);
     write(2,msg, ft_strlen(msg));
     //clean everything
     exit(127);
@@ -108,10 +108,10 @@ void    executor(cmd *tree, env *env, int *flag_out, int *flag_in)
         }
         close(p[1]);
         close(p[0]);
-        while(wait(NULL) > 0);
-        waitpid(id, &exits, -1);
+        while(waitpid(id, &exits, 0) > 0);
+        //waitpid(id, &exits, -1);
         int exit_status = WEXITSTATUS(exits);
-        printf("%d\n",exit_status);
+        //printf("%d\n",exit_status);
         exit(exit_status);
     }
     else if (tree->type == REDIR)
@@ -138,7 +138,7 @@ void    executor(cmd *tree, env *env, int *flag_out, int *flag_in)
         i = -1;
         while (env->path[++i])
         { 
-            s  = ft_strjoin(ft_strjoin(env->path[i], "/"), tree3->argv[0]);   
+            s  = ft_strjoin(ft_strjoin(env->path[i], "/"), tree3->argv[0]);
             if (access(s, F_OK) != -1)
                 str = s;
         }
