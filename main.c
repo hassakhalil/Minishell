@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/16 19:37:40 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/16 19:46:18 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ int main(int ac, char **av, char **env)
         {
             tree = parsecmd(buff);
             find_in_redir(tree, &flag_in);
-            // if (flag_in == 2)
-            //     errors("no such file or directory\n");
             executor(tree, envp, &flag_out, &flag_in);
             //parsing_tester(tree);
         }
