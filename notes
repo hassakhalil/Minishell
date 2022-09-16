@@ -1,3 +1,5 @@
+//fill here doc file in a child process
+
 /*• Handle $? which should expand to the exit status of the most recently executedforeground pipeline.*/
 
 //(single quote) / " (double quote)
