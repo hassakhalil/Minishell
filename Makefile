@@ -6,7 +6,7 @@
 #    By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/23 11:34:27 by iakry             #+#    #+#              #
-#    Updated: 2022/09/11 18:40:33 by hkhalil          ###   ########.fr        #
+#    Updated: 2022/09/16 20:10:54 by hkhalil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ MINISHELL_OBJS	= $(MINISHELL_SRCS:.c=.o)
 all:			$(NAME)
 
 $(NAME):		$(MINISHELL_SRCS)
-				gcc  $(CFLAGS) $(MINISHELL_SRCS) -o $(NAME) -lreadline  -L /Users/hkhalil/.brew/opt/readline/lib -I /Users/hkhalil/.brew/opt/readline/include -D BUFFER_SIZE=10
+				gcc  $(CFLAGS) $(MINISHELL_SRCS) -o $(NAME) -lreadline  -L /Users/hkhalil/.brew/opt/readline/lib -I /Users/hkhalil/.brew/opt/readline/include
 
 clean:
 				rm -f $(MINISHELL_OBJS)
