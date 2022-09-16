@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/16 19:39:50 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/16 19:47:51 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,7 @@ void    executor(cmd *tree, env *env, int *flag_out, int *flag_in)
         close(p[1]);
         close(p[0]);
         while(waitpid(id, &exits, 0) > 0);
-        //waitpid(id, &exits, -1);
-        int exit_status = WEXITSTATUS(exits);
-        //printf("%d\n",exit_status);
-        exit(exit_status);
+        exit(WEXITSTATUS(exits));
     }
     else if (tree->type == REDIR)
     {
