@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/17 17:12:12 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/17 17:38:18 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int main(int ac, char **av, char **env)
 {
     static char *buff = "";
     static char **var;
-    struct env  *envp;
-    cmd        *tree;
+    t_env  *envp;
+    t_cmd        *tree;
     int         flag_in = 0;
     int         flag_out = 0;
     int exits = 0;

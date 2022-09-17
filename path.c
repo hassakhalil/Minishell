@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iakry <iakry@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 13:07:20 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/13 14:29:00 by iakry            ###   ########.fr       */
+/*   Updated: 2022/09/17 17:46:02 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-struct env *envpath(char **env)
+t_env *envpath(char **env)
 {
     int j;
     int i = 0;
-    struct env *envp;
+    t_env *envp;
 
     envp = malloc(sizeof(*envp));
     while(env[i])

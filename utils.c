@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/17 16:24:17 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/17 17:44:55 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ char	*mkcopy(char *s, char *es)
 	return c;
 }
 
-struct cmd* redircmd(struct cmd *subcmd, char *file, int mode, int type)
+t_cmd* redircmd(t_cmd *subcmd, char *file, int mode, int type)
 {
-    struct redircmd *cmd;
+    t_redir *cmd;
     
     cmd = malloc(sizeof(*cmd));
     //memset(cmd, 0, sizeof(*cmd));
@@ -76,29 +76,29 @@ struct cmd* redircmd(struct cmd *subcmd, char *file, int mode, int type)
         cmd->fd = 0;
     else
         cmd->fd = 1;
-    return ((struct cmd*)cmd);
+    return ((t_cmd*)cmd);
 }
 
-struct cmd* execcmd(void)
+t_cmd* execcmd(void)
 {
-    struct execcmd *cmd;
+    t_exec *cmd;
     
     cmd = malloc(sizeof(*cmd));
     //memset(cmd, 0, sizeof(*cmd));
     cmd->type = EXEC;
-    return (struct cmd*)cmd;
+    return (t_cmd*)cmd;
 }
 
-struct cmd* pipecmd(struct cmd *left, struct cmd *right)
+t_cmd   *pipecmd(t_cmd *left, t_cmd *right)
 {
-    struct pipecmd *cmd;
+    t_pip *cmd;
     
     cmd = malloc(sizeof(*cmd));
    // memset(cmd, 0, sizeof(*cmd));
     cmd->type = PIPE;
     cmd->left = left;
     cmd->right = right;
-    return ((struct cmd*)cmd);
+    return ((t_cmd*)cmd);
 }
 
 void    hd_handler(int sig)

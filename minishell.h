@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/15 14:10:04 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/17 17:41:29 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,33 +30,33 @@
 #define REDIR 2
 #define PIPE 3
 
-typedef struct env
+typedef struct s_env
 {
   char **path;
-} env;
+} t_env;
 
-typedef struct cmd
+typedef struct s_cmd
 {
   int type;
-} cmd;
+} t_cmd;
 
-typedef struct redircmd
+typedef struct s_redircmd
 {
   int type;
-  struct cmd *cmd;
+  t_cmd *cmd;
   char *file;
   int mode;
   int fd;
 } t_redir;
 
-typedef struct pipecmd
+typedef struct s_pipecmd
 {
   int type;
-  struct cmd *left;
-  struct cmd *right;
+  t_cmd *left;
+  t_cmd *right;
 } t_pip;
 
-typedef struct execcmd
+typedef struct s_execcmd
 {
   int type;              // ' '
   char *argv[MAXARGS];
@@ -74,28 +74,28 @@ char    *ft_strchr(const char *s, int c);
 int     forkk(void);
 char    *mkcopy(char *s, char *es);
 void    errors(char * name, char *msg);
-struct cmd* redircmd(struct cmd *subcmd, char *file, int mode, int type);
-struct cmd* pipecmd(struct cmd *left, struct cmd *right);
-struct cmd* execcmd(void);
+t_cmd *redircmd(t_cmd *subcmd, char *file, int mode, int type);
+t_cmd *pipecmd(t_cmd *left, t_cmd *right);
+t_cmd  *execcmd(void);
 
 // path
-struct env *envpath(char **env);
+t_env *envpath(char **env);
 char    *getpath(char *buff);
 
 // builtins
 int      cd(char *buff);
 
 // executor
-void    executor(cmd *tree, env *envp, int *flag_out, int *flag_in);
-void    parsing_tester(cmd *result_tree);
-int     check_in_files(cmd *first_redir);
-void    find_in_redir(cmd *tree, int *flag_in);
+void    executor(t_cmd *tree, t_env *envp, int *flag_out, int *flag_in);
+void    parsing_tester(t_cmd *result_tree);
+int     check_in_files(t_cmd *first_redir);
+void    find_in_redir(t_cmd *tree, int *flag_in);
 
 //parser
-struct cmd* parsepipe(char **ps, char *es);
-struct cmd* parsecmd(char *s);
-struct cmd* parseexec(char **ss, char *es);
-struct cmd* parseredirs(struct cmd *cmd, char **ss, char *es);
+t_cmd* parsepipe(char **ps, char *es);
+t_cmd* parsecmd(char *s);
+t_cmd* parseexec(char **ss, char *es);
+t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es);
 
 //lexer
 int       gettoken(char **ps, char *es, char **q, char **eq);

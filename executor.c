@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/17 16:19:30 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/17 17:37:48 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void errors(char *name, char *msg)
     exit(127);
 }
 
-int check_in_files(cmd *first_redir)
+int check_in_files(t_cmd *first_redir)
 {
     t_redir   *tmp;
     int     i = 1;
@@ -44,7 +44,7 @@ int check_in_files(cmd *first_redir)
     return (0);
 }
 
-void find_in_redir(cmd *tree, int *flag)
+void find_in_redir(t_cmd *tree, int *flag)
 {
     t_pip *tree1;
     t_redir  *tree2;
@@ -61,7 +61,7 @@ void find_in_redir(cmd *tree, int *flag)
     }
 }
 
-void    executor(cmd *tree, env *env, int *flag_out, int *flag_in)
+void    executor(t_cmd *tree, t_env *env, int *flag_out, int *flag_in)
 {
     char    *s;
     int     p[2];

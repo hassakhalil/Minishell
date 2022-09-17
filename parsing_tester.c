@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void    parsing_tester(cmd *result_tree)
+void    parsing_tester(t_cmd *result_tree)
 {
     t_pip *tree1;
     t_redir *tree2;
