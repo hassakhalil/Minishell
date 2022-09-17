@@ -80,14 +80,9 @@ t_cmd   *pipecmd(t_cmd *left, t_cmd *right)
 
 void    hd_handler(int sig)
 {
-    if (sig == SIGINT)
-    {
-        //write(1, "\n" ,1);
-        rl_replace_line("", 0);
-        rl_redisplay();
-        //rl_on_new_line();
-        exit(1);
-    }
+        sig = 1;
+        write(1, "\n",1 );
+        exit(sig);
 }
 
 char    *create_heredoc(char *delimiter)
@@ -115,6 +110,8 @@ char    *create_heredoc(char *delimiter)
         close(fd);
         exit(0);
     }
+    signal(SIGQUIT, SIG_IGN);
+    signal(SIGINT, SIG_IGN);
     waitpid(id, &exits, 0);
     if (WEXITSTATUS(exits) == 1)
     {

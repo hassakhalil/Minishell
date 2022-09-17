@@ -12,20 +12,22 @@
 
 #include "minishell.h"
 
-void    handler(int sig)
+void	sig_handle(int sig)
 {
-    if (sig == SIGHUP)
-    {
-        write(2, "passed from here 1\n", 20);
-        exit(0);
-    }
-    else if (sig == SIGINT)
-    {
-        write(1, "\n" ,1);
-        rl_replace_line("", 0);
-        rl_on_new_line();
-        rl_redisplay();
-    }
+	(void)sig;
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	write(1, "\n", 1);
+	rl_redisplay();
+}
+
+void	sig_handl(int sig)
+{
+	(void)sig;
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	write(1, "Quit: 3", 7);
+	write(1, "\n", 1);
 }
 
 int exit_status;
@@ -44,10 +46,11 @@ int main(int argc, char *argv[], char **env)
     //
     system("clear");
     envp = envpath(env);
-    signal(SIGQUIT,SIG_IGN);
-	signal(SIGINT, handler);
+
     while (1)
-    {
+    {  
+        signal(SIGQUIT,SIG_IGN);
+	    signal(SIGINT, sig_handle);
         buff = readline("$ ");
         if (!buff)
             exit (0);
@@ -60,10 +63,14 @@ int main(int argc, char *argv[], char **env)
         int pid = forkk();
         if (pid == 0)
         {
+            signal(SIGQUIT,SIG_DFL);
+	        signal(SIGINT, SIG_DFL);
             tree = parsecmd(buff);
             executor(tree, envp, &flag_out, &flag_in);
             //parsing_tester(tree);
         }
+        signal(SIGINT, SIG_IGN);
+	    signal(SIGQUIT, sig_handl);
         waitpid(pid, &exits, 0);
         exit_status = WEXITSTATUS(exits);
         //printf("%d\n",exit_status);
