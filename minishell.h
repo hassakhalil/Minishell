@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/17 18:11:35 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/17 18:32:39 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,17 @@ typedef struct s_execcmd
 } t_exec;
 
 
-// utils
+// libft utils
 char    *ft_strnstr(char	**big, char *little, size_t l);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
 char	  **ft_split(char const *s, char c);
-char	  *ft_strjoin(char *s1, char *s2);
+char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strjoin2(char const *s1, char *s2);
 char	  *ft_strdup(const char *str);
-size_t  ft_strlen(char *s);
+size_t  ft_strlen(const char *s);
 char    *ft_strchr(const char *s, int c);
+
+//minishell utils
 int     forkk(void);
 char    *mkcopy(char *s, char *es);
 void    errors(char * name, char *msg);

@@ -1,39 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils0.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/17 18:11:59 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/17 18:38:38 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-size_t  ft_strlen(char *s)
-{
-    size_t i;
-
-    i = 0;
-    while (s[i])
-		i++;
-    return (i);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	int	i;
-
-	i = -1;
-	while (s[++i])
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
-	if (s[i] == c)
-		return ((char *)&s[i]);
-	return (0);
-}
+#include "../minishell.h"
 
 int	forkk(void)
 {
