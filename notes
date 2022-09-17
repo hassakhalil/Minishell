@@ -1,5 +1,3 @@
-//fill here doc file in a child process to Handle signals
-
 //signals 
 
 /*• Handle $? which should expand to the exit status of the most recently executedforeground pipeline.*/
