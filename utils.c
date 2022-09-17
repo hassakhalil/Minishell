@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/16 23:14:35 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/17 16:24:17 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,11 @@ void    hd_handler(int sig)
 {
     if (sig == SIGINT)
     {
-        write(1, "\n" ,1);
+        //write(1, "\n" ,1);
         rl_replace_line("", 0);
-        rl_on_new_line();
         rl_redisplay();
-        exit(0);
+        //rl_on_new_line();
+        exit(1);
     }
 }
 
@@ -120,6 +120,7 @@ char    *create_heredoc(char *delimiter)
     char *deli;
     char *buff;
     char *path;
+    int exits;
 
     path = ft_strjoin("/tmp/", delimiter);
     id  = forkk();
@@ -138,6 +139,11 @@ char    *create_heredoc(char *delimiter)
         close(fd);
         exit(0);
     }
-    wait(0);
+    waitpid(id, &exits, 0);
+    if (WEXITSTATUS(exits) == 1)
+    {
+        //dprintf(2, "exited with code 1 from heredoc  parent process\n");
+        exit(1);
+    }
     return (path);
 }
