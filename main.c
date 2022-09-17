@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/17 17:38:18 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/17 18:06:47 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,20 @@ void    handler(int sig)
     }
 }
 
-int main(int ac, char **av, char **env)
-{
-    static char *buff = "";
-    static char **var;
-    t_env  *envp;
-    t_cmd        *tree;
-    int         flag_in = 0;
-    int         flag_out = 0;
-    int exits = 0;
-    int status;
+int exit_status;
 
+int main(int argc, char *argv[], char **env)
+{
+    static char     *buff = "";
+    t_env           *envp;
+    t_cmd           *tree;
+    int             flag_in = 0;
+    int             flag_out = 0;
+    int             exits = 0;
+
+    //silencing warnings
+    argv[argc] = 0;
+    //
     system("clear");
     envp = envpath(env);
     signal(SIGQUIT,SIG_IGN);
@@ -58,12 +61,11 @@ int main(int ac, char **av, char **env)
         if (pid == 0)
         {
             tree = parsecmd(buff);
-            //find_in_redir(tree, &flag_in);
             executor(tree, envp, &flag_out, &flag_in);
             //parsing_tester(tree);
         }
         waitpid(pid, &exits, 0);
-        int exit_status = WEXITSTATUS(exits);
+        exit_status = WEXITSTATUS(exits);
         //printf("%d\n",exit_status);
     }
     return(0);

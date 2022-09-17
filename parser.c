@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/17 17:36:24 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/17 18:12:42 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es)
     int tok;
     char *q;
     char *eq;
-    int  fd;
-    char *buff = "";
-    char *delimiter;
 
     while (peek(ss, es, "<>"))
     {
@@ -93,7 +90,6 @@ t_cmd* parseexec(char **ss, char *es)
 t_cmd* parsepipe(char **ss, char *es)
 {
     t_cmd *cmd;
-    char *pipeerr;
     
     cmd = parseexec(ss, es);
     if(peek(ss, es, "|"))
