@@ -12,25 +12,16 @@
 
 #include "minishell.h"
 
-void	sig_handle(int sig)
+int GLOBAL;
+
+void	handler(int sig)
 {
-	(void)sig;
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	write(1, "\n", 1);
-	rl_redisplay();
+    if  (sig == SIGINT)
+	    rl_redisplay();
 }
-
-void	sig_handl(int sig)
-{
-	(void)sig;
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	write(1, "Quit: 3", 7);
-	write(1, "\n", 1);
-}
-
-int exit_status;
 
 int main(int argc, char *argv[], char **env)
 {
@@ -50,7 +41,7 @@ int main(int argc, char *argv[], char **env)
     while (1)
     {  
         signal(SIGQUIT,SIG_IGN);
-	    signal(SIGINT, sig_handle);
+	    signal(SIGINT, handler);
         buff = readline("$ ");
         if (!buff)
             exit (0);
@@ -70,10 +61,10 @@ int main(int argc, char *argv[], char **env)
             //parsing_tester(tree);
         }
         signal(SIGINT, SIG_IGN);
-	    signal(SIGQUIT, sig_handl);
+	    signal(SIGQUIT, handler);
         waitpid(pid, &exits, 0);
-        exit_status = WEXITSTATUS(exits);
-        //printf("%d\n",exit_status);
+        GLOBAL = WEXITSTATUS(exits);
+        printf("%d\n", GLOBAL);
     }
     return(0);
 }

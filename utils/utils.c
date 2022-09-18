@@ -12,6 +12,7 @@
 
 #include "../minishell.h"
 
+
 int	forkk(void)
 {
 	int pid;
@@ -81,7 +82,7 @@ t_cmd   *pipecmd(t_cmd *left, t_cmd *right)
 void    hd_handler(int sig)
 {
         sig = 1;
-        write(1, "\n",1 );
+        write(1, "\n", 1);
         exit(sig);
 }
 
@@ -114,9 +115,6 @@ char    *create_heredoc(char *delimiter)
     signal(SIGINT, SIG_IGN);
     waitpid(id, &exits, 0);
     if (WEXITSTATUS(exits) == 1)
-    {
-        //dprintf(2, "exited with code 1 from heredoc  parent process\n");
         exit(1);
-    }
     return (path);
 }

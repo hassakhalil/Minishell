@@ -30,6 +30,8 @@
 #define REDIR 2
 #define PIPE 3
 
+extern int GLOBAL;
+
 typedef struct s_env
 {
   char **path;
