@@ -6,6 +6,8 @@
 
 //• Handle environment variables ($ followed by a sequence of characters) whichshould expand to their values.
 
+//just testing if git problem  resolved
+
 
 /*• Your shell must implement the following builtins:
 ◦ echo with option -n
