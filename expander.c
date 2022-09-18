@@ -17,6 +17,9 @@ void    expander(t_cmd *tree, t_env *env)
     t_pip     *tree1;
     t_redir   *tree2;
     t_exec    *tree3;
+    int       i;
+    int       j;
+    int       k;
 
     if (tree->type == PIPE)
     {
@@ -31,12 +34,28 @@ void    expander(t_cmd *tree, t_env *env)
     }
     else
     {
-        while (/*there is a $x in argv[MAXAERGS]*/)
+        tree3 = (t_exec *)tree;
+        i = search_table(tree3->argv, "$");
+        while (i)
         {
-            if (/* x == '?'*/)
-                //replace $x with GLOBAL value
-            else if (//search for x in env)
-                //replace $x with path[i];
+            if (!strcmp((tree3->argv)[i], "$?"))
+            {
+                free((tree3->argv)[i]);
+                (tree3->argv)[i] = ft_strdup(itoa(GLOBAL));
+            }
+            else
+            {
+                j = search_table(env->path, &(tree3->argv)[i][1]);
+                if (j)
+                {
+                    free((tree3->argv)[i]);
+                    k = 0;
+                    while((env->path)[j][k] != '=')
+                    k++;
+                    (tree3->argv)[i] = ft_strdup(&(env->path)[j][++k]);
+                }
+                i = search_table(tree3->argv, "$");
+            }
         }
     }
 }
