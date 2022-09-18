@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+int     search_table(char **s, char *c)
+{
+
+    //return place where you found it or 0 if you dont
+}
+
 void    expander(t_cmd *tree, t_env *env)
 {
     t_pip     *tree1;
