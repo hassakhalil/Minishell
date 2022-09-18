@@ -75,7 +75,7 @@ t_cmd* parseexec(char **ss, char *es)
             perror("syntax error");
             exit(EXIT_FAILURE);
         }
-        cmd->argv[argc] = mkcopy(q, eq);
+        cmd->argv[argc] = ft_strdup(mkcopy(q, eq));
         argc++;
         if(argc >= MAXARGS)
         {
