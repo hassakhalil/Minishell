@@ -14,8 +14,13 @@
 
 int     search_table(char **s, char *c)
 {
-
+    int i = 0;
     //return place where you found it or 0 if you dont
+    while (s[i])
+    {
+        if (strcmp())
+        i++;
+    }
 }
 
 void    expander(t_cmd *tree, t_env *env)

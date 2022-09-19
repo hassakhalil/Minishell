@@ -1,3 +1,5 @@
+//clear all the forbiden functions !!!!!!!
+
 //signals 
 
 /*• Handle $? which should expand to the exit status of the most recently executedforeground pipeline.*/
