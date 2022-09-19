@@ -35,12 +35,13 @@ int main(int argc, char *argv[], char **env)
     //silencing warnings
     argv[argc] = 0;
     //
-    system("clear");
+    printf("\e[1;1H\e[2J");
+
     envp = envpath(env);
     
     while (1)
     {  //debug
-       // dprintf(2, "%s\n", *env[1]);
+        dprintf(2, "%s\n", getenv("USER"));
     //end debug
         signal(SIGQUIT,SIG_IGN);
 	    signal(SIGINT, handler);
