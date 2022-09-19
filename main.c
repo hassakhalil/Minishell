@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     t_cmd           *tree;
     int             flag_in = 0;
     int             flag_out = 0;
-    int             exits = 0;
+    int             exits;
 
     //silencing warnings
     argv[argc] = 0;
