@@ -29,7 +29,7 @@ char *getpath(char *buff)
     char path[100];
     int i = 0;
     
-    if (!strncmp(s, "cd ", 3))
+    if (!ft_strncmp(s, "cd ", 3))
     {
         s = s+3;
         while (*s == ' ')

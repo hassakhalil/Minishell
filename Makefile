@@ -6,18 +6,18 @@
 #    By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/23 11:34:27 by iakry             #+#    #+#              #
-#    Updated: 2022/09/19 21:29:05 by hkhalil          ###   ########.fr        #
+#    Updated: 2022/09/19 22:16:25 by hkhalil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRC	= expander.c executor.c main.c lexer.c parser.c path.c builtins.c\
-					utils/libft/utils0.c utils/libft/utils1.c utils/libft/utils2.c utils/utils.c\
+	utils/libft/utils0.c utils/libft/utils1.c utils/libft/utils2.c utils/libft/utils3.c utils/utils.c \
 
 OBJ	= $(SRC:.c=.o)
 
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 
 $(NAME): $(OBJ)

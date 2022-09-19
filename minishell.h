@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/17 18:32:39 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/19 22:16:40 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	  *ft_strdup(const char *str);
 size_t  ft_strlen(const char *s);
 char    *ft_strchr(const char *s, int c);
 char	*ft_itoa(int n);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
 
 //minishell utils
 int     forkk(void);
