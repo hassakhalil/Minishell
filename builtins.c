@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iakry <iakry@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 13:03:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/08/16 15:49:46 by iakry            ###   ########.fr       */
+/*   Updated: 2022/09/19 23:26:12 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int check_cd(char *buff, int index)
 {    
     while (--index >= 0)
-        if (!strchr(" \t\v\f\r\t", buff[index]) && !strchr("|", buff[index]))
+        if (!ft_strchr(" \t\v\f\r\t", buff[index]) && !ft_strchr("|", buff[index]))
             return 0;
     return 1;
 }
@@ -28,7 +28,7 @@ int cd(char *buff)
     while (s[++i]){
         if (!strncmp(&s[i], "cd ", 3) && check_cd(s, i))
         {
-            if (!strchr(&s[i], '|'))
+            if (!ft_strchr(&s[i], '|'))
                 if (chdir(getpath(&s[i]))){
                     perror("cd");
                     free(buff);

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:26:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/11 13:31:26 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/19 23:26:59 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int gettoken(char **ss, char *es, char **q, char **eq)
     int ret;
 
     s = *ss;
-    while(s < es && strchr(" \t\r\n\v", *s))
+    while(s < es && ft_strchr(" \t\r\n\v", *s))
         s++;
     if(q)
         *q = s;
@@ -48,12 +48,12 @@ int gettoken(char **ss, char *es, char **q, char **eq)
     else
     {
         ret = 'a';
-        while (s < es && !strchr(" \t\r\n\v", *s) && !strchr("<|>", *s))
+        while (s < es && !ft_strchr(" \t\r\n\v", *s) && !ft_strchr("<|>", *s))
             s++;
     }
     if(eq)
         *eq = s;
-    while(s < es && strchr(" \t\r\n\v", *s))
+    while(s < es && ft_strchr(" \t\r\n\v", *s))
         s++;
     *ss = s;
     return ret;
@@ -64,8 +64,8 @@ int peek(char **ss, char *es, char *toks)
     char *s;
 
     s = *ss;
-    while(s < es && strchr(" \t\r\n\v", *s))
+    while(s < es && ft_strchr(" \t\r\n\v", *s))
         s++;
     *ss = s;
-    return (*s && strchr(toks, *s));
+    return (*s && ft_strchr(toks, *s));
 }
