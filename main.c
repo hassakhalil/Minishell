@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/17 18:06:47 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/19 23:13:28 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
             add_history(buff);
         if (!cd(buff))
             continue;
-        if (!strcmp(buff, "exit"))
+        if (!ft_strcmp(buff, "exit"))
             exit(0);
         int pid = forkk();
         if (pid == 0)

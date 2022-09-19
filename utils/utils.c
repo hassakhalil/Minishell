@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils0.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/17 18:38:38 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/19 23:13:28 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char    *create_heredoc(char *delimiter)
 	    signal(SIGINT, hd_handler);
         fd = open(path, O_WRONLY|O_CREAT|O_TRUNC, 0666);
         buff = readline("> ");
-        while(buff && strcmp(buff, delimiter))
+        while(buff && ft_strcmp(buff, delimiter))
         {
             write(fd, buff, strlen(buff));
             write(fd, "\n", 1);

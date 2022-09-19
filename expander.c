@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/17 17:30:43 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/19 23:13:28 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void    expander(t_cmd *tree)
         i = search_dollar(tree3->argv, i);
         while (i != -1)
         {
-            if (!strcmp((tree3->argv)[i], "$?"))
+            if (!ft_strcmp((tree3->argv)[i], "$?"))
             {
                 free((tree3->argv)[i]);
                 (tree3->argv)[i] = ft_strdup(ft_itoa(GLOBAL));
