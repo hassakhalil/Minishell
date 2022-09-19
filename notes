@@ -2,9 +2,9 @@
 
 //test expander very well
 
-//signals 
+//finish signals 
 
-//(single quote) / " (double quote)
+// handle (single quote) / " (double quote)
 
 
 /*• Your shell must implement the following builtins:
@@ -17,7 +17,7 @@
 ◦ exit with no options*/+
 
 
-//CASES
+//CASES to test
 
 bash-3.2$ << stop
 > bash-3.2$ echo $?
