@@ -12,7 +12,7 @@
 
 NAME = minishell
 
-SRC	=  executor.c main.c lexer.c parser.c path.c builtins.c\
+SRC	= expander.c executor.c main.c lexer.c parser.c path.c builtins.c\
 					utils/libft/utils0.c utils/libft/utils1.c utils/libft/utils2.c utils/utils.c\
 
 OBJ	= $(SRC:.c=.o)

@@ -74,6 +74,7 @@ char	*ft_strjoin2(char const *s1, char *s2);
 char	  *ft_strdup(const char *str);
 size_t  ft_strlen(const char *s);
 char    *ft_strchr(const char *s, int c);
+char	*ft_itoa(int n);
 
 //minishell utils
 int     forkk(void);
@@ -105,6 +106,9 @@ t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es);
 //lexer
 int       gettoken(char **ps, char *es, char **q, char **eq);
 int       peek(char **ps, char *es, char *toks);
+
+//expander
+void    expander(t_cmd *tree, t_env *env);
 
 //signals
 void    handler(int sig);

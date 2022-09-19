@@ -12,15 +12,33 @@
 
 #include "minishell.h"
 
-int     search_table(char **s, char *c)
+int     search_dollar(char **s)
 {
-    int i = 0;
+    int i = 1;
     //return place where you found it or 0 if you dont
     while (s[i])
     {
-        if (strcmp())
+        if (ft_strchr(s[i], '$'))
+        {
+            dprintf(2, "found dollaaaaaaaaar$$$$$$\n");
+            return(i);
+        }
         i++;
     }
+    return(0);
+}
+
+int     search_table(char **s, char *c)
+{
+    int i = 1;
+    //return place where you found it or 0 if you dont
+    while (s[i])
+    {
+        if (!strcmp(s[i], c))
+            return(i);
+        i++;
+    }
+    return (0);
 }
 
 void    expander(t_cmd *tree, t_env *env)
@@ -38,7 +56,7 @@ void    expander(t_cmd *tree, t_env *env)
         expander(tree1->right, env);
         expander(tree1->left, env);
     }
-    else if (ree->type == REDIR)
+    else if (tree->type == REDIR)
     {
         tree2 = (t_redir *)tree;
         expander(tree2->cmd, env);
@@ -46,13 +64,13 @@ void    expander(t_cmd *tree, t_env *env)
     else
     {
         tree3 = (t_exec *)tree;
-        i = search_table(tree3->argv, "$");
+        i = search_dollar(tree3->argv);
         while (i)
         {
             if (!strcmp((tree3->argv)[i], "$?"))
             {
                 free((tree3->argv)[i]);
-                (tree3->argv)[i] = ft_strdup(itoa(GLOBAL));
+                (tree3->argv)[i] = ft_strdup(ft_itoa(GLOBAL));
             }
             else
             {
@@ -65,7 +83,7 @@ void    expander(t_cmd *tree, t_env *env)
                     k++;
                     (tree3->argv)[i] = ft_strdup(&(env->path)[j][++k]);
                 }
-                i = search_table(tree3->argv, "$");
+                i = search_dollar(tree3->argv);
             }
         }
     }

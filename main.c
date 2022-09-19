@@ -57,6 +57,7 @@ int main(int argc, char *argv[], char **env)
             signal(SIGQUIT,SIG_DFL);
 	        signal(SIGINT, SIG_DFL);
             tree = parsecmd(buff);
+            expander(tree, envp);
             executor(tree, envp, &flag_out, &flag_in);
             //parsing_tester(tree);
         }
