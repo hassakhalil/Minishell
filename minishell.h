@@ -85,7 +85,7 @@ t_cmd *pipecmd(t_cmd *left, t_cmd *right);
 t_cmd  *execcmd(void);
 
 // path
-t_env *envpath(char **env);
+t_env *envpath(void);
 char    *getpath(char *buff);
 
 // builtins

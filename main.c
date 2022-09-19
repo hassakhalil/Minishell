@@ -23,7 +23,7 @@ void	handler(int sig)
 	    rl_redisplay();
 }
 
-int main(int argc, char *argv[], char **env)
+int main(int argc, char *argv[])
 {
     static char     *buff = "";
     t_env           *envp;
@@ -36,13 +36,9 @@ int main(int argc, char *argv[], char **env)
     argv[argc] = 0;
     //
     printf("\e[1;1H\e[2J");
-
-    envp = envpath(env);
-    
+    envp = envpath();
     while (1)
-    {  //debug
-        dprintf(2, "%s\n", getenv("USER"));
-    //end debug
+    {
         signal(SIGQUIT,SIG_IGN);
 	    signal(SIGINT, handler);
         buff = readline("$ ");
@@ -68,7 +64,6 @@ int main(int argc, char *argv[], char **env)
 	    signal(SIGQUIT, handler);
         waitpid(pid, &exits, 0);
         GLOBAL = WEXITSTATUS(exits);
-        printf("%d\n", GLOBAL);
     }
     return(0);
 }

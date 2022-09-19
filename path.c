@@ -12,22 +12,17 @@
 
 #include "minishell.h"
 
-t_env *envpath(char **env)
+t_env *envpath(void)
 {
     int i = 0;
     t_env *envp;
+    char  *p;
 
     envp = malloc(sizeof(*envp));
-    while(env[i])
-    {
-        while (*env[i])
-        {
-            if (!strncmp(env[i], "PATH=", 5))
-                envp->path = ft_split(env[i]+5, ':');
-            env[i]++;
-        }
-        i++;
-    }
+    //
+    p = getenv("PATH");
+    envp->path = ft_split(p+5, ':');
+    //
     return envp;
 }
 

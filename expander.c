@@ -12,16 +12,13 @@
 
 #include "minishell.h"
 #include <errno.h>
+
 int     search_dollar(char **s, int i)
 {
-    //return place where you found it or 0 if you dont
     while (s[i])
     {
         if (ft_strchr(s[i], '$'))
-        {
-            //dprintf(2, "found dollaaaaaaaaar$$$$$$\n");
             return(i);
-        }
         i++;
     }
     return (-1);
@@ -56,17 +53,10 @@ void    expander(t_cmd *tree)
                 free((tree3->argv)[i]);
                 (tree3->argv)[i] = ft_strdup(ft_itoa(GLOBAL));
             }
-            //
-            dprintf(2, "%s\n", &((tree3->argv)[i][1]));
-                
-            char *l =     ft_strdup("LOGNAME");
-            dprintf(2, "%s\n", getenv(l));
-            dprintf(2, "%s\n", strerror(errno));
-            //
-            if (getenv(&((tree3->argv)[i][1])))
+            else if (getenv(&((tree3->argv)[i][1])))
             {
-                    free((tree3->argv)[i]);
-                    (tree3->argv)[i] = ft_strdup(getenv(&((tree3->argv)[i][1])));
+                free((tree3->argv)[i]);
+                (tree3->argv)[i] = ft_strdup(getenv(&((tree3->argv)[i][1])));
             }
             i++;
             i = search_dollar(tree3->argv, i);
