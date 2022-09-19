@@ -108,7 +108,7 @@ int       gettoken(char **ps, char *es, char **q, char **eq);
 int       peek(char **ps, char *es, char *toks);
 
 //expander
-void    expander(t_cmd *tree, char **env);
+void    expander(t_cmd *tree);
 
 //signals
 void    handler(int sig);
