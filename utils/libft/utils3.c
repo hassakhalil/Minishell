@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 22:14:53 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/19 23:39:13 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/19 23:47:55 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	int	i;
 
 	i = 0;
-	while (s1[i])
+	while (s1[i] || s2[i])
 	{
 		if (s1[i] != s2[i])
 			return ((unsigned char)(s1[i] - s2[i]));
