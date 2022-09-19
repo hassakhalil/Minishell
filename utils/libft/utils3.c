@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 22:14:53 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/19 23:17:43 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/19 23:39:13 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,25 @@ int	ft_strcmp(const char *s1, const char *s2)
 		i++;
 	}
 	return (0);
+}
+
+char	*ft_strncpy(char *dest, const char *src, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	if (len)
+	{
+		while (src[i] && i < len)
+		{
+			dest[i] = src[i];
+			i++;
+		}
+		while (i < len)
+		{
+			dest[i] = 0;
+			i++;
+		}
+	}
+	return (dest);
 }

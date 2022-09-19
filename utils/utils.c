@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/19 23:23:07 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/19 23:33:06 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*mkcopy(char *s, char *es)
 	char *c = malloc(n+1);
 	if (!c)
 		perror("error");
-	strncpy(c, s, n);
+	ft_strncpy(c, s, n);
 	c[n] = 0;
 	return c;
 }
