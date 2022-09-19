@@ -37,9 +37,11 @@ int main(int argc, char *argv[], char **env)
     //
     system("clear");
     envp = envpath(env);
-
+    
     while (1)
-    {  
+    {  //debug
+        dprintf(2, "%s\n", *env[1]);
+    //end debug
         signal(SIGQUIT,SIG_IGN);
 	    signal(SIGINT, handler);
         buff = readline("$ ");
@@ -57,7 +59,7 @@ int main(int argc, char *argv[], char **env)
             signal(SIGQUIT,SIG_DFL);
 	        signal(SIGINT, SIG_DFL);
             tree = parsecmd(buff);
-            expander(tree, envp);
+            expander(tree, env);
             executor(tree, envp, &flag_out, &flag_in);
             //parsing_tester(tree);
         }

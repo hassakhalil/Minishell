@@ -12,15 +12,14 @@
 
 #include "minishell.h"
 
-int     search_dollar(char **s)
+int     search_dollar(char **s, int i)
 {
-    int i = 1;
     //return place where you found it or 0 if you dont
     while (s[i])
     {
         if (ft_strchr(s[i], '$'))
         {
-            dprintf(2, "found dollaaaaaaaaar$$$$$$\n");
+            //dprintf(2, "found dollaaaaaaaaar$$$$$$\n");
             return(i);
         }
         i++;
@@ -34,6 +33,7 @@ int     search_table(char **s, char *c)
     //return place where you found it or 0 if you dont
     while (s[i])
     {
+        dprintf(2, "hello this is from env struct = %s\n", s[i]);
         if (!strcmp(s[i], c))
             return(i);
         i++;
@@ -41,12 +41,12 @@ int     search_table(char **s, char *c)
     return (0);
 }
 
-void    expander(t_cmd *tree, t_env *env)
+void    expander(t_cmd *tree, char **env)
 {
     t_pip     *tree1;
     t_redir   *tree2;
     t_exec    *tree3;
-    int       i;
+    int       i = 0;
     int       j;
     int       k;
 
@@ -64,7 +64,7 @@ void    expander(t_cmd *tree, t_env *env)
     else
     {
         tree3 = (t_exec *)tree;
-        i = search_dollar(tree3->argv);
+        i = search_dollar(tree3->argv, i);
         while (i)
         {
             if (!strcmp((tree3->argv)[i], "$?"))
@@ -74,17 +74,20 @@ void    expander(t_cmd *tree, t_env *env)
             }
             else
             {
-                j = search_table(env->path, &(tree3->argv)[i][1]);
+                j = search_table(env, &((tree3->argv)[i][1]));
+                dprintf(2, "this is the en variable   = %s\n", &((tree3->argv)[i][1]));
                 if (j)
                 {
                     free((tree3->argv)[i]);
                     k = 0;
-                    while((env->path)[j][k] != '=')
+                    while(env[j][k] != '=')
                     k++;
-                    (tree3->argv)[i] = ft_strdup(&(env->path)[j][++k]);
+                    (tree3->argv)[i] = ft_strdup(&env[j][++k]);
                 }
-                i = search_dollar(tree3->argv);
+                
             }
+            i++;
+            i = search_dollar(tree3->argv, i);
         }
     }
 }
