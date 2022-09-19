@@ -14,15 +14,12 @@
 
 t_env *envpath(void)
 {
-    int i = 0;
     t_env *envp;
     char  *p;
 
     envp = malloc(sizeof(*envp));
-    //
     p = getenv("PATH");
     envp->path = ft_split(p+5, ':');
-    //
     return envp;
 }
 
