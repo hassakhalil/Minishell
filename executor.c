@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/17 17:59:40 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/20 01:52:48 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void errors(char *name, char *msg)
     write(2,name, ft_strlen(name));
     write(2,":",1);
     write(2,msg, ft_strlen(msg));
-    //clean everything
     exit(127);
 }
 

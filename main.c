@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/19 23:13:28 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/20 01:53:56 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,19 @@ int main(int argc, char *argv[])
 	    signal(SIGINT, handler);
         buff = readline("$ ");
         if (!buff)
+        {
+            //clear everything
             exit (0);
+        }
         if (buff && *buff)
             add_history(buff);
         if (!cd(buff))
             continue;
         if (!ft_strcmp(buff, "exit"))
+        {
+            //clear everything
             exit(0);
+        }
         int pid = forkk();
         if (pid == 0)
         {
@@ -64,6 +70,7 @@ int main(int argc, char *argv[])
 	    signal(SIGQUIT, handler);
         waitpid(pid, &exits, 0);
         GLOBAL = WEXITSTATUS(exits);
+        //clear what you need to clear 
     }
     return(0);
 }
