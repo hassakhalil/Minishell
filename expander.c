@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/19 23:49:28 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/20 01:26:55 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ void    expander(t_cmd *tree)
             {
                 free((tree3->argv)[i]);
                 (tree3->argv)[i] = ft_strdup(getenv(&((tree3->argv)[i][1])));
+            }
+            else
+            {
+                free((tree3->argv)[i]);
+                (tree3->argv)[i] = ft_strdup("");
             }
             i++;
             i = search_dollar(tree3->argv, i);
