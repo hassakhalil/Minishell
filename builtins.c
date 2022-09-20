@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 13:03:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/19 23:26:12 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/20 01:13:38 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int cd(char *buff)
     char *s = buff;
 
     while (s[++i]){
-        if (!strncmp(&s[i], "cd ", 3) && check_cd(s, i))
+        if (!ft_strncmp(&s[i], "cd ", 3) && check_cd(s, i))
         {
             if (!ft_strchr(&s[i], '|'))
                 if (chdir(getpath(&s[i]))){
