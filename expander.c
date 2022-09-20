@@ -6,13 +6,29 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/20 23:45:00 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/20 23:59:55 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    expander(char *arg)
+int is_white_space(int c)
+{
+    if (c == ' ' || c == '\n' || c == '\v'|| c == '\t' || c == '\f' || c == '\r')
+        return (1);
+    return (0);
+}
+
+char    *ft_env_name(char *s)
+{
+    int i = 0;
+
+    while (s[i] && !is_white_space(s[i]))
+        i++;
+    return (ft_substr(s, 0, i));
+}
+
+char    *expander(char *arg)
 {
     char    *new_arg;
     char    *v;
@@ -35,7 +51,7 @@ void    expander(char *arg)
             }
             else if (getenv(ft_env_name(&arg[i])))
             {
-                value = getenv(ft_env_name(&arg[i]));
+                v = getenv(ft_env_name(&arg[i]));
                 //replace
                 new_arg = ft_strjoin(ft_strjoin(ft_substr(arg, 0, i), v), &arg[i + ft_strlen(v) + 1]);
                 free(arg);
@@ -50,4 +66,5 @@ void    expander(char *arg)
         else
             i++;
     }
+    return (arg);
 }

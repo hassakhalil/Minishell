@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/20 23:42:32 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/20 23:56:54 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int       gettoken(char **ps, char *es, char **q, char **eq);
 int       peek(char **ps, char *es, char *toks);
 
 //expander
-void    expander(char *arg);
+char  *expander(char *arg);
 
 //signals
 void    handler(int sig);
