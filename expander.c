@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/20 23:59:55 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/21 00:10:06 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ char    *ft_env_name(char *s)
 
     while (s[i] && !is_white_space(s[i]))
         i++;
+    //debug
+    //dprintf(2, "this is the name = %s\n", ft_substr(s, 0, i));
+    //end debug
+
     return (ft_substr(s, 0, i));
 }
 
@@ -49,9 +53,9 @@ char    *expander(char *arg)
                 //skip 
                 i++;
             }
-            else if (getenv(ft_env_name(&arg[i])))
+            else if (getenv(ft_env_name(&arg[i + 1])))
             {
-                v = getenv(ft_env_name(&arg[i]));
+                v = getenv(ft_env_name(&arg[i + 1]));
                 //replace
                 new_arg = ft_strjoin(ft_strjoin(ft_substr(arg, 0, i), v), &arg[i + ft_strlen(v) + 1]);
                 free(arg);
@@ -60,6 +64,10 @@ char    *expander(char *arg)
                 //skip
                 i = i + ft_strlen(v) + 1;
             }
+            //else if (getenv(ft_env_name(&arg[i + 1])) && ft_env_name(&arg[i + 1]))
+            //{
+                
+            //}
             else
                 i++;
         }
