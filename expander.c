@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/20 01:26:55 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/20 20:06:14 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void    expander(t_cmd *tree)
     t_pip     *tree1;
     t_redir   *tree2;
     t_exec    *tree3;
+    char        **s;
     int       i = 0;
 
     if (tree->type == PIPE)
@@ -48,12 +49,17 @@ void    expander(t_cmd *tree)
         i = search_dollar(tree3->argv, i);
         while (i != -1)
         {
-            if (!ft_strcmp((tree3->argv)[i], "$?"))
+            if (ft_strchr((tree3->argv)[i], '?'))
             {
+                //check if there is "$?" at the begening and the end
+                //split
+                s = ft_split((tree3->argv)[i], "$?");
                 free((tree3->argv)[i]);
-                (tree3->argv)[i] = ft_strdup(ft_itoa(GLOBAL));
+                //join everything again in one string
+                //(tree3->argv)[i] = ft_strdup(ft_itoa(GLOBAL));
             }
-            else if (getenv(&((tree3->argv)[i][1])))
+            //split every
+            if (getenv(&((tree3->argv)[i][1])))
             {
                 free((tree3->argv)[i]);
                 (tree3->argv)[i] = ft_strdup(getenv(&((tree3->argv)[i][1])));
