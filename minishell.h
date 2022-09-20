@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/19 23:39:42 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/20 23:42:32 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char	*ft_itoa(int n);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 int	ft_strcmp(const char *s1, const char *s2);
 char	*ft_strncpy(char *dest, const char *src, size_t len);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 //minishell utils
 int     forkk(void);
@@ -111,7 +112,7 @@ int       gettoken(char **ps, char *es, char **q, char **eq);
 int       peek(char **ps, char *es, char *toks);
 
 //expander
-void    expander(t_cmd *tree);
+void    expander(char *arg);
 
 //signals
 void    handler(int sig);

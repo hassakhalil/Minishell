@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/20 20:14:18 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/20 23:40:59 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_cmd* parseexec(char **ss, char *es)
             exit(EXIT_FAILURE);
         }
         //add expander here                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-        cmd->argv[argc] = ft_strdup(mkcopy(q, eq));
+        cmd->argv[argc] = expander(ft_strdup(mkcopy(q, eq)));
         argc++;
         if(argc >= MAXARGS)
         {

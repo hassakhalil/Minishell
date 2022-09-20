@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 22:14:53 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/19 23:47:55 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/20 23:39:12 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,33 @@ char	*ft_strncpy(char *dest, const char *src, size_t len)
 		}
 	}
 	return (dest);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	int		i;
+	char	*sub;
+
+	if (!s)
+		return (0);
+	if (ft_strlen(s) <= start || !len)
+		sub = malloc(1);
+	else if (ft_strlen(s) <= len + start)
+		sub = malloc(ft_strlen(s) - start + 1);
+	else
+		sub = malloc(len + 1);
+	if (!sub)
+		return (0);
+	i = 0;
+	if (ft_strlen(s) > start)
+	{
+		while (s[i + start] && len > 0)
+		{
+			sub[i] = s[start + i];
+			i++;
+			len--;
+		}
+	}
+	sub[i] = 0;
+	return ((char *)sub);
 }
