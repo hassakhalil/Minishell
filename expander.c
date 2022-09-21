@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/21 01:19:20 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/21 01:30:39 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,6 @@ char    *ft_env_name(char *s)
 
     while (s[i] && (s[i] != '$') && !is_white_space(s[i]) && (ft_isalpha(s[i]) || ft_isdigit(s[i])))
         i++;
-    //debug
-    //dprintf(2, "this is the name = %s\n", ft_substr(s, 0, i));
-    //end debug
-
     return (ft_substr(s, 0, i));
 }
 
@@ -73,14 +69,24 @@ char    *expander(char *arg)
                 c = ft_env_name(&arg[i + 1]);
                 if (getenv(c))
                 {
-                    v = getenv(ft_env_name(&arg[i + 1]));
+                    v = getenv(c);
                     //replace
                     new_arg = ft_strjoin(ft_strjoin(ft_substr(arg, 0, i), v), &arg[i + ft_strlen(c) + 1]);
                     free(arg);
+                    free(c);
                     arg = ft_strdup(new_arg);
                     free(new_arg);
                     //skip
                     i = i + ft_strlen(v);
+                }
+                else if (c[0])
+                {
+                    new_arg = ft_strjoin(ft_substr(arg, 0, i), &arg[i + ft_strlen(c) + 1]);
+                    free(arg);
+                    arg = ft_strdup(new_arg);
+                    free(new_arg);
+                    i = i + ft_strlen(c);
+                    free(c);
                 }
                 else
                     i++;
