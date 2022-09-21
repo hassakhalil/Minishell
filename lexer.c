@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:26:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/21 19:02:50 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/21 19:19:28 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ int gettoken(char **ss, char *es, char **q, char **eq)
         
         //dprintf(2, "this is the quote = {%c}\n", c);
         while(s < es && *s != c)
+            s++;
+        if (*s == c)
         {
-            //*eq = s;
+            *eq = s;
             s++;
         }
-        if (*s != c)
-            perror("expected Quote\n");
         ret = 'a';
     }
     else
@@ -73,7 +73,7 @@ int gettoken(char **ss, char *es, char **q, char **eq)
         while (s < es && !ft_strchr(" \t\r\n\v", *s) && !ft_strchr("<|>", *s)) 
             s++;
     }
-    if(eq)
+    if(!c && eq)
         *eq = s;
     while(s < es && ft_strchr(" \t\r\n\v", *s))
         s++;
