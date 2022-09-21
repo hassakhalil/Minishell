@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:26:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/19 23:26:59 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/21 18:12:08 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int gettoken(char **ss, char *es, char **q, char **eq)
     }
     else
     {
+        //add qoutes heere
         ret = 'a';
         while (s < es && !ft_strchr(" \t\r\n\v", *s) && !ft_strchr("<|>", *s))
             s++;
