@@ -6,11 +6,18 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/21 00:10:06 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/21 01:13:31 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_isalpha(int c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
+}
 
 int is_white_space(int c)
 {
@@ -23,7 +30,7 @@ char    *ft_env_name(char *s)
 {
     int i = 0;
 
-    while (s[i] && !is_white_space(s[i]))
+    while (s[i] && (s[i] != '$') && !is_white_space(s[i]) && ft_isalpha(s[i]))
         i++;
     //debug
     //dprintf(2, "this is the name = %s\n", ft_substr(s, 0, i));
@@ -36,6 +43,7 @@ char    *expander(char *arg)
 {
     char    *new_arg;
     char    *v;
+    char    *c;
     int     i = 0;
 
     while (arg[i])
@@ -53,23 +61,23 @@ char    *expander(char *arg)
                 //skip 
                 i++;
             }
-            else if (getenv(ft_env_name(&arg[i + 1])))
-            {
-                v = getenv(ft_env_name(&arg[i + 1]));
-                //replace
-                new_arg = ft_strjoin(ft_strjoin(ft_substr(arg, 0, i), v), &arg[i + ft_strlen(v) + 1]);
-                free(arg);
-                arg = ft_strdup(new_arg);
-                free(new_arg);
-                //skip
-                i = i + ft_strlen(v) + 1;
-            }
-            //else if (getenv(ft_env_name(&arg[i + 1])) && ft_env_name(&arg[i + 1]))
-            //{
-                
-            //}
             else
-                i++;
+            {
+                c = ft_env_name(&arg[i + 1]);
+                if (getenv(c))
+                {
+                    v = getenv(ft_env_name(&arg[i + 1]));
+                    //replace
+                    new_arg = ft_strjoin(ft_strjoin(ft_substr(arg, 0, i), v), &arg[i + ft_strlen(c) + 1]);
+                    free(arg);
+                    arg = ft_strdup(new_arg);
+                    free(new_arg);
+                    //skip
+                    i = i + ft_strlen(v);
+                }
+                else
+                    i++;
+            }
         }
         else
             i++;
