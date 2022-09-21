@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:26:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/21 18:12:08 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/21 19:02:50 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int gettoken(char **ss, char *es, char **q, char **eq)
 {
     char *s;
     int ret;
+    int c = 0;
 
     s = *ss;
     while(s < es && ft_strchr(" \t\r\n\v", *s))
@@ -45,11 +46,31 @@ int gettoken(char **ss, char *es, char **q, char **eq)
             ret = '*';
         }
     }
+    else if (*s == '\'' || *s == '\"')
+    {
+        //debug
+        //dprintf(2, "biitch\n");
+        //end debug
+        c = *s;
+        s++;
+       
+        //dprintf(2, "%s\n", s);
+        *q = s;
+        
+        //dprintf(2, "this is the quote = {%c}\n", c);
+        while(s < es && *s != c)
+        {
+            //*eq = s;
+            s++;
+        }
+        if (*s != c)
+            perror("expected Quote\n");
+        ret = 'a';
+    }
     else
     {
-        //add qoutes heere
         ret = 'a';
-        while (s < es && !ft_strchr(" \t\r\n\v", *s) && !ft_strchr("<|>", *s))
+        while (s < es && !ft_strchr(" \t\r\n\v", *s) && !ft_strchr("<|>", *s)) 
             s++;
     }
     if(eq)
