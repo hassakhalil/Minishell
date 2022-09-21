@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/21 01:38:26 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/21 02:53:22 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,10 @@ char    *expander(char *arg)
         {
             if (arg[i + 1] && arg[i + 1] == '?')
             {
-                //repplace "$?" with GLOBAL in new_arg
                 new_arg = ft_strjoin(ft_strjoin(ft_substr(arg, 0, i), ft_itoa(GLOBAL)),&arg[i + 2]);
                 free(arg);
                 arg = ft_strdup(new_arg);
                 free(new_arg);
-                //free the left arg in strjoin
-                //skip 
                 i++;
             }
             else
@@ -70,22 +67,19 @@ char    *expander(char *arg)
                 if (getenv(c))
                 {
                     v = getenv(c);
-                    //replace
                     new_arg = ft_strjoin(ft_strjoin(ft_substr(arg, 0, i), v), &arg[i + ft_strlen(c) + 1]);
                     free(arg);
                     free(c);
                     arg = ft_strdup(new_arg);
                     free(new_arg);
-                    //skip
                     i = i + ft_strlen(v);
                 }
                 else if (c[0])
                 {
-                    new_arg = ft_strjoin(ft_substr(arg, 0, i), &arg[i + ft_strlen(c) + 1]);
+                    new_arg = ft_strjoin(ft_substr(arg, 0, i), &arg[i + ft_strlen(c) +1]);
                     free(arg);
                     arg = ft_strdup(new_arg);
                     free(new_arg);
-                    i = i + ft_strlen(c);
                     free(c);
                 }
                 else
