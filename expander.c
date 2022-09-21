@@ -6,11 +6,18 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/21 01:13:31 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/21 01:19:20 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
 
 int	ft_isalpha(int c)
 {
@@ -30,7 +37,7 @@ char    *ft_env_name(char *s)
 {
     int i = 0;
 
-    while (s[i] && (s[i] != '$') && !is_white_space(s[i]) && ft_isalpha(s[i]))
+    while (s[i] && (s[i] != '$') && !is_white_space(s[i]) && (ft_isalpha(s[i]) || ft_isdigit(s[i])))
         i++;
     //debug
     //dprintf(2, "this is the name = %s\n", ft_substr(s, 0, i));
