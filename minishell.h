@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/22 20:48:53 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/22 22:35:20 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char    *getpath(char *buff);
 int      cd(char *buff);
 
 // executor
-void    executor(t_cmd *tree, char **env, int *flag_out, int *flag_in);
+void    executor(t_cmd *tree, char **env, t_env *envp, int *flag_out, int *flag_in);
 void    parsing_tester(t_cmd *result_tree);
 int     check_in_files(t_cmd *first_redir);
 void    find_in_redir(t_cmd *tree, int *flag_in);

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/22 20:53:47 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/22 22:36:17 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,8 @@ void find_in_redir(t_cmd *tree, int *flag)
     }
 }
 
-void    executor(t_cmd *tree, char **env, int *flag_out, int *flag_in)
+void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_in)
 {
-    t_env *envp = envpath();
     char    *s;
     int     p[2];
     int     id;
@@ -95,7 +94,7 @@ void    executor(t_cmd *tree, char **env, int *flag_out, int *flag_in)
             close(p[0]);
             dup2(p[1], 1);
             close(p[1]);
-            executor(tree1->left, env, flag_out, flag_in);
+            executor(tree1->left, env, envp,flag_out, flag_in);
         }
         id = forkk();
         if (id == 0)
@@ -103,11 +102,11 @@ void    executor(t_cmd *tree, char **env, int *flag_out, int *flag_in)
             close(p[1]);
             dup2(p[0], 0);
             close(p[0]);
-            executor(tree1->right, env, flag_out, flag_in);
+            executor(tree1->right, env, envp,flag_out, flag_in);
         }
         close(p[0]);
         close(p[1]);
-        while(waitpid(id, &exits, 0) > 0);
+        while(waitpid(-1, &exits, 0) > 0);
         exit(WEXITSTATUS(exits));
     }
     else if (tree->type == REDIR)
@@ -125,7 +124,7 @@ void    executor(t_cmd *tree, char **env, int *flag_out, int *flag_in)
             dup2(open_fd, tree2->fd);
         }
         close(open_fd);
-        executor(tree2->cmd, env, flag_out, flag_in);
+        executor(tree2->cmd, env, envp,flag_out, flag_in);
     }
     else
     {
