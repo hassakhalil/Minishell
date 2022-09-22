@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/22 01:35:44 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/22 20:39:23 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,11 +131,16 @@ void    executor(t_cmd *tree, t_env *env, int *flag_out, int *flag_in)
         char *str;
         tree3 = (t_exec *)tree;
         i = -1;
-        while (env->path[++i])
-        { 
-            s  = ft_strjoin(ft_strjoin(env->path[i], "/"), tree3->argv[0]);
-            if (access(s, F_OK) != -1)
-                str = ft_strdup(s);
+        if (access(tree3->argv[0], F_OK) != -1)
+            str = ft_strdup(tree3->argv[0]);
+        else
+        {
+            while (env->path[++i])
+            { 
+                s  = ft_strjoin(ft_strjoin(env->path[i], "/"), tree3->argv[0]);
+                if (access(s, F_OK) != -1)
+                    str = ft_strdup(s);
+            }
         }
         //dprintf(2, "this is the path found = %s\n", str);
         execve(str, tree3->argv, env->path);
