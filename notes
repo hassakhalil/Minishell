@@ -1,5 +1,21 @@
 // leaks
 
+
+//another cases to handle
+    bash-3.2$ var="2                  3"
+    bash-3.2$ echo $var
+    2 3
+    bash-3.2$ echo "hello "$var"world"
+    hello 2 3world
+    bash-3.2$ ls > $var
+    bash: $var: ambiguous redirect
+    bash-3.2$ ls > "$var"
+    bash-3.2$ ls
+    2                  3	Documents		goinfre
+    Applications		Downloads
+    Desktop			Library
+    bash-3.2$ 
+
 //norm
 
 //finish signals

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:26:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/21 19:19:28 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/21 21:38:16 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,10 @@ int gettoken(char **ss, char *es, char **q, char **eq)
     }
     else if (*s == '\'' || *s == '\"')
     {
-        //debug
-        //dprintf(2, "biitch\n");
-        //end debug
         c = *s;
-        s++;
-       
-        //dprintf(2, "%s\n", s);
+        while (ft_strchr("\'\"", *s))
+            s++;
         *q = s;
-        
-        //dprintf(2, "this is the quote = {%c}\n", c);
         while(s < es && *s != c)
             s++;
         if (*s == c)
