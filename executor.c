@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/22 20:39:23 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/22 20:53:47 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ void find_in_redir(t_cmd *tree, int *flag)
     }
 }
 
-void    executor(t_cmd *tree, t_env *env, int *flag_out, int *flag_in)
+void    executor(t_cmd *tree, char **env, int *flag_out, int *flag_in)
 {
+    t_env *envp = envpath();
     char    *s;
     int     p[2];
     int     id;
@@ -135,15 +136,14 @@ void    executor(t_cmd *tree, t_env *env, int *flag_out, int *flag_in)
             str = ft_strdup(tree3->argv[0]);
         else
         {
-            while (env->path[++i])
+            while (envp->path[++i])
             { 
-                s  = ft_strjoin(ft_strjoin(env->path[i], "/"), tree3->argv[0]);
+                s  = ft_strjoin(ft_strjoin(envp->path[i], "/"), tree3->argv[0]);
                 if (access(s, F_OK) != -1)
                     str = ft_strdup(s);
             }
         }
-        //dprintf(2, "this is the path found = %s\n", str);
-        execve(str, tree3->argv, env->path);
+        execve(str, tree3->argv, env);
         errors(tree3->argv[0],"command not found \n");
     }
 }

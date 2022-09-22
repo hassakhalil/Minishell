@@ -1,6 +1,10 @@
 // leaks
 
 
+//cat ||||| --->error
+
+//cat | cat | ls
+
 //watch for seg fault (unset.....)
 
 //another cases to handle
