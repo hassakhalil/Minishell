@@ -1,6 +1,8 @@
 // leaks
 
 
+//watch for seg fault (unset.....)
+
 //another cases to handle
     bash-3.2$ var="2                  3"
     bash-3.2$ echo $var
@@ -19,7 +21,7 @@
 //another cases to handle
     $ which ls
 
-    
+
 //absolute path
 
 //norm
