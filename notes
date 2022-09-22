@@ -16,6 +16,12 @@
     Desktop			Library
     bash-3.2$ 
 
+//another cases to handle
+    $ which ls
+
+    
+//absolute path
+
 //norm
 
 //finish signals
@@ -31,7 +37,6 @@
 ◦ unset with no options
 ◦ env with no options or arguments
 ◦ exit with no options*/+
-
 //CASES to test
 
 bash-3.2$ << stop

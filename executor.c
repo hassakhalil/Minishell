@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/20 01:52:48 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/22 01:35:44 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,9 @@ void    executor(t_cmd *tree, t_env *env, int *flag_out, int *flag_in)
         { 
             s  = ft_strjoin(ft_strjoin(env->path[i], "/"), tree3->argv[0]);
             if (access(s, F_OK) != -1)
-                str = s;
+                str = ft_strdup(s);
         }
+        //dprintf(2, "this is the path found = %s\n", str);
         execve(str, tree3->argv, env->path);
         errors(tree3->argv[0],"command not found \n");
     }
