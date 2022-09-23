@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/23 06:54:13 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/23 23:51:21 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,52 +42,60 @@ char    *ft_env_name(char *s)
     return (ft_substr(s, 0, i));
 }
 
-char    *expander(char *arg)
+char    *expander(char **arg)
 {
     char    *new_arg;
     char    *v;
     char    *c;
     int     i = 0;
+    int     k = 0;
 
-    while (arg[i])
+    while (arg[0][i])
     {
-        if (arg[i] == '$') //and  dollar[k] = expand // k++
-        { 
-            if (arg[i + 1] && arg[i + 1] == '?')
+        if (arg[0][i] == '$') //and  dollar[k] = expand // k++
+        {
+            if (arg[1][k] == '\"')
             {
-                new_arg = ft_strjoin(ft_strjoin(ft_substr(arg, 0, i), ft_itoa(GLOBAL)),&arg[i + 2]);
-                free(arg);
-                arg = ft_strdup(new_arg);
-                free(new_arg);
-                i++;
-            }
-            else
-            {
-                c = ft_env_name(&arg[i + 1]);
-                if (getenv(c))
+                if (arg[0][i + 1] && arg[0][i + 1] == '?')
                 {
-                    v = getenv(c);
-                    new_arg = ft_strjoin(ft_strjoin(ft_substr(arg, 0, i), v), &arg[i + ft_strlen(c) + 1]);
-                    free(arg);
-                    free(c);
-                    arg = ft_strdup(new_arg);
+                    new_arg = ft_strjoin(ft_strjoin(ft_substr(arg[0], 0, i), ft_itoa(GLOBAL)),&arg[0][i + 2]);
+                    free(arg[0]);
+                    arg[0] = ft_strdup(new_arg);
                     free(new_arg);
-                    i = i + ft_strlen(v);
-                }
-                else if (c[0])
-                {
-                    new_arg = ft_strjoin(ft_substr(arg, 0, i), &arg[i + ft_strlen(c) +1]);
-                    free(arg);
-                    arg = ft_strdup(new_arg);
-                    free(new_arg);
-                    free(c);
+                    i++;
                 }
                 else
-                    i++;
+                {
+                    c = ft_env_name(&arg[0][i + 1]);
+                    if (getenv(c))
+                    {
+                        v = getenv(c);
+                        new_arg = ft_strjoin(ft_strjoin(ft_substr(arg[0], 0, i), v), &arg[0][i + ft_strlen(c) + 1]);
+                        free(arg[0]);
+                        free(c);
+                        arg[0] = ft_strdup(new_arg);
+                        free(new_arg);
+                        i = i + ft_strlen(v);
+                    }
+                    else if (c[0])
+                    {
+                        new_arg = ft_strjoin(ft_substr(arg[0], 0, i), &arg[0][i + ft_strlen(c) +1]);
+                        free(arg[0]);
+                        arg[0] = ft_strdup(new_arg);
+                        free(new_arg);
+                        free(c);
+                    }
+                    else
+                        i++;   
+                }
             }
+            i++;
+            k++;   
         }
         else
             i++;
     }
-    return (arg);
+    free(arg[1]);
+    free(arg[2]);
+    return (arg[0]);
 }
