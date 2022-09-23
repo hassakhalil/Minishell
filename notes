@@ -5,6 +5,21 @@
 
 //watch for seg fault (unset.....)
 
+//norm
+
+//finish signals
+
+//*• Your shell must implement the following builtins:
+◦ echo with option -n
+◦ cd with only a relative or absolute path>>
+◦ pwd with no options
+◦ export with no options
+◦ unset with no options
+◦ env with no options or arguments
+◦ exit with no options*/+
+
+
+
 //another cases to handle
     bash-3.2$ var="2                  3"
     bash-3.2$ echo $var
@@ -20,21 +35,6 @@
     Desktop			Library
     bash-3.2$ 
 
-//norm
-
-//finish signals
-
-// handle (single quote) / " (double quote)
-
-
-//*• Your shell must implement the following builtins:
-◦ echo with option -n
-◦ cd with only a relative or absolute path>>
-◦ pwd with no options
-◦ export with no options
-◦ unset with no options
-◦ env with no options or arguments
-◦ exit with no options*/+
 //CASES to test
 
 bash-3.2$ << stop
