@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/23 06:41:02 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/23 06:54:13 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char    *expander(char *arg)
 
     while (arg[i])
     {
-        if (arg[i] == '$') //and  dollar[k] = expand
+        if (arg[i] == '$') //and  dollar[k] = expand // k++
         { 
             if (arg[i + 1] && arg[i + 1] == '?')
             {

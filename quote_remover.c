@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 05:09:26 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/23 06:38:08 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/23 06:51:19 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char    *quote_remover(char *s)
 {
     //char *dollars = malloc(number of dollars );
+    //int k = 0;
     int i = 0;
     int j = 0;
     int c;
@@ -22,6 +23,9 @@ char    *quote_remover(char *s)
 
     while (s[i])
     {
+        //if s[i] == $
+            //dollars[k] = '\"';
+            //k++;
         if (s[i] == '\'' || s[i] == '\"')
         {
             c = s[i];
