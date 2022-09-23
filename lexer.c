@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:26:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/21 21:38:16 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/23 02:46:11 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,14 @@ int gettoken(char **ss, char *es, char **q, char **eq)
     if (*s == 0)
         return ret;
     else if (*s == '|')
+    {
         s++;
+        if (*s == '|')
+        {
+            dprintf(2, "syntax error\n");
+            exit(258);
+        }
+    }
     else if (*s == '>')
     {
         s++;
@@ -46,28 +53,38 @@ int gettoken(char **ss, char *es, char **q, char **eq)
             ret = '*';
         }
     }
-    else if (*s == '\'' || *s == '\"')
-    {
-        c = *s;
-        while (ft_strchr("\'\"", *s))
-            s++;
-        *q = s;
-        while(s < es && *s != c)
-            s++;
-        if (*s == c)
-        {
-            *eq = s;
-            s++;
-        }
-        ret = 'a';
-    }
     else
     {
-        ret = 'a';
-        while (s < es && !ft_strchr(" \t\r\n\v", *s) && !ft_strchr("<|>", *s)) 
-            s++;
+        /*if (*s == '\'' || *s == '\"')
+        {
+            c = *s;
+            while(s < es && *s != c)
+                s++;
+            if (*s != c)
+            {
+                dprintf(2, "syntax error\n");
+                exit(1);
+            }
+            ret = 'a';
+        }*/
+        //else
+        //{
+            ret = 'a';
+            while (s < es && !ft_strchr(" \t\r\n\v", *s) && !ft_strchr("<|>", *s))
+            {
+                if (*s == '\'' || *s == '\"')
+                {
+                    c = *s;
+                    dprintf(2, "found quote [ %c ]\n", c);
+                    s++;
+                    while(s < es && *s != c)
+                        s++;
+                }
+                    s++;
+            }
+        //}
     }
-    if(!c && eq)
+    if(eq)
         *eq = s;
     while(s < es && ft_strchr(" \t\r\n\v", *s))
         s++;

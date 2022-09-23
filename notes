@@ -1,5 +1,8 @@
 // leaks
 
+bash-3.2$ 'e''c'"ho" $LANG
+en_US.UTF-8
+
 
 //cat ||||| --->error
 
