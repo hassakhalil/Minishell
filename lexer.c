@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:26:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/23 02:46:11 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/23 02:58:09 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,34 +55,24 @@ int gettoken(char **ss, char *es, char **q, char **eq)
     }
     else
     {
-        /*if (*s == '\'' || *s == '\"')
+        ret = 'a';
+        while (s < es && !ft_strchr(" \t\r\n\v", *s) && !ft_strchr("<|>", *s))
         {
-            c = *s;
-            while(s < es && *s != c)
+            if (*s == '\'' || *s == '\"')
+            {
+                c = *s;
                 s++;
-            if (*s != c)
-            {
-                dprintf(2, "syntax error\n");
-                exit(1);
-            }
-            ret = 'a';
-        }*/
-        //else
-        //{
-            ret = 'a';
-            while (s < es && !ft_strchr(" \t\r\n\v", *s) && !ft_strchr("<|>", *s))
-            {
-                if (*s == '\'' || *s == '\"')
+                while(s < es && *s != c)
+                    s++;
+                if (s == es)
                 {
-                    c = *s;
-                    dprintf(2, "found quote [ %c ]\n", c);
-                    s++;
-                    while(s < es && *s != c)
-                        s++;
+                    dprintf(2, "syntax error\n");
+                    exit (1);
                 }
-                    s++;
             }
-        //}
+            if (s!= es)
+                s++;
+        }
     }
     if(eq)
         *eq = s;
