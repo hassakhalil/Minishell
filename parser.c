@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/20 23:40:59 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/23 03:04:35 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ t_cmd* parseexec(char **ss, char *es)
             perror("syntax error");
             exit(EXIT_FAILURE);
         }
-        //add expander here                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+        //add expander here 
+        //remove quotes here                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
         cmd->argv[argc] = expander(ft_strdup(mkcopy(q, eq)));
         argc++;
         if(argc >= MAXARGS)
