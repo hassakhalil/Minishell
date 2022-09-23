@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/21 02:53:22 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/23 06:41:02 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ char    *expander(char *arg)
 
     while (arg[i])
     {
-        if (arg[i] == '$')
-        {
+        if (arg[i] == '$') //and  dollar[k] = expand
+        { 
             if (arg[i + 1] && arg[i + 1] == '?')
             {
                 new_arg = ft_strjoin(ft_strjoin(ft_substr(arg, 0, i), ft_itoa(GLOBAL)),&arg[i + 2]);
