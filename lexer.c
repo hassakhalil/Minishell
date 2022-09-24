@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:26:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/23 23:57:38 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/24 06:01:02 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,7 @@ int gettoken(char **ss, char *es, char **q, char **eq)
     if (*s == 0)
         return ret;
     else if (*s == '|')
-    {
         s++;
-        /*if (*s == '|')
-        {
-            dprintf(2, "syntax error\n");
-            exit(258);
-        }*/
-    }
     else if (*s == '>')
     {
         s++;
