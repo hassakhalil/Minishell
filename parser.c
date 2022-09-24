@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/24 07:00:18 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/25 00:02:16 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,12 @@ t_cmd* parsepipe(char **ss, char *es)
 {
     t_cmd *cmd;
     t_exec *check_empty;
-    char    **tt;
-    char    *et;
     char    *buff;
     int     ret;
     
     cmd = parseexec(ss, es);
     if(peek(ss, es, "|"))
     {
-        dprintf(2, "1 = [ %s ]\n", *ss);
         ret = gettoken(ss, es, 0, 0);
         //check for empty exec node here
         if (cmd->type == EXEC)
@@ -113,12 +110,8 @@ t_cmd* parsepipe(char **ss, char *es)
                 exit(58);
             } 
         }
-        dprintf(2, "2 = [ %s ]\n", *ss);
-        tt = ss;
-        et = es;
-        if (!gettoken(tt, et, 0, 0) && !peek(ss, es, "<|>"))
+        if (!empty_cmd(*ss))
         {
-            dprintf(2, "insiiiide\n");
             buff = readline("> ");
             ss = &buff;
             es = buff + ft_strlen(buff);

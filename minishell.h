@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/24 03:30:39 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/25 00:00:59 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void    errors(char * name, char *msg);
 t_cmd *redircmd(t_cmd *subcmd, char *file, int mode, int type);
 t_cmd *pipecmd(t_cmd *left, t_cmd *right);
 t_cmd  *execcmd(void);
+int empty_cmd(char *buff);
 
 // path
 t_env *envpath(void);
