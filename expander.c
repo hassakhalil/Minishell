@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/23 23:51:21 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/24 05:23:50 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ char    *expander(char **arg)
             {
                 if (arg[0][i + 1] && arg[0][i + 1] == '?')
                 {
+                    if (GLOBAL == 58)
+                        GLOBAL = 258;
                     new_arg = ft_strjoin(ft_strjoin(ft_substr(arg[0], 0, i), ft_itoa(GLOBAL)),&arg[0][i + 2]);
                     free(arg[0]);
                     arg[0] = ft_strdup(new_arg);

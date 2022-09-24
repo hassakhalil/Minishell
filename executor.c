@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/22 22:36:17 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/24 04:06:16 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,22 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
         {
             write(2, "No such file or directory\n", 27);
             exit(1);
-        } 
+        }
     }
-
+    /*else
+    {
+        tree1 = (t_pip *)tree;
+        if (tree1->left->type == EXEC)
+        {
+            tree3 = (t_exec *)tree1->left;
+            if (!tree3->argv[0])
+            {
+                dprintf(2, "syntax error near unexpected token `|'\n");
+                GLOBAL = 258;
+                exit(258);
+            }
+        }
+    }*/
     if (tree->type == PIPE)
     {
         
@@ -107,6 +120,10 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
         close(p[0]);
         close(p[1]);
         while(waitpid(-1, &exits, 0) > 0);
+        /*{
+            if (WEXITSTATUS(exits) == 258)
+                exit(WEXITSTATUS(exits));
+        }*/
         exit(WEXITSTATUS(exits));
     }
     else if (tree->type == REDIR)
@@ -130,6 +147,12 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
     {
         char *str;
         tree3 = (t_exec *)tree;
+
+        /*if (!tree3->argv[0])
+        {
+            dprintf(2, "syntax error near unexpected token `|'\n");
+            exit(258);
+        }*/
         i = -1;
         if (access(tree3->argv[0], F_OK) != -1)
             str = ft_strdup(tree3->argv[0]);

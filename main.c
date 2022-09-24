@@ -6,13 +6,26 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/22 22:33:50 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/24 05:22:23 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int GLOBAL;
+
+int empty_cmd(char *buff)
+{
+    int i = 0;
+
+    while (buff[i])
+    {
+        if (!is_white_space(buff[i]))
+            return (1);
+        i++;
+    }
+    return (0);
+}
 
 void	handler(int sig)
 {
@@ -49,7 +62,7 @@ int main(int argc, char *argv[], char **env)
         }
         if (buff && *buff)
             add_history(buff);
-        if (!cd(buff))
+        if (!cd(buff) || !empty_cmd(buff))
             continue;
         if (!ft_strcmp(buff, "exit"))
         {

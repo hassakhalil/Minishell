@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/23 23:34:07 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/24 03:30:39 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int       peek(char **ps, char *es, char *toks);
 
 //expander
 char  *expander(char **arg);
+int is_white_space(int c);
 
 //quotes
 char    **quote_remover(char *s);
