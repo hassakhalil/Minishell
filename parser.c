@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/24 06:23:04 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/24 07:00:18 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,9 @@ t_cmd* parsepipe(char **ss, char *es)
         dprintf(2, "2 = [ %s ]\n", *ss);
         tt = ss;
         et = es;
-        if (!gettoken(tt, et, 0, 0))
+        if (!gettoken(tt, et, 0, 0) && !peek(ss, es, "<|>"))
         {
+            dprintf(2, "insiiiide\n");
             buff = readline("> ");
             ss = &buff;
             es = buff + ft_strlen(buff);

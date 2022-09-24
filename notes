@@ -1,7 +1,6 @@
 // leaks
 
-//cat ||||| --->error
-//cat || ->?
+//cmd |
 
 //watch for seg fault (unset.....)
 
