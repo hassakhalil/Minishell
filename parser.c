@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/25 00:02:16 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/25 00:17:57 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,10 @@ t_cmd* parsepipe(char **ss, char *es)
         if (!empty_cmd(*ss))
         {
             buff = readline("> ");
+            while (!empty_cmd(buff))
+                 buff = readline("> ");
+            //if (buff && *buff)
+                //add_history(buff);
             ss = &buff;
             es = buff + ft_strlen(buff);
         }
