@@ -1,6 +1,6 @@
 // leaks
 
-//cmd |
+//join the history of (cmd | ) and (>.....)
 
 //watch for seg fault (unset.....)
 
