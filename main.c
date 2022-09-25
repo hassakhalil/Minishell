@@ -6,13 +6,29 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/24 05:22:23 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/25 02:11:37 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int GLOBAL;
+
+int complete_pipe(char *buff)
+{
+    int i = 0;
+    int c = 0;
+
+    while (buff[i])
+    {
+        if (!is_white_space(buff[i]))
+            c = buff[i];
+        i++;
+    }
+    if (c == '|')
+        return (1);
+    return (0);
+}
 
 int empty_cmd(char *buff)
 {
@@ -39,6 +55,7 @@ void	handler(int sig)
 int main(int argc, char *argv[], char **env)
 {
     static char     *buff = "";
+    char            *tmp;
     t_env           *envp;
     t_cmd           *tree;
     int             flag_in = 0;
@@ -61,7 +78,16 @@ int main(int argc, char *argv[], char **env)
             exit (0);
         }
         if (buff && *buff)
+        {
+            if (complete_pipe(buff))
+            {
+                tmp = readline("> ");
+                while (!empty_cmd(tmp))
+                    tmp = readline("> ");
+                buff = ft_strjoin(buff, tmp);
+            }
             add_history(buff);
+        }
         if (!cd(buff) || !empty_cmd(buff))
             continue;
         if (!ft_strcmp(buff, "exit"))

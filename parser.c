@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/25 00:17:57 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/25 02:13:32 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,11 @@ t_cmd* parsepipe(char **ss, char *es)
 {
     t_cmd *cmd;
     t_exec *check_empty;
-    char    *buff;
-    int     ret;
     
     cmd = parseexec(ss, es);
     if(peek(ss, es, "|"))
     {
-        ret = gettoken(ss, es, 0, 0);
+        gettoken(ss, es, 0, 0);
         //check for empty exec node here
         if (cmd->type == EXEC)
         {
@@ -109,16 +107,6 @@ t_cmd* parsepipe(char **ss, char *es)
                 dprintf(2, "syntax error near unexpected token `|'\n");
                 exit(58);
             } 
-        }
-        if (!empty_cmd(*ss))
-        {
-            buff = readline("> ");
-            while (!empty_cmd(buff))
-                 buff = readline("> ");
-            //if (buff && *buff)
-                //add_history(buff);
-            ss = &buff;
-            es = buff + ft_strlen(buff);
         }
         cmd = pipecmd(cmd, parsepipe(ss, es));
     }
