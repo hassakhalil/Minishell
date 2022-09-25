@@ -6,13 +6,21 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/25 02:11:37 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/25 12:01:54 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int GLOBAL;
+
+void    child_handler(int sig)
+{
+    dprintf(2, "[[ paased from child_handler ]]\n");
+    sig = 0;
+    GLOBAL = 130;
+    //exit(130);
+}
 
 int complete_pipe(char *buff)
 {
@@ -50,6 +58,7 @@ void	handler(int sig)
 	write(1, "\n", 1);
     if  (sig == SIGINT)
 	    rl_redisplay();
+    dprintf(2, "{{ passed from the handler function }}\n");
 }
 
 int main(int argc, char *argv[], char **env)
@@ -71,14 +80,18 @@ int main(int argc, char *argv[], char **env)
     {
         signal(SIGQUIT,SIG_IGN);
 	    signal(SIGINT, handler);
+        //test signals
+        //signal(SIGQUIT, handler);
+        //end test
         buff = readline("$ ");
         if (!buff)
         {
             //clear everything
-            exit (0);
+            exit (GLOBAL);
         }
         if (buff && *buff)
         {
+            //signal(SIGQUIT, SIG_DFL);
             if (complete_pipe(buff))
             {
                 tmp = readline("> ");
@@ -98,16 +111,22 @@ int main(int argc, char *argv[], char **env)
         int pid = forkk();
         if (pid == 0)
         {
+            
+            tree = parsecmd(buff);
             signal(SIGQUIT,SIG_DFL);
 	        signal(SIGINT, SIG_DFL);
-            tree = parsecmd(buff);
             executor(tree, env, envp,&flag_out, &flag_in);
+            
             //parsing_tester(tree);
         }
-        signal(SIGINT, SIG_IGN);
-	    signal(SIGQUIT, handler);
+        signal(SIGINT, child_handler);
+        dprintf(2, "[ global  = %d\n ]", GLOBAL);
+	    //signal(SIGQUIT, SIG_DFL);
         waitpid(pid, &exits, 0);
         GLOBAL = WEXITSTATUS(exits);
+        //signal(SIGINT, child_handler);
+        //signal(SIGINT, SIG_IGN);
+       
         //clear what you need to clear 
     }
     return(0);
