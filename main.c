@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/26 16:24:13 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/26 18:17:13 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,6 @@
 
 int GLOBAL;
 
-void    child_handler(int sig)
-{
-    dprintf(2, "[[ paased from child_handler ]]\n");
-    if (sig == SIGQUIT)
-    {   
-        //the child proccess
-        GLOBAL = 131;
-    }
-}
 
 int complete_pipe(char *buff)
 {
@@ -81,8 +72,6 @@ int main(int argc, char *argv[], char **env)
     //
     printf("\e[1;1H\e[2J");
     envp = envpath();
-     //signal(SIGQUIT,SIG_DFL);
-	    //signal(SIGINT, handler);
     while (1)
     {
         signal(SIGQUIT,SIG_IGN);
@@ -122,9 +111,12 @@ int main(int argc, char *argv[], char **env)
             //parsing_tester(tree);
         }
         //signal(SIGINT, SIG_IGN);
-	    signal(SIGQUIT, child_handler);
+	    //signal(SIGQUIT, child_handler);
         waitpid(pid, &exits, 0);
-        GLOBAL = WEXITSTATUS(exits); 
+        GLOBAL = WEXITSTATUS(exits);
+        if (WTERMSIG(exits) == 3 || WTERMSIG(exits) == 2)
+            GLOBAL = 128 + WTERMSIG(exits);
+       //dprintf(2, "signal value == [ %d ]\n",  SIGQUIT);
         //signal(SIGINT, child_handler);
         //signal(SIGINT, SIG_IGN);
        
