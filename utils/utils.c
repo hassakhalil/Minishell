@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/26 15:24:07 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/26 18:22:49 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ char    *create_heredoc(char *delimiter)
     id  = forkk();
     if (id == 0)
     {
-        //signal(SIGQUIT,SIG_IGN);
-	    //signal(SIGINT, hd_handler);
+        signal(SIGQUIT,SIG_IGN);
+	    signal(SIGINT, hd_handler);
         fd = open(path, O_WRONLY|O_CREAT|O_TRUNC, 0666);
         buff = readline("> ");
         while(buff && ft_strcmp(buff, delimiter))
@@ -110,8 +110,8 @@ char    *create_heredoc(char *delimiter)
         close(fd);
         exit(0);
     }
-    //signal(SIGQUIT, SIG_IGN);
-    //signal(SIGINT, SIG_IGN);
+    signal(SIGQUIT, SIG_IGN);
+    signal(SIGINT, SIG_IGN);
     waitpid(id, &exits, 0);
     if (WEXITSTATUS(exits) == 1)
         exit(1);
