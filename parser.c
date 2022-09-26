@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/25 02:13:32 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/26 22:10:54 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_cmd* parsepipe(char **ss, char *es)
             check_empty = (t_exec *)cmd;
             if (!check_empty->argv[0])
             {
-                dprintf(2, "syntax error near unexpected token `|'\n");
+                write(2, "syntax error near unexpected token `|'\n", 40);
                 exit(58);
             } 
         }

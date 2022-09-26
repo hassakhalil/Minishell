@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/26 19:08:55 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/26 22:11:41 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,22 @@ int complete_pipe(char *buff)
 {
     int i = 0;
     int c = 0;
+    int k = 0;
 
     while (buff[i])
     {
         if (!is_white_space(buff[i]))
+        {
             c = buff[i];
+            if (c == '|')
+            {
+                k++;
+                if (k > 1)
+                    return (0);
+            }
+            else if (k)
+                k--;
+        }
         i++;
     }
     if (c == '|')

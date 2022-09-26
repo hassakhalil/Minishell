@@ -1,5 +1,24 @@
 // leaks
 
+// 3nzoooooooool
+$ echo $"SHELL"
+/bin/zsh
+ echo $SHELL$PATH
+
+bash-3.2$ cat < file 
+bash: file: Permission denied
+bash-3.2$ $?
+bash: 1: command not found
+
+unset PATH && execut command in current directory 
+
+((///Users/hkhalil/Desktop/Minishell:hkhalil$0:hkhalil
+$ echo $8888
+
+$ echo $8970
+
+$ echo $8970//ih))
+
 //fix exit 
 
 //watch for seg fault (unset.....)
