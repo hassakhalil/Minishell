@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/26 18:17:13 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/26 18:40:02 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,12 @@ int empty_cmd(char *buff)
 
 void	handler(int sig)
 {
+    sig  = 0;
+    GLOBAL = 1;
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	write(1, "\n", 1);
-    if  (sig == SIGINT)
-    {
-        GLOBAL = 1;
-	    rl_redisplay();
-    }
-    //dprintf(2, "{{ passed from the handler function }}\n");
+	rl_redisplay();
 }
 
 int main(int argc, char *argv[], char **env)
@@ -76,9 +73,6 @@ int main(int argc, char *argv[], char **env)
     {
         signal(SIGQUIT,SIG_IGN);
 	    signal(SIGINT, handler);
-        //test signals
-        //signal(SIGQUIT, handler);
-        //end test
         buff = readline("$ ");
         if (!buff || !ft_strcmp(buff, "exit"))
         {
@@ -88,7 +82,6 @@ int main(int argc, char *argv[], char **env)
         }
         if (buff && *buff)
         {
-            //signal(SIGQUIT, SIG_DFL);
             if (complete_pipe(buff))
             {
                 tmp = readline("> ");
@@ -110,15 +103,10 @@ int main(int argc, char *argv[], char **env)
             
             //parsing_tester(tree);
         }
-        //signal(SIGINT, SIG_IGN);
-	    //signal(SIGQUIT, child_handler);
         waitpid(pid, &exits, 0);
         GLOBAL = WEXITSTATUS(exits);
         if (WTERMSIG(exits) == 3 || WTERMSIG(exits) == 2)
             GLOBAL = 128 + WTERMSIG(exits);
-       //dprintf(2, "signal value == [ %d ]\n",  SIGQUIT);
-        //signal(SIGINT, child_handler);
-        //signal(SIGINT, SIG_IGN);
        
         //clear what you need to clear 
     }
