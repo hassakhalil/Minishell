@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/26 18:40:02 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/26 19:08:55 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int main(int argc, char *argv[], char **env)
             
             //parsing_tester(tree);
         }
+         signal(SIGINT,SIG_IGN);
         waitpid(pid, &exits, 0);
         GLOBAL = WEXITSTATUS(exits);
         if (WTERMSIG(exits) == 3 || WTERMSIG(exits) == 2)
