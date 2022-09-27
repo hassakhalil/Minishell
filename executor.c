@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/27 16:40:11 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/27 18:20:00 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 
 extern int errno ;
 
-void errors(char *name, char *msg)
+void errors(char *name)
 {
-    write(2,name, ft_strlen(name));
-    write(2,":",1);
-    write(2,msg, ft_strlen(msg));
+    if (ft_strchr(name, '/'))
+        perror(name);
+    else
+    {
+        write(2,name, ft_strlen(name));
+        write(2, ": command not found\n",21);
+    }
     exit(127);
 }
 
@@ -148,7 +152,6 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
         }
         execve(str, tree3->argv, env);
         //handle errors like bash
-        perror(tree3->argv[0]);
-        errors(tree3->argv[0],"command not found \n");
+        errors(tree3->argv[0]);
     }
 }
