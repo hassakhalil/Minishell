@@ -1,14 +1,14 @@
 // leaks
 
 
-//echo "||"
-
-
-// 3nzoooooooool
+// EXPAND/QUOTES
 $ echo $"SHELL"
 /bin/zsh
 echo $SHELL$PATH
+echo "||"
 
+
+//EXECUTION
 bash-3.2$ cat < file 
 bash: file: Permission denied
 bash-3.2$ $?
@@ -26,8 +26,6 @@ bash: ./ls: Permission denied
 bash-3.2$ $?
 bash: 126: command not found
 bash-3.2$ 
-
-
 unset PATH && execut command in current directory 
 
 ((///Users/hkhalil/Desktop/Minishell:hkhalil$0:hkhalil
