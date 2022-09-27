@@ -1,14 +1,20 @@
 // leaks
 
+
+//echo "||"
+
+
 // 3nzoooooooool
 $ echo $"SHELL"
 /bin/zsh
- echo $SHELL$PATH
+echo $SHELL$PATH
 
 bash-3.2$ cat < file 
 bash: file: Permission denied
 bash-3.2$ $?
 bash: 1: command not found
+bash-3.2$ $?
+bash: 126: command not found
 
 unset PATH && execut command in current directory 
 

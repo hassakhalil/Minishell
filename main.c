@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/26 22:11:41 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/27 16:08:14 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int main(int argc, char *argv[], char **env)
     //
     printf("\e[1;1H\e[2J");
     envp = envpath();
+    //envp = NULL;
     while (1)
     {
         signal(SIGQUIT,SIG_IGN);

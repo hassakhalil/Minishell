@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 13:07:20 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/22 01:26:38 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/27 15:54:11 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_env *envpath(void)
     char  *p;
 
     envp = malloc(sizeof(*envp));
-    p = getenv("PATH");
+    p =getenv("PATH");
     if (!p)
         return (NULL);
     envp->path = ft_split(p, ':');

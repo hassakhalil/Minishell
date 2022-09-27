@@ -6,12 +6,13 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/26 22:42:15 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/27 16:40:11 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+extern int errno ;
 
 void errors(char *name, char *msg)
 {
@@ -129,22 +130,25 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
     }
     else
     {
-        char *str;
-        tree3 = (t_exec *)tree;
-        //signal(SIGINT, c);
-        i = -1;
-        if (access(tree3->argv[0], F_OK) != -1)
+        char *str = NULL;
+        tree3 = (t_exec *)tree;   
+        if (ft_strchr(tree3->argv[0], '/') && access(tree3->argv[0], F_OK) != -1)
             str = ft_strdup(tree3->argv[0]);
         else
         {
-            while (envp->path[++i])
-            { 
+            i = -1;
+            while (envp && envp->path[++i])
+            {
                 s  = ft_strjoin(ft_strjoin(envp->path[i], "/"), tree3->argv[0]);
                 if (access(s, F_OK) != -1)
                     str = ft_strdup(s);
             }
+            if (!str)
+                   str = ft_strdup(tree3->argv[0]);  
         }
         execve(str, tree3->argv, env);
+        //handle errors like bash
+        perror(tree3->argv[0]);
         errors(tree3->argv[0],"command not found \n");
     }
 }
