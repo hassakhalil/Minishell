@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/27 18:20:00 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/27 18:25:27 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ void errors(char *name)
         write(2,name, ft_strlen(name));
         write(2, ": command not found\n",21);
     }
-    exit(127);
+    //dprintf(2, "errno = [ %d ]\n", errno);
+    if (errno == 2)
+        exit(127);
+    else if (errno == 13)
+        exit(126);
 }
 
 int check_in_files(t_cmd *first_redir)
