@@ -9,7 +9,7 @@ echo "||"
 
 
 //EXECUTION
-bash-3.2$ cat < file 
+bash-3.2$ cat < file
 bash: file: Permission denied
 bash-3.2$ $?
 bash: 1: command not found

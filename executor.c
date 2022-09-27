@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/27 19:13:43 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/27 21:39:40 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ void errors(char *name, int flag)
 {
     if (flag == 2 || flag == 3)
     {
+        write(2,name, ft_strlen(name));
         if (flag == 2)
-            write(2, "Permission denied\n", 19);
+            write(2, ": Permission denied\n", 21);
         else
-             write(2, "No such file or directory\n", 27);
+             write(2, ": No such file or directory\n", 29);
+            dprintf(2, "exiiiiiiiiiit\n");
         exit(1);
     }
     if (errno == 2 || errno == 13)
@@ -39,44 +41,34 @@ void errors(char *name, int flag)
             exit(126);
     } 
 }
-int check_in_files(t_cmd *first_redir)
+void check_in_files(t_cmd *redir)
 {
     t_redir   *tmp;
-    int     i = 1;
     int     fd;
 
-    tmp = (t_redir *)first_redir;
-    while (tmp->type == REDIR && tmp->fd == 0)
-    {
+        tmp = (t_redir *)redir;
         fd = open(tmp->file, tmp->mode);
-        if (fd <0)
+        if (fd < 0)
         { 
             close(fd);
             if (!access(tmp->file, F_OK))
-                return (2);
+                errors(tmp->file, 2);
             else
-                return (3);
+                errors(tmp->file, 3);
         }
         close(fd);
-        tmp = (t_redir *)(tmp->cmd);  
-        i++;
-    }
-    return (0);
 }
 
-void find_in_redir(t_cmd *tree, int *flag)
+void find_in_redir(t_cmd *tree)
 {
     t_redir  *tree2;
 
     if (tree->type == REDIR)
     {
         tree2 = (t_redir *)tree;
-        if (tree2->fd == 0 && check_in_files(tree))
-        {
-            *flag = check_in_files(tree);
-            return ;
-        }
-        find_in_redir(tree2->cmd, flag);
+        find_in_redir(tree2->cmd);
+        if (tree2->fd == 0)
+           check_in_files(tree); 
     }
 }
 
@@ -93,14 +85,8 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
     t_exec    *tree3;
 
 
-    //signal(SIGINT, child_handler);
     if (tree->type != PIPE)
-    {
-        find_in_redir(tree, flag_in);
-        if (*flag_in == 2 || *flag_in == 3)
-            errors(NULL, *flag_in);
-    }
-    // signal(SIGINT, child_handler);
+        find_in_redir(tree);
     if (tree->type == PIPE)
     {
         tree1 = (t_pip *)tree;
