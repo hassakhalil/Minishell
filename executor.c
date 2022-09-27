@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/27 18:25:27 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/27 19:13:43 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,31 @@
 
 extern int errno ;
 
-void errors(char *name)
+void errors(char *name, int flag)
 {
-    if (ft_strchr(name, '/'))
-        perror(name);
-    else
+    if (flag == 2 || flag == 3)
     {
-        write(2,name, ft_strlen(name));
-        write(2, ": command not found\n",21);
+        if (flag == 2)
+            write(2, "Permission denied\n", 19);
+        else
+             write(2, "No such file or directory\n", 27);
+        exit(1);
     }
-    //dprintf(2, "errno = [ %d ]\n", errno);
-    if (errno == 2)
-        exit(127);
-    else if (errno == 13)
-        exit(126);
+    if (errno == 2 || errno == 13)
+    {
+        if (ft_strchr(name, '/'))
+            perror(name);
+        else
+        {
+            write(2,name, ft_strlen(name));
+            write(2, ": command not found\n",21);
+        }
+        if (errno == 2)
+            exit(127);
+        else if (errno == 13)
+            exit(126);
+    } 
 }
-
 int check_in_files(t_cmd *first_redir)
 {
     t_redir   *tmp;
@@ -40,10 +49,13 @@ int check_in_files(t_cmd *first_redir)
     while (tmp->type == REDIR && tmp->fd == 0)
     {
         fd = open(tmp->file, tmp->mode);
-        if (fd < 0)
-        {
+        if (fd <0)
+        { 
             close(fd);
-            return (1);
+            if (!access(tmp->file, F_OK))
+                return (2);
+            else
+                return (3);
         }
         close(fd);
         tmp = (t_redir *)(tmp->cmd);  
@@ -61,7 +73,7 @@ void find_in_redir(t_cmd *tree, int *flag)
         tree2 = (t_redir *)tree;
         if (tree2->fd == 0 && check_in_files(tree))
         {
-            *flag = 2;
+            *flag = check_in_files(tree);
             return ;
         }
         find_in_redir(tree2->cmd, flag);
@@ -85,11 +97,8 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
     if (tree->type != PIPE)
     {
         find_in_redir(tree, flag_in);
-        if (*flag_in == 2)
-        {
-            write(2, "No such file or directory\n", 27);
-            exit(1);
-        }
+        if (*flag_in == 2 || *flag_in == 3)
+            errors(NULL, *flag_in);
     }
     // signal(SIGINT, child_handler);
     if (tree->type == PIPE)
@@ -155,7 +164,6 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
                    str = ft_strdup(tree3->argv[0]);  
         }
         execve(str, tree3->argv, env);
-        //handle errors like bash
-        errors(tree3->argv[0]);
+        errors(tree3->argv[0], 0);
     }
 }

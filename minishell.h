@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/27 18:05:04 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/27 18:57:40 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 //minishell utils
 int     forkk(void);
 char    *mkcopy(char *s, char *es);
-void    errors(char * name);
+void    errors(char * name, int flag);
 t_cmd *redircmd(t_cmd *subcmd, char *file, int mode, int type);
 t_cmd *pipecmd(t_cmd *left, t_cmd *right);
 t_cmd  *execcmd(void);
