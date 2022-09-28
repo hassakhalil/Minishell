@@ -3,9 +3,8 @@
 
 // EXPAND/QUOTES
 $ echo $"SHELL"
-/bin/zsh
+
 echo $SHELL$PATH
-echo "||"
 
 
 //EXECUTION
