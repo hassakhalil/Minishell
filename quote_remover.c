@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 05:09:26 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/23 23:49:19 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/28 21:35:11 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char    **quote_remover(char *s)
         {
             c = s[i];
             i++;
-            while (s[i] != c)
+            while (s[i] && s[i] != c)
             {
                 if (s[i] == '$')
                 {
@@ -65,8 +65,7 @@ char    **quote_remover(char *s)
             new[0][j] = s[i];
             i++;
             j++;
-        }
-        
+        } 
     }
     new[0][j] = 0;
     new[1][k] = 0;

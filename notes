@@ -7,16 +7,6 @@ $ echo $"SHELL"
 echo $SHELL$PATH
 
 
-//EXECUTION
-
-
-((///Users/hkhalil/Desktop/Minishell:hkhalil$0:hkhalil
-$ echo $8888
-
-$ echo $8970
-
-$ echo $8970//ih))
-
 //fix exit 
 
 //watch for seg fault (unset.....)
