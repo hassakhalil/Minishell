@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/28 20:57:03 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/29 04:59:30 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,9 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
             executor(tree1->right, env, envp,flag_out, flag_in);
         }
         close(p[0]);
-        close(p[1]);
-        while(waitpid(-1, &exits, 0) > 0);
+        close(p[1]); 
+        waitpid(id, &exits, 0);
+        while(wait(0) > 0);
         exit(WEXITSTATUS(exits));
     }
     else if (tree->type == REDIR)

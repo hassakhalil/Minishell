@@ -31,35 +31,3 @@
     Applications		Downloads
     Desktop			Library
     bash-3.2$ 
-
-//CASES to test
-
-bash-3.2$ << stop
-> bash-3.2$ echo $?
-0
-bash-3.2$ << stop
-> 
-bash-3.2$ echo $?
-1
-bash-3.2$ << stop
-> bash-3.2$ cat
-^\Quit: 3
-bash-3.2$ echo $?
-131
-bash-3.2$ cat
-^C
-bash-3.2$ echo $?
-130
-bash-3.2$ ls 
-Makefile                builtins.c              executor.c              lexer.c                 libft                   main.c                  minishell.h             notes                   parser.c                parsing_tester.c        path.c                  utils.c
-bash-3.2$ echo $?
-0
-bash-3.2$ ls | eqweqe
-bash: eqweqe: command not found
-bash-3.2$ echo $?
-127
-bash-3.2$ eqweqw | ls
-bash: eqweqw: command not found
-Makefile                builtins.c              executor.c              lexer.c                 libft                   main.c                  minishell.h             notes                   parser.c                parsing_tester.c        path.c                  utils.c
-bash-3.2$ echo $?
-0
