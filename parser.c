@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/26 22:10:54 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/29 20:01:01 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es)
         tok = gettoken(ss, es, 0, 0);
         if (gettoken(ss, es, &q, &eq) != 'a')
         {
+            //cleaning should be done here
             perror("missing file for redirection");
             exit(EXIT_FAILURE);
         }
@@ -43,7 +44,6 @@ t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es)
         }
         if (tok == '*')
         {
-            //here doc here
             cmd = redircmd(cmd, create_heredoc(mkcopy(q, eq)), O_RDONLY, tok);
             break;
         }
@@ -72,15 +72,15 @@ t_cmd* parseexec(char **ss, char *es)
             ret = parseredirs(ret, ss, es);
         if (tok != 'a')
         {
+            //cleaning should be done here
             perror("syntax error");
             exit(EXIT_FAILURE);
-        }
-        //add expander here 
-        //remove quotes here                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
         cmd->argv[argc] = expander(quote_remover(mkcopy(q, eq)));
         argc++;
         if(argc >= MAXARGS)
         {
+            //cleaning should be done here
             perror("Too many args");
             exit(EXIT_FAILURE);
         }
@@ -98,13 +98,13 @@ t_cmd* parsepipe(char **ss, char *es)
     if(peek(ss, es, "|"))
     {
         gettoken(ss, es, 0, 0);
-        //check for empty exec node here
         if (cmd->type == EXEC)
         {
             check_empty = (t_exec *)cmd;
             if (!check_empty->argv[0])
             {
                 write(2, "syntax error near unexpected token `|'\n", 40);
+                //cleaning should be done here
                 exit(58);
             } 
         }

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/29 04:56:54 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/29 20:04:22 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int main(int argc, char *argv[], char **env)
     //
     printf("\e[1;1H\e[2J");
     envp = envpath();
-    //envp = NULL;
     while (1)
     {
         signal(SIGQUIT,SIG_IGN);
@@ -112,7 +111,6 @@ int main(int argc, char *argv[], char **env)
 	        signal(SIGINT, SIG_DFL);
             tree = parsecmd(buff);
             executor(tree, env, envp,&flag_out, &flag_in);
-            
             //parsing_tester(tree);
         }
         signal(SIGINT,SIG_IGN);
@@ -121,7 +119,7 @@ int main(int argc, char *argv[], char **env)
             GLOBAL = 128 + WTERMSIG(exits);
         else
             GLOBAL = WEXITSTATUS(exits);
-        //clear what you need to clear 
+        //clear tree
     }
     return(0);
 }

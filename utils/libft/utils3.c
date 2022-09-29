@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 22:14:53 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/29 19:52:36 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/29 20:06:38 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,6 @@ char	*ft_strjoin3(char const *s1, char const *s2)
 		j++;
 	}
 	s[i + j] = 0;
-	free(s1);
+	free((void *)s1);
 	return (s);
 }
