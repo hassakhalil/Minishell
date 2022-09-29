@@ -14,7 +14,7 @@
 ◦ exit with no options*/+
 
 
-
+//el
 //another cases to handle
     bash-3.2$ var="2                  3"
     bash-3.2$ echo $var

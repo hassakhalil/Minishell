@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/27 21:23:27 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/29 19:53:01 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
 char	  **ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strjoin2(char const *s1, char *s2);
+char	*ft_strjoin3(char const *s1, char const *s2);
 char	  *ft_strdup(const char *str);
 size_t  ft_strlen(const char *s);
 char    *ft_strchr(const char *s, int c);

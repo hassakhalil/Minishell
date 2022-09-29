@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 22:14:53 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/20 23:39:12 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/29 19:52:36 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,32 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	sub[i] = 0;
 	return ((char *)sub);
+}
+
+char	*ft_strjoin3(char const *s1, char const *s2)
+{
+	int		i;
+	int		j;
+	char	*s;
+
+	if (!s1 || !s2)
+		return (0);
+	s = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!s)
+		return (0);
+	i = 0;
+	while (s1[i])
+	{
+		s[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j])
+	{
+		s[i + j] = s2[j];
+		j++;
+	}
+	s[i + j] = 0;
+	free(s1);
+	return (s);
 }

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/29 03:22:31 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/29 19:54:02 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char    *expander(char **arg)
                 {
                     if (GLOBAL == 58)
                         GLOBAL = 258;
-                    new_arg = ft_strjoin(ft_strjoin(ft_substr(arg[0], 0, i), ft_itoa(GLOBAL)),&arg[0][i + 2]);
+                    new_arg = ft_strjoin3(ft_strjoin3(ft_substr(arg[0], 0, i), ft_itoa(GLOBAL)),&arg[0][i + 2]);
                     free(arg[0]);
                     arg[0] = ft_strdup(new_arg);
                     free(new_arg);
@@ -72,7 +72,7 @@ char    *expander(char **arg)
                     if (getenv(c))
                     {
                         v = getenv(c);
-                        new_arg = ft_strjoin(ft_strjoin(ft_substr(arg[0], 0, i), v), &arg[0][i + ft_strlen(c) + 1]);
+                        new_arg = ft_strjoin3(ft_strjoin3(ft_substr(arg[0], 0, i), v), &arg[0][i + ft_strlen(c) + 1]);
                         free(arg[0]);
                         free(c);
                         arg[0] = ft_strdup(new_arg);
@@ -81,7 +81,7 @@ char    *expander(char **arg)
                     }
                     else if (c[0])
                     {
-                        new_arg = ft_strjoin(ft_substr(arg[0], 0, i), &arg[0][i + ft_strlen(c) +1]);
+                        new_arg = ft_strjoin3(ft_substr(arg[0], 0, i), &arg[0][i + ft_strlen(c) +1]);
                         free(arg[0]);
                         arg[0] = ft_strdup(new_arg);
                         free(new_arg);
@@ -93,7 +93,7 @@ char    *expander(char **arg)
             }
             else if (arg[1][k] == 'r')
             {
-                new_arg = ft_strjoin(ft_substr(arg[0], 0, i),  &arg[0][i+1]);
+                new_arg = ft_strjoin3(ft_substr(arg[0], 0, i),  &arg[0][i+1]);
                 free(arg[0]);
                 arg[0] = ft_strdup(new_arg);
                 free(new_arg);
