@@ -29,3 +29,7 @@
     Applications		Downloads
     Desktop			Library
     bash-3.2$ 
+
+//bash-3.2$ export var=q1 q2
+//bash-3.2$ var="2                  3"
+bash-3.2$ var=2                  3

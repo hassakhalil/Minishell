@@ -1,0 +1,14 @@
+Makefile
+builtins.c
+executor.c
+expander.c
+f1
+lexer.c
+main.c
+minishell.h
+notes
+parser.c
+parsing_tester.c
+path.c
+quote_remover.c
+utils
