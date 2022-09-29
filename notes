@@ -1,12 +1,5 @@
 // leaks
 
-
-// EXPAND/QUOTES
-$ echo $"SHELL"
-
-echo $SHELL$PATH
-
-
 //fix exit 
 
 //watch for seg fault (unset.....)

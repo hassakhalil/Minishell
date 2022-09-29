@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/29 02:50:22 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/29 03:22:31 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,10 @@ char    *expander(char **arg)
     int     i = 0;
     int     k = 0;
 
-    //debug
-    dprintf(2, "{ %s }\n", arg[1]);
-    //end debug
     while (arg[0][i])
     {
-        if (arg[0][i] == '$') //and  dollar[k] = expand // k++
+        if (arg[0][i] == '$')
         {
-            //debug
-            dprintf(2, "found $$$$$$$\n");
-            //end debug
             if (arg[1][k] == '\"')
             {
                 if (arg[0][i + 1] && arg[0][i + 1] == '?')
@@ -96,6 +90,14 @@ char    *expander(char **arg)
                     else
                         i++;
                 }
+            }
+            else if (arg[1][k] == 'r')
+            {
+                new_arg = ft_strjoin(ft_substr(arg[0], 0, i),  &arg[0][i+1]);
+                free(arg[0]);
+                arg[0] = ft_strdup(new_arg);
+                free(new_arg);
+                i++;
             }
             else
                 i++;
