@@ -6,13 +6,13 @@
 #    By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/23 11:34:27 by iakry             #+#    #+#              #
-#    Updated: 2022/09/29 19:46:28 by hkhalil          ###   ########.fr        #
+#    Updated: 2022/09/29 20:32:51 by hkhalil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC	= parsing_tester.c quote_remover.c expander.c executor.c main.c lexer.c parser.c path.c builtins.c\
+SRC	=  clean.c parsing_tester.c quote_remover.c expander.c executor.c main.c lexer.c parser.c path.c builtins.c\
 	utils/libft/utils0.c utils/libft/utils1.c utils/libft/utils2.c utils/libft/utils3.c utils/utils.c \
 
 OBJ	= $(SRC:.c=.o)

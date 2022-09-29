@@ -1,4 +1,5 @@
 // leaks
+->do we have to clean after readline?
 
 //watch for seg fault (unset.....)
 
