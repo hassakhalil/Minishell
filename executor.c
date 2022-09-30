@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/29 20:12:13 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/30 02:26:33 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
     int     p[2];
     int     id;
     int     i;
-    int     exits = 0;
+    int     last;
+    int     mid;
     int     open_fd;
     t_pip     *tree1;
     t_redir   *tree2;
@@ -109,10 +110,14 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
             executor(tree1->right, env, envp,flag_out, flag_in);
         }
         close(p[0]);
-        close(p[1]); 
-        waitpid(id, &exits, 0);
-        while(wait(0) > 0);
-        exit(WEXITSTATUS(exits));
+        close(p[1]);
+        waitpid(id, &last , 0);
+        while(wait(&mid) > 0)
+        {
+            if ((WTERMSIG(mid) == 3 || WTERMSIG(mid) == 2) && (WTERMSIG(last) != 3 && WTERMSIG(last) != 2))
+            GLOBAL = -1;
+        }
+        exit(WEXITSTATUS(last));
     }
     else if (tree->type == REDIR)
     {

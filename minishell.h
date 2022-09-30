@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/29 19:53:01 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/30 00:55:39 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_pipecmd
 
 typedef struct s_execcmd
 {
-  int type;              // ' '
+  int type;
   char *argv[MAXARGS];
 } t_exec;
 

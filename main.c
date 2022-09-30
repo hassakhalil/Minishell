@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/29 20:04:22 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/09/30 02:26:55 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,22 +103,27 @@ int main(int argc, char *argv[], char **env)
             add_history(buff);
         }
         if (!cd(buff) || !empty_cmd(buff))
+        {
+            free(buff);
             continue;
+        }
         int pid = forkk();
         if (pid == 0)
         {
             signal(SIGQUIT,SIG_DFL);
 	        signal(SIGINT, SIG_DFL);
             tree = parsecmd(buff);
+            free(buff);
             executor(tree, env, envp,&flag_out, &flag_in);
             //parsing_tester(tree);
         }
         signal(SIGINT,SIG_IGN);
         wait(&exits);
-        if (WTERMSIG(exits) == 3 || WTERMSIG(exits) == 2)
+        if ((WTERMSIG(exits) == 3 || WTERMSIG(exits) == 2) && GLOBAL != -1)
             GLOBAL = 128 + WTERMSIG(exits);
         else
             GLOBAL = WEXITSTATUS(exits);
+        free(buff);
         //clear tree
     }
     return(0);
