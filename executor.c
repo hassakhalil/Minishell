@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/30 02:26:33 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/01 10:21:45 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ extern int errno ;
 
 void errors(char *name, int flag)
 {
+    DIR *dir;
     if (flag == 2 || flag == 3)
     {
         write(2,name, ft_strlen(name));
@@ -28,10 +29,20 @@ void errors(char *name, int flag)
     if (errno == 2 || errno == 13)
     {
         if (ft_strchr(name, '/'))
-            perror(name);
+        {
+            dir = opendir(name);
+            if (dir)
+            {
+                write(2, name, ft_strlen(name));
+                write(2, ": is a directory\n", 18);
+                closedir(dir);
+            }
+            else
+                perror(name);
+        }
         else
         {
-            write(2,name, ft_strlen(name));
+            write(2, name, ft_strlen(name));
             write(2, ": command not found\n",21);
         }
         if (errno == 2)
@@ -91,8 +102,7 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
     {
         tree1 = (t_pip *)tree;
         if (pipe(p) < 0)
-            printf("pipe error\n");
-           // errors("pipe error\n");
+            perror("pipe error");
         id = forkk();
         if (id == 0)
         {
