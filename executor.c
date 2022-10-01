@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/01 10:21:45 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/01 11:17:03 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,9 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
     else
     {
         char *str = NULL;
-        tree3 = (t_exec *)tree;   
+        tree3 = (t_exec *)tree;
+        if (!empty_cmd(tree3->argv[0]))
+            exit(0);
         if (ft_strchr(tree3->argv[0], '/') && access(tree3->argv[0], F_OK) != -1)
             str = ft_strdup(tree3->argv[0]);
         else
