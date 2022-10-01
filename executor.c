@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/01 11:17:03 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/01 14:13:13 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,17 @@ extern int errno ;
 
 void errors(char *name, int flag)
 {
-    DIR *dir;
+    if (flag == 4)
+    {
+        if (errno == 22)
+        {
+            write(2, name, ft_strlen(name));
+            write(2, ": is a directory\n", 18);
+            exit(126);
+        }
+        perror(name);
+        exit(126);
+    }
     if (flag == 2 || flag == 3)
     {
         write(2,name, ft_strlen(name));
@@ -29,17 +39,7 @@ void errors(char *name, int flag)
     if (errno == 2 || errno == 13)
     {
         if (ft_strchr(name, '/'))
-        {
-            dir = opendir(name);
-            if (dir)
-            {
-                write(2, name, ft_strlen(name));
-                write(2, ": is a directory\n", 18);
-                closedir(dir);
-            }
-            else
                 perror(name);
-        }
         else
         {
             write(2, name, ft_strlen(name));
@@ -148,12 +148,21 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
     }
     else
     {
+        DIR *dir;
         char *str = NULL;
         tree3 = (t_exec *)tree;
         if (!empty_cmd(tree3->argv[0]))
             exit(0);
-        if (ft_strchr(tree3->argv[0], '/') && access(tree3->argv[0], F_OK) != -1)
-            str = ft_strdup(tree3->argv[0]);
+        dir = opendir(tree3->argv[0]);
+        if (dir)
+            errors(tree3->argv[0], 4);
+        if (ft_strchr(tree3->argv[0], '/'))
+        {   
+            if(access(tree3->argv[0], F_OK) != -1)
+                str = ft_strdup(tree3->argv[0]);
+            else
+                errors(tree3->argv[0], 4);
+        }
         else
         {
             i = -1;
