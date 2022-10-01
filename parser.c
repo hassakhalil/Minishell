@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/01 09:51:54 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/01 10:30:50 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_cmd* parseexec(char **ss, char *es)
             perror("syntax error");
             exit(EXIT_FAILURE);
         }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-        cmd->argv[argc] = expander(quote_remover(mkcopy(q, eq)));
+        cmd->argv[argc] = quote_remover(expander(mkcopy(q, eq)));
         argc++;
         if(argc >= MAXARGS)
         {

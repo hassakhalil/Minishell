@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/01 09:35:24 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/01 11:01:11 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,81 +39,66 @@ char    *ft_env_name(char *s)
 
     while (s[i] && (s[i] != '$' && !is_white_space(s[i]) && s[i] != '\'' && s[i] != '\"') && (ft_isalpha(s[i]) || ft_isdigit(s[i]) || s[i] == '_'))
         i++;
-    dprintf(2, "[ %s ]\n", ft_substr(s, 0, i));
     return (ft_substr(s, 0, i));
 }
 
-char    *expander(char **arg)
+char    *expander(char *arg)
 {
     char    *new_arg;
     char    *v;
     char    *c;
     int     i = 0;
-    int     k = 0;
+    int     quote = 0;
 
-    while (arg[0][i])
+    while (arg[i])
     {
-        if (arg[0][i] == '$')
+        if (arg[i] == '\'' || arg[i] == '\"')
         {
-            if (arg[1][k] == '\"')
-            {
-                //debug
-                 dprintf(2, "found expandable dollar\n");
-            //end debug
-                if (arg[0][i + 1] && arg[0][i + 1] == '?')
+            if (!quote)
+                quote = arg[i];
+            else
+                if (arg[i] == quote)
+                    quote = 0;
+        }
+        if (quote != '\'' && arg[i] == '$')
+        {
+                if (arg[i + 1] && arg[i + 1] == '?')
                 {
                     if (GLOBAL == 58)
                         GLOBAL = 258;
-                    new_arg = ft_strjoin3(ft_strjoin3(ft_substr(arg[0], 0, i), ft_itoa(GLOBAL)),&arg[0][i + 2]);
-                    free(arg[0]);
-                    arg[0] = ft_strdup(new_arg);
+                    new_arg = ft_strjoin3(ft_strjoin3(ft_substr(arg, 0, i), ft_itoa(GLOBAL)),&arg[i + 2]);
+                    free(arg);
+                    arg = ft_strdup(new_arg);
                     free(new_arg);
                     i++;
                 }
                 else
                 {
-                    c = ft_env_name(&arg[0][i + 1]);
+                    c = ft_env_name(&arg[i + 1]);
                     if (getenv(c))
                     {
-                        //debug
-                        dprintf(2, "found path\n");
-                        //end debug
                         v = getenv(c);
-                        new_arg = ft_strjoin3(ft_strjoin3(ft_substr(arg[0], 0, i), v), &arg[0][i + ft_strlen(c) + 1]);
-                        free(arg[0]);
+                        new_arg = ft_strjoin3(ft_strjoin3(ft_substr(arg, 0, i), v), &arg[i + ft_strlen(c) + 1]);
+                        free(arg);
                         free(c);
-                        arg[0] = ft_strdup(new_arg);
+                        arg = ft_strdup(new_arg);
                         free(new_arg);
                         i = i + ft_strlen(v);
                     }
                     else if (c[0])
                     {
-                        new_arg = ft_strjoin3(ft_substr(arg[0], 0, i), &arg[0][i + ft_strlen(c) +1]);
-                        free(arg[0]);
-                        arg[0] = ft_strdup(new_arg);
+                        new_arg = ft_strjoin3(ft_substr(arg, 0, i), &arg[i + ft_strlen(c) +1]);
+                        free(arg);
+                        arg = ft_strdup(new_arg);
                         free(new_arg);
                         free(c);
                     }
                     else
                         i++;
                 }
-            }
-            else if (arg[1][k] == 'r')
-            {
-                new_arg = ft_strjoin3(ft_substr(arg[0], 0, i),  &arg[0][i+1]);
-                free(arg[0]);
-                arg[0] = ft_strdup(new_arg);
-                free(new_arg);
-                i++;
-            }
-            else
-                i++;
-            k++;
         }
         else
             i++;
     }
-    free(arg[1]);
-    free(arg[2]);
-    return (arg[0]);
+    return (arg);
 }

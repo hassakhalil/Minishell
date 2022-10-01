@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/01 10:17:21 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/01 10:38:45 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,11 @@ int       gettoken(char **ps, char *es, char **q, char **eq);
 int       peek(char **ps, char *es, char *toks);
 
 //expander
-char  *expander(char **arg);
+char  *expander(char *arg);
 int is_white_space(int c);
 
 //quotes
-char    **quote_remover(char *s);
+char    *quote_remover(char *s);
 
 //signals
 void    handler(int sig);

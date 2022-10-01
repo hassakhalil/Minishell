@@ -6,58 +6,29 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 05:09:26 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/29 02:55:03 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/01 10:45:00 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int dollars(char *s)
-{
-    int i = 0;
-    int k = 0;
-
-    while (s[i])
-    {
-        if (s[i] == '$')
-            k++;
-        i++;
-    }
-    return(k);
-}
-
-char    **quote_remover(char *s)
+char    *quote_remover(char *s)
 {
     int i = 0;
     int j = 0;
-    int k = 0;
     int c;
-    char    **new = malloc(sizeof(char *) * 3);
+    char    *new;
     
-    new[0] = malloc(sizeof(char) * ft_strlen(s) + 1);
-    new[1] = malloc(sizeof(char) * dollars(s) + 1);
+    new = malloc(sizeof(char) * ft_strlen(s) + 1);
     while (s[i])
     {
-        if (s[i] == '$')
-        {
-            if (s[i + 1] && ( s[i + 1] == '\''|| s[i + 1] == '\"'))
-                 new[1][k] = 'r';
-            else
-                new[1][k] = '\"';
-            k++;
-        }
         if (s[i] == '\'' || s[i] == '\"')
         {
             c = s[i];
             i++;
             while (s[i] && s[i] != c)
             {
-                if (s[i] == '$')
-                {
-                    new[1][k] = c;
-                    k++;
-                }
-                new[0][j] = s[i];
+                new[j] = s[i];
                 i++;
                 j++;
             }
@@ -65,13 +36,11 @@ char    **quote_remover(char *s)
         }
         else
         {
-            new[0][j] = s[i];
+            new[j] = s[i];
             i++;
             j++;
         } 
     }
-    new[0][j] = 0;
-    new[1][k] = 0;
-    new[2] = 0;
+    new[j] = 0;
     return (new);
 }
