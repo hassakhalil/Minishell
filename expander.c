@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/29 19:54:02 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/01 09:35:24 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ char    *ft_env_name(char *s)
 {
     int i = 0;
 
-    while (s[i] && (s[i] != '$' && !is_white_space(s[i])) && (ft_isalpha(s[i]) || ft_isdigit(s[i]) || s[i] == '_'))
+    while (s[i] && (s[i] != '$' && !is_white_space(s[i]) && s[i] != '\'' && s[i] != '\"') && (ft_isalpha(s[i]) || ft_isdigit(s[i]) || s[i] == '_'))
         i++;
+    dprintf(2, "[ %s ]\n", ft_substr(s, 0, i));
     return (ft_substr(s, 0, i));
 }
 
@@ -56,6 +57,9 @@ char    *expander(char **arg)
         {
             if (arg[1][k] == '\"')
             {
+                //debug
+                 dprintf(2, "found expandable dollar\n");
+            //end debug
                 if (arg[0][i + 1] && arg[0][i + 1] == '?')
                 {
                     if (GLOBAL == 58)
@@ -71,6 +75,9 @@ char    *expander(char **arg)
                     c = ft_env_name(&arg[0][i + 1]);
                     if (getenv(c))
                     {
+                        //debug
+                        dprintf(2, "found path\n");
+                        //end debug
                         v = getenv(c);
                         new_arg = ft_strjoin3(ft_strjoin3(ft_substr(arg[0], 0, i), v), &arg[0][i + ft_strlen(c) + 1]);
                         free(arg[0]);

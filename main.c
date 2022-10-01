@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/30 02:26:55 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/01 09:50:06 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int complete_pipe(char *buff)
             {
                 k++;
                 if (k > 1)
-                    return (0);
+                    return (1);
             }
             else if (k)
                 k--;
@@ -68,7 +68,6 @@ void	handler(int sig)
 int main(int argc, char *argv[], char **env)
 {
     static char     *buff = "";
-    char            *tmp;
     t_env           *envp;
     t_cmd           *tree;
     int             flag_in = 0;
@@ -92,16 +91,7 @@ int main(int argc, char *argv[], char **env)
             exit (GLOBAL);
         }
         if (buff && *buff)
-        {
-            if (complete_pipe(buff))
-            {
-                tmp = readline("> ");
-                while (!empty_cmd(tmp))
-                    tmp = readline("> ");
-                buff = ft_strjoin(buff, tmp);
-            }
             add_history(buff);
-        }
         if (!cd(buff) || !empty_cmd(buff))
         {
             free(buff);

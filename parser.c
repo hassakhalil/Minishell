@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/29 20:01:01 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/01 09:51:54 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,20 +93,19 @@ t_cmd* parsepipe(char **ss, char *es)
 {
     t_cmd *cmd;
     t_exec *check_empty;
+    char    **tt;
     
     cmd = parseexec(ss, es);
     if(peek(ss, es, "|"))
     {
         gettoken(ss, es, 0, 0);
-        if (cmd->type == EXEC)
+        tt = ss;
+        check_empty = (t_exec *)cmd;
+        if (!check_empty->argv[0] || complete_pipe(*ss) || !gettoken(tt, es, 0, 0))
         {
-            check_empty = (t_exec *)cmd;
-            if (!check_empty->argv[0])
-            {
-                write(2, "syntax error near unexpected token `|'\n", 40);
-                //cleaning should be done here
-                exit(58);
-            } 
+            write(2, "syntax error near unexpected token `|'\n", 40);
+            //cleaning should be done here
+            exit(58);
         }
         cmd = pipecmd(cmd, parsepipe(ss, es));
     }
