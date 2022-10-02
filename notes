@@ -1,5 +1,4 @@
 // leaks
- ls | grep m
 
 //watch for seg fault (unset.....)
 
