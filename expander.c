@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/01 11:01:11 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/02 18:30:07 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ char    *expander(char *arg)
                         v = getenv(c);
                         new_arg = ft_strjoin3(ft_strjoin3(ft_substr(arg, 0, i), v), &arg[i + ft_strlen(c) + 1]);
                         free(arg);
-                        free(c);
                         arg = ft_strdup(new_arg);
                         free(new_arg);
                         i = i + ft_strlen(v);
@@ -91,10 +90,17 @@ char    *expander(char *arg)
                         free(arg);
                         arg = ft_strdup(new_arg);
                         free(new_arg);
-                        free(c);
+                    }
+                    else if(arg[i + 1] && (arg[i + 1] == '\'' || arg[i + 1] == '\"'))
+                    {
+                        new_arg = ft_strjoin3(ft_substr(arg, 0, i), &arg[i + 1]);
+                        free(arg);
+                        arg = ft_strdup(new_arg);
+                        free(new_arg);
                     }
                     else
                         i++;
+                    free(c);
                 }
         }
         else
