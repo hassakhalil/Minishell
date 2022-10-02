@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/01 14:13:13 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/02 19:25:02 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,10 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
             exit(0);
         dir = opendir(tree3->argv[0]);
         if (dir)
+        {
+            closedir(dir);
             errors(tree3->argv[0], 4);
+        }
         if (ft_strchr(tree3->argv[0], '/'))
         {   
             if(access(tree3->argv[0], F_OK) != -1)
