@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/03 22:27:56 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/03 23:17:29 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,10 @@ t_env *envpath(void);
 char    *getpath(char *buff);
 
 // builtins
-int builtin(char *buff);
+int builtin(char *buff, t_envvar *env_list);
 void ft_exit(t_exec *cmd);
+void ft_cd(t_exec *cmd, t_envvar *env);
+t_envvar *init_envvar(char **env);
 
 
 // executor

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/03 22:29:46 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/03 23:11:32 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,14 @@ int main(int argc, char *argv[], char **env)
     int             flag_in = 0;
     int             flag_out = 0;
     int             exits;
+    t_envvar        *env_list;
 
     //silencing warnings
     argv[argc] = 0;
     //
     printf("\e[1;1H\e[2J");
     envp = envpath();
+    env_list = init_envvar(env);
     while (1)
     {
         signal(SIGQUIT,SIG_IGN);
@@ -92,7 +94,7 @@ int main(int argc, char *argv[], char **env)
         }
         if (buff && *buff)
             add_history(buff);
-        if (!empty_cmd(buff) || builtin(buff))
+        if (!empty_cmd(buff) || builtin(buff, env_list))
         {
             free(buff);
             continue;
