@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/03 22:40:08 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/04 00:14:14 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void find_in_redir(t_cmd *tree)
     }
 }
 
-void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_in)
+void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_in, t_envvar *env_list)
 {
     char    *s;
     int     p[2];
@@ -109,7 +109,7 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
             close(p[0]);
             dup2(p[1], 1);
             close(p[1]);
-            executor(tree1->left, env, envp,flag_out, flag_in);
+            executor(tree1->left, env, envp,flag_out, flag_in, env_list);
         }
         id = forkk();
         if (id == 0)
@@ -117,7 +117,7 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
             close(p[1]);
             dup2(p[0], 0);
             close(p[0]);
-            executor(tree1->right, env, envp,flag_out, flag_in);
+            executor(tree1->right, env, envp,flag_out, flag_in, env_list);
         }
         close(p[0]);
         close(p[1]);
@@ -144,7 +144,7 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
             dup2(open_fd, tree2->fd);
         }
         close(open_fd);
-        executor(tree2->cmd, env, envp,flag_out, flag_in);
+        executor(tree2->cmd, env, envp,flag_out, flag_in, env_list);
     }
     else
     {
@@ -157,6 +157,13 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
         {
             ft_exit(tree3);
             return;
+        }
+        if (!ft_strcmp(tree3->argv[0], "cd"))
+        {
+            ft_cd(tree3, env_list);
+            if (errno == 13 || errno == 2)
+                exit(1);
+            return ;
         }
         dir = opendir(tree3->argv[0]);
         if (dir)

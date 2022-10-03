@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/03 23:16:51 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/04 00:01:02 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,11 @@ void ft_cd(t_exec *cmd, t_envvar *env)
 {
     if (cmd->argv[1])
         if (chdir(cmd->argv[1]))
-            perror("cd");
+        {
+            write(2, "cd: ",5);
+            perror(cmd->argv[1]);
+            GLOBAL = 1;
+        }
     if (!(cmd->argv[1]))
         while (env)
         {

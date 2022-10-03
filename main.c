@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/03 23:11:32 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/03 23:51:58 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int main(int argc, char *argv[], char **env)
 	        signal(SIGINT, SIG_DFL);
             tree = parsecmd(buff);
             free(buff);
-            executor(tree, env, envp,&flag_out, &flag_in);
+            executor(tree, env, envp,&flag_out, &flag_in, env_list);
             //parsing_tester(tree);
         }
         signal(SIGINT,SIG_IGN);

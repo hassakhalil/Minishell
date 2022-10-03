@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/03 23:17:29 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/03 23:51:44 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ t_envvar *init_envvar(char **env);
 
 
 // executor
-void    executor(t_cmd *tree, char **env, t_env *envp, int *flag_out, int *flag_in);
+void    executor(t_cmd *tree, char **env, t_env *envp, int *flag_out, int *flag_in, t_envvar *env_list);
 void    parsing_tester(t_cmd *result_tree);
 void     check_in_files(t_cmd *redir);
 void    find_in_redir(t_cmd *tree);
