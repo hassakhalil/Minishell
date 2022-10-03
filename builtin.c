@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/03 20:50:22 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/03 21:03:07 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,23 +113,33 @@ int builtin_expander(char *buff, t_envvar *env, t_localvar **local)
         }
     }
     return i;
-}
+}*/
 
-void ft_cd(t_exec *cmd, t_envvar *env)
+void ft_cd(char *buff, t_ *env)
 {
-    if (!ft_strcmp(cmd->argv[0], "cd") && cmd->argv[1])
-        if (chdir(cmd->argv[1]))
-            perror("cd");
-    if (!ft_strcmp(cmd->argv[0], "cd") && !(cmd->argv[1]))
-        while (env)
-        {
-            if (!ft_strcmp(env->name, "HOME"))
-                chdir(env->value);
-            env = env->next;
-        }
+    t_cmd   *tree;
+    t_exec  *cmd;
+
+    tree = parsecmd(buff);
+    if (tree->type == EXEC)
+    {
+        cmd = (t_exec *)tree;
+        if (!ft_strcmp(cmd->argv[0], "cd") && cmd->argv[1])
+            if (chdir(cmd->argv[1]))
+                perror("cd");
+        if (!ft_strcmp(cmd->argv[0], "cd") && !(cmd->argv[1]))
+            while (env)
+            {
+                if (!ft_strcmp(env->name, "HOME"))
+                    chdir(env->value);
+                env = env->next;
+            }
+    }
+    //clean everything
+    return(0);
 }
 
-int if_varexist(t_envvar *env, char **s)
+/*int if_varexist(t_envvar *env, char **s)
 {
     while (env)
     {

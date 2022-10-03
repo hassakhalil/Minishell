@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/03 20:42:10 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/03 21:15:55 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,24 @@ int main(int argc, char *argv[], char **env)
         }
         if (buff && *buff)
             add_history(buff);
-        if (/*!cd(buff) ||*/ !empty_cmd(buff) || ft_exit(buff))
+        if (!empty_cmd(buff) || ft_exit(buff) || ft_cd(buff, env_list))
         {
             free(buff);
             continue;
         }
+        //if (single builtin cmd)
+        //{
+            //tree = parsecmd(buff);
+            //if (tree->type == EXEC)
+            //cast
+            //if cmd == exit
+            //free
+                //execute
+            //else if cmd == cd
+                //execute
+                //clean
+            //continue
+        //}
         int pid = forkk();
         if (pid == 0)
         {
