@@ -6,11 +6,33 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/03 21:03:07 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/03 22:35:07 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int builtin(char *buff)
+{
+    t_cmd   *tree;
+    t_exec  *cmd;
+
+    tree = parsecmd(buff);
+    if (tree->type == EXEC)
+    {
+        cmd = (t_exec *)tree;
+        if (!ft_strcmp(cmd->argv[0], "exit"))
+        {
+            ft_exit(cmd);
+            return (1);
+        }
+        /*else if (!ft_strcmp(cmd->argv[0], "cd"))
+        {
+        }*/
+    }
+    //clear 
+    return (0);
+}
 
 /*int ft_isallnum(char *s)
 {
@@ -25,53 +47,37 @@
     printf("\e[1;1H\e[2J");
 }*/
 
-int ft_exit(char *buff)
+void ft_exit(t_exec *node)
 {
-    t_cmd   *tree;
-    t_exec  *node;
     int      i = 0;
+    int      k = 0;
 
-    tree = parsecmd(buff);
-    if (tree->type == EXEC)
+    while (node->argv[k])
+        k++;
+    if (node->argv[1])
     {
-        node = (t_exec *)tree;
-        if (!ft_strcmp(node->argv[0], "exit"))
+        i = 0;
+        while (node->argv[1][i])
         {
-            while (node->argv[i])
-                i++;
-            if (i > 2)
+            if (!ft_isdigit(node->argv[1][i]))
             {
-                write(2, "exit: too many arguments\n", 26);
-                GLOBAL = 1;
-                //clean everything
-                return (1);
+                write(2, "exit: ", 7);
+                write(2, node->argv[1], ft_strlen(node->argv[1]));
+                write(2, ": numeric argument required\n", 29);
+                exit(255);
             }
-            if (node->argv[1])
-            {
-                //clean everything
-                i = 0;
-                while (node->argv[1][i])
-                {
-                    if (!ft_isdigit(node->argv[1][i]))
-                    {
-                        write(2, "exit: ", 7);
-                        write(2, node->argv[1], ft_strlen(node->argv[1]));
-                        write(2, ": numeric argument required\n", 29);
-                        exit(255);
-                    }
-                    i++;
-                }
-                exit(ft_atoi(node->argv[1]));
-            }
-            else
-            {
-                //clean everything
-                exit(GLOBAL);
-            }
+            i++;
         }
-    }  
-    //clean everything
-    return (0);
+        if (k > 2)
+        {
+            write(2, "exit: too many arguments\n", 26);
+            GLOBAL = 1;
+            //clean everything
+            return ;
+        }
+        exit(ft_atoi(node->argv[1]));
+    }
+    exit(GLOBAL);
 }
 
 /*void ft_env(t_exec *cmd, t_envvar *var)
@@ -115,29 +121,19 @@ int builtin_expander(char *buff, t_envvar *env, t_localvar **local)
     return i;
 }*/
 
-void ft_cd(char *buff, t_ *env)
+/*void ft_cd(t_exec *cmd, t_ *env)
 {
-    t_cmd   *tree;
-    t_exec  *cmd;
-
-    tree = parsecmd(buff);
-    if (tree->type == EXEC)
-    {
-        cmd = (t_exec *)tree;
-        if (!ft_strcmp(cmd->argv[0], "cd") && cmd->argv[1])
-            if (chdir(cmd->argv[1]))
-                perror("cd");
-        if (!ft_strcmp(cmd->argv[0], "cd") && !(cmd->argv[1]))
-            while (env)
-            {
-                if (!ft_strcmp(env->name, "HOME"))
-                    chdir(env->value);
-                env = env->next;
-            }
-    }
-    //clean everything
-    return(0);
-}
+    if (!ft_strcmp(cmd->argv[0], "cd") && cmd->argv[1])
+        if (chdir(cmd->argv[1]))
+            perror("cd");
+    if (!ft_strcmp(cmd->argv[0], "cd") && !(cmd->argv[1]))
+        while (env)
+        {
+            if (!ft_strcmp(env->name, "HOME"))
+                chdir(env->value);
+            env = env->next;
+        }
+}*/
 
 /*int if_varexist(t_envvar *env, char **s)
 {
