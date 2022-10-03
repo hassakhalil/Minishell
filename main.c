@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/03 21:15:55 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/03 21:18:28 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,9 @@ int main(int argc, char *argv[], char **env)
             free(buff);
             continue;
         }
+        //make fct builtin ->1/0
+        //if (builtin)
+        //    continue;
         //if (single builtin cmd)
         //{
             //tree = parsecmd(buff);
