@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/01 10:38:45 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/03 20:00:21 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,20 @@
 #define PIPE 3
 
 extern int GLOBAL;
+
+typedef struct s_envvar
+{
+  char *name;
+  char *value;
+  struct s_envvar *next;
+} t_envvar;
+
+typedef struct s_localvar
+{
+  char *name;
+  char *value;
+  struct s_localvar *next;
+} t_localvar;
 
 typedef struct s_env
 {
@@ -82,6 +96,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n);
 int	ft_strcmp(const char *s1, const char *s2);
 char	*ft_strncpy(char *dest, const char *src, size_t len);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+int	ft_atoi(const char *nptr);
+int	ft_isdigit(int c);
 
 //minishell utils
 int     forkk(void);
@@ -98,7 +114,8 @@ t_env *envpath(void);
 char    *getpath(char *buff);
 
 // builtins
-int      cd(char *buff);
+int ft_exit(char *buff);
+
 
 // executor
 void    executor(t_cmd *tree, char **env, t_env *envp, int *flag_out, int *flag_in);

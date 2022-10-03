@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/02 19:04:16 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/03 20:07:17 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,18 @@ int main(int argc, char *argv[], char **env)
         signal(SIGQUIT,SIG_IGN);
 	    signal(SIGINT, handler);
         buff = readline("$ ");
-        if (!buff || !ft_strcmp(buff, "exit"))
+        if (!buff)
         {
             //clear everything
             write(1, "exit\n", 5);
             exit (GLOBAL);
         }
         if (buff && *buff)
+        {
             add_history(buff);
-        if (!cd(buff) || !empty_cmd(buff))
+            ft_exit(buff);
+        }
+        if (/*!cd(buff) ||*/ !empty_cmd(buff) || ft_exit(buff))
         {
             free(buff);
             continue;

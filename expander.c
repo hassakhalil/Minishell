@@ -6,18 +6,11 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/02 18:30:07 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/03 19:54:38 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
 
 int	ft_isalpha(int c)
 {
