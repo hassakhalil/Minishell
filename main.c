@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/03 20:07:17 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/03 20:42:10 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,7 @@ int main(int argc, char *argv[], char **env)
             exit (GLOBAL);
         }
         if (buff && *buff)
-        {
             add_history(buff);
-            ft_exit(buff);
-        }
         if (/*!cd(buff) ||*/ !empty_cmd(buff) || ft_exit(buff))
         {
             free(buff);

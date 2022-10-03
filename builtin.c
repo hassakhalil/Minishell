@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/03 19:59:35 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/03 20:50:22 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,18 @@ int ft_exit(char *buff)
             if (node->argv[1])
             {
                 //clean everything
+                i = 0;
+                while (node->argv[1][i])
+                {
+                    if (!ft_isdigit(node->argv[1][i]))
+                    {
+                        write(2, "exit: ", 7);
+                        write(2, node->argv[1], ft_strlen(node->argv[1]));
+                        write(2, ": numeric argument required\n", 29);
+                        exit(255);
+                    }
+                    i++;
+                }
                 exit(ft_atoi(node->argv[1]));
             }
             else
