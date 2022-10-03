@@ -1,9 +1,5 @@
 // leaks
 
-bash-3.2$ ls>file0 | exit 100| ls | grep m|exit 50
-bash-3.2$ $?
-bash: 50: command not found
-
 //watch for seg fault (unset.....)
 
 //norm
