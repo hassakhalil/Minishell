@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/04 13:43:31 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/04 14:15:21 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int builtin(char *buff, t_envvar *env_list);
 void ft_exit(t_exec *cmd);
 void ft_cd(t_exec *cmd, t_envvar *env);
 void ft_pwd(void);
+int ft_check_for_pwd(char *s);
 t_envvar *init_envvar(char **env);
 
 

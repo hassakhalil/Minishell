@@ -6,7 +6,6 @@
 
 //*• Your shell must implement the following builtins:
 ◦ echo with option -n
-◦ pwd with no options
 ◦ export with no options
 ◦ unset with no options
 ◦ env with no options or arguments
