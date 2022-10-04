@@ -1,13 +1,10 @@
 // leaks
 
-//uppercase
-
 //watch for seg fault (unset.....)
 
 //norm
 
 //*• Your shell must implement the following builtins:
-◦ echo with option -n
 ◦ export with no options
 ◦ unset with no options
 ◦ env with no options or arguments
