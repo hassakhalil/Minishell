@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/04 00:01:02 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/04 14:00:17 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void ft_exit(t_exec *node)
             printf("%s=%s\n", var->name, var->value);
             var = var->next;
         }
-}
+}*/
 
 void ft_pwd(void)
 {
@@ -100,9 +100,10 @@ void ft_pwd(void)
     
     getcwd(cwd, 100);
     printf("%s\n", cwd);
+    exit(0);
 }
 
-int builtin_expander(char *buff, t_envvar *env, t_localvar **local)
+/*int builtin_expander(char *buff, t_envvar *env, t_localvar **local)
 {
     int i = 0;
     char *s;
@@ -131,6 +132,7 @@ void ft_cd(t_exec *cmd, t_envvar *env)
             write(2, "cd: ",5);
             perror(cmd->argv[1]);
             GLOBAL = 1;
+            return ;
         }
     if (!(cmd->argv[1]))
         while (env)
@@ -139,6 +141,7 @@ void ft_cd(t_exec *cmd, t_envvar *env)
                 chdir(env->value);
             env = env->next;
         }
+        GLOBAL = 0;
 }
 
 /*int if_varexist(t_envvar *env, char **s)
@@ -153,9 +156,9 @@ void ft_cd(t_exec *cmd, t_envvar *env)
         env = env->next;
     }
     return 0;
-}
+}*/
 
-void ft_export(t_exec *cmd, t_envvar *env)
+/*void ft_export(t_exec *cmd, t_envvar *env)
 {
     char **p;
 
@@ -166,14 +169,14 @@ void ft_export(t_exec *cmd, t_envvar *env)
             if (!if_varexist(env, p))
                 ft_lstadd_back(&env, ft_lstadd_new(p[0], p[1]));
         }
-}
+}*/
 
-void ft_unset(t_exec *cmd, t_envvar *env)
+/*void ft_unset(t_exec *cmd, t_envvar *env)
 {
     ft_list_remove_if(&env, cmd->argv[1], ft_strcmp);
-}
+}*/
 
-int echo_checker(char *s)
+/*int echo_checker(char *s)
 {
     int i = 0;
 
@@ -221,9 +224,9 @@ void ft_echo(t_exec *cmd, t_envvar *env, t_localvar *local)
                 printf("\n");
         }
     }
-}
+}*/
 
-int cherche(char *s, char *f)
+/*int cherche(char *s, char *f)
 {
     int i = -1;
     int j = 0;

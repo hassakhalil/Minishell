@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/04 00:14:14 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/04 14:00:28 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,15 +156,17 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
         if (!ft_strcmp(tree3->argv[0], "exit"))
         {
             ft_exit(tree3);
-            return;
+            exit(GLOBAL);
         }
         if (!ft_strcmp(tree3->argv[0], "cd"))
         {
             ft_cd(tree3, env_list);
             if (errno == 13 || errno == 2)
                 exit(1);
-            return ;
+            exit(0);
         }
+        if (!ft_strcmp(tree3->argv[0], "pwd"))
+            ft_pwd();
         dir = opendir(tree3->argv[0]);
         if (dir)
         {
