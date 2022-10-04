@@ -6,11 +6,19 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/04 17:17:58 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/04 22:16:09 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_tolower(int c)
+{
+	if (c >= 'A' && c <= 'Z')
+		return (c + 32);
+	return (c);
+}
+
 
 int builtin(char *buff, t_envvar *env)
 {
@@ -35,19 +43,6 @@ int builtin(char *buff, t_envvar *env)
     //clear 
     return (0);
 }
-
-/*int ft_isallnum(char *s)
-{
-    while (*s)
-        if (!ft_isdigit(*s++))
-            return 0;
-    return 1;
-}*/
-
-/*void ft_clear()
-{
-    printf("\e[1;1H\e[2J");
-}*/
 
 //exit
 
@@ -84,26 +79,38 @@ void ft_exit(t_exec *node)
     exit(GLOBAL);
 }
 
-/*void ft_env(t_exec *cmd, t_envvar *var)
+
+//env
+
+int ft_check_for_env(char *s)
 {
+    if (ft_strlen(s) != 3)
+        return(0);
+    if (ft_tolower(s[0]) == 'e' && ft_tolower(s[1]) == 'n' && ft_tolower(s[2]) == 'v')
+        return(1);
+    return (0);
+}
+
+void ft_env(t_exec *cmd, t_envvar *var)
+{
+    //debug
+    dprintf(2, "my env \n");
+    //end debug
     if (cmd->argv[1])
+    {
         printf("env: %s: No such file or directory\n", cmd->argv[1]);
+        exit(127);
+    } 
     else
         while (var)
         {
             printf("%s=%s\n", var->name, var->value);
             var = var->next;
         }
-}*/
+    exit(0);
+}
 
 //pwd
-
-int	ft_tolower(int c)
-{
-	if (c >= 'A' && c <= 'Z')
-		return (c + 32);
-	return (c);
-}
 
 int ft_check_for_pwd(char *s)
 {
@@ -122,27 +129,6 @@ void ft_pwd(void)
         printf("%s\n", cwd);
     exit(0);
 }
-
-/*int builtin_expander(char *buff, t_envvar *env, t_localvar **local)
-{
-    int i = 0;
-    char *s;
-    (void)local;
-    if (buff[i] == '$')
-    {
-        i++;
-        while (buff[i] && !is_space(buff[i]))
-            i++;
-        printf("expander\n");
-        s = ft_substr(buff, 1, i);
-        while (env){
-            if (!ft_strcmp(env->name, s))
-                printf("%s", env->value);
-            env = env->next;
-        }
-    }
-    return i;
-}*/
 
 //cd
 
@@ -280,33 +266,4 @@ void ft_localvar(t_exec *cmd, t_localvar *local)
             local = local->next;
         }
     }
-}
-
-void scan_and_run(t_exec *cmd, t_envvar *env, t_localvar *local)
-{
-    if (cherche(cmd->argv[0], "cd"))
-        ft_cd(cmd, env);
-    if (cherche(cmd->argv[0], "pwd"))
-        ft_pwd(cmd);
-    if (cherche(cmd->argv[0], "echo"))
-        ft_echo(cmd, env, local);
-    if (cherche(cmd->argv[0], "exit"))
-        ft_exit(cmd);
-    if (cherche(cmd->argv[0], "env"))
-        ft_env(cmd, env);
-    if (cherche(cmd->argv[0], "export"))
-        ft_export(cmd, env);
-    if (cherche(cmd->argv[0], "unset"))
-        ft_unset(cmd, env);
-    if (cherche(cmd->argv[0], "clear"))
-        ft_clear();
-    if (cherche(cmd->argv[0], "="))
-        ft_localvar(cmd, local);
-}
-
-void builtin(t_cmd *tree, t_envvar *env, t_localvar *local)
-{
-    t_exec *cmd = (t_exec *)tree;
-
-    scan_and_run(cmd, env, local);
 }*/

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/04 17:16:35 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/04 22:12:26 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,15 @@ char    *getpath(char *buff);
 
 // builtins
 int builtin(char *buff, t_envvar *env_list);
+t_envvar *init_envvar(char **env);
 void ft_exit(t_exec *cmd);
 void ft_cd(t_exec *cmd, t_envvar *env);
 void ft_pwd(void);
 int ft_check_for_pwd(char *s);
 void ft_echo(t_exec *cmd);
 int ft_check_for_echo(char *s);
-t_envvar *init_envvar(char **env);
-
+void  ft_env(t_exec *cmd, t_envvar *env_list);
+int ft_check_for_env(char *s);
 
 // executor
 void    executor(t_cmd *tree, char **env, t_env *envp, int *flag_out, int *flag_in, t_envvar *env_list);
