@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/04 22:26:12 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/04 23:32:23 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,23 +163,33 @@ void ft_cd(t_exec *cmd, t_envvar *env)
     return 0;
 }*/
 
-/*void ft_export(t_exec *cmd, t_envvar *env)
+void ft_export(t_exec *cmd, t_envvar *env)
 {
-    char **p;
+    //check the name (syntax)if its not valid display error
+    //check if its already there if yes replace it with the new value (if there is no value do nothing)
+    //else check local if you find it ->export
+    //create it
 
-    if (!ft_strcmp(cmd->argv[0], "export"))
-        if (cherche(cmd->argv[1], "="))
-        {
-            p = ft_split(cmd->argv[1], '=');
-            if (!if_varexist(env, p))
-                ft_lstadd_back(&env, ft_lstadd_new(p[0], p[1]));
-        }
-}*/
+    //char **p;
+    ///if (!ft_strcmp(cmd->argv[0], "export"))
+       // if (cherche(cmd->argv[1], "="))
+        //{
+          //  p = ft_split(cmd->argv[1], '=');
+            //if (!if_varexist(env, p))
+              //  ft_lstadd_back(&env, ft_lstadd_new(p[0], p[1]));
+        //}
+    //exit(?)
+    return ;
+}
 
-/*void ft_unset(t_exec *cmd, t_envvar *env)
+void ft_unset(t_exec *cmd, t_envvar *env)
 {
-    ft_list_remove_if(&env, cmd->argv[1], ft_strcmp);
-}*/
+    //unset alone does nothing
+    //check every variable if it exist remove it else diplay  error
+    //ft_list_remove_if(&env, cmd->argv[1], ft_strcmp);
+    //exit(?)
+     return ;
+}
 
 //echo
 
