@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/04 14:16:24 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/04 17:17:58 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int builtin(char *buff, t_envvar *env)
 {
     printf("\e[1;1H\e[2J");
 }*/
+
+//exit
 
 void ft_exit(t_exec *node)
 {
@@ -142,6 +144,8 @@ void ft_pwd(void)
     return i;
 }*/
 
+//cd
+
 void ft_cd(t_exec *cmd, t_envvar *env)
 {
     if (cmd->argv[1])
@@ -194,75 +198,60 @@ void ft_cd(t_exec *cmd, t_envvar *env)
     ft_list_remove_if(&env, cmd->argv[1], ft_strcmp);
 }*/
 
-/*int echo_checker(char *s)
-{
-    int i = 0;
+//echo
 
-    if (s[i] && s[i] == '-')
-        i++;
-    while (s[i] && s[i] == 'n')
-        i++;
-    if (s[i])
-        return 0;
-    return 1;
+int ft_check_for_echo(char *s)
+{
+    if (ft_strlen(s) != 4)
+        return(0);
+    if (ft_tolower(s[0]) == 'e' && ft_tolower(s[1]) == 'c' && ft_tolower(s[2]) == 'h' && ft_tolower(s[3]) == 'o')
+        return(1);
+    return (0);
 }
 
-void ft_echo(t_exec *cmd, t_envvar *env, t_localvar *local)
+int options(char *s)
 {
     int i = 0;
 
-    if (cherche(cmd->argv[++i], "-n"))
+    if (s[i] != '-')
+        return(0);
+    i++;
+    while (s[i])
     {
-        while (cherche(cmd->argv[i], "-n"))
+        if (s[i] != 'n')
+            return (0);
+        i++;
+    }
+    return (1);
+    
+}
+
+void ft_echo(t_exec *cmd)
+{
+    int i = 1;
+    int noption = 0;
+
+    if (cmd->argv[i])
+    {
+        while (options(cmd->argv[i]))
         {
-            if (!echo_checker(cmd->argv[i]))
-                break;
+            noption = 1;
             i++;
         }
         while (cmd->argv[i])
         {
-            i += builtin_expander(cmd->argv[i], env, &local);
-            printf("%s", cmd->argv[i++]);
+            printf("%s", cmd->argv[i]);
+            i++;
             if (cmd->argv[i])
                 printf(" ");
         }
     }
-    else 
-    {
-        while (cmd->argv[i])
-        {
-            if (cherche(cmd->argv[i], "$"))
-                printf("---- %s ----\n", cmd->argv[i]);
-                //builtin_expander(cmd->argv[i++], env, &local);
-            if (cmd->argv[i])
-                printf("%s", cmd->argv[i++]);
-            if (cmd->argv[i])
-                printf(" ");
-            else
-                printf("\n");
-        }
-    }
-}*/
-
-/*int cherche(char *s, char *f)
-{
-    int i = -1;
-    int j = 0;
-
-    while (s[++i])
-    {
-        j = 0;
-        while (s[i+j] == f[j])
-        {
-            j++;
-            if (!f[j])
-                return 1;
-        }
-    }
-    return 0;
+    if (noption == 0)
+        printf("\n");
+    exit(0);
 }
 
-int if_localexist(t_localvar *local, char **s)
+/*int if_localexist(t_localvar *local, char **s)
 {
     while (local)
     {

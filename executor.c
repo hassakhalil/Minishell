@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/04 14:10:37 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/04 16:32:53 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,8 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
         }
         if (ft_check_for_pwd(tree3->argv[0]))
             ft_pwd();
+        if(ft_check_for_echo(tree3->argv[0]))
+            ft_echo(tree3);
         dir = opendir(tree3->argv[0]);
         if (dir)
         {

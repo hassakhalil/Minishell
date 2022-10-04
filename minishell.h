@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/04 14:15:21 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/04 17:16:35 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <errno.h>
  #include <dirent.h>
 
-# define MAXARGS 10
+# define MAXARGS 100
 #define EXEC 1
 #define REDIR 2
 #define PIPE 3
@@ -119,6 +119,8 @@ void ft_exit(t_exec *cmd);
 void ft_cd(t_exec *cmd, t_envvar *env);
 void ft_pwd(void);
 int ft_check_for_pwd(char *s);
+void ft_echo(t_exec *cmd);
+int ft_check_for_echo(char *s);
 t_envvar *init_envvar(char **env);
 
 

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/04 13:51:18 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/04 16:29:33 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int main(int argc, char *argv[], char **env)
     int             flag_out = 0;
     int             exits;
     t_envvar        *env_list;
+    //t_localvar      *local_list;
 
     //silencing warnings
     argv[argc] = 0;
