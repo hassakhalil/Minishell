@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/04 22:16:09 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/04 22:26:12 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,6 @@ int ft_check_for_env(char *s)
 
 void ft_env(t_exec *cmd, t_envvar *var)
 {
-    //debug
-    dprintf(2, "my env \n");
-    //end debug
     if (cmd->argv[1])
     {
         printf("env: %s: No such file or directory\n", cmd->argv[1]);
