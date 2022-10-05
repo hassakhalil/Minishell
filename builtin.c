@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/05 16:12:29 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/05 16:19:51 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,20 @@ int builtin(char *buff, t_envvar *env, t_envvar *local)
         else if (ft_strchr(cmd->argv[0],'='))
         {
            add_local(cmd, local);
+           return(1);
+        }
+        else if (!ft_strcmp(cmd->argv[0], "unset"))
+        {
+           ft_unset(cmd, env);
+           return (1);
+        }
+        else if (!ft_strcmp(cmd->argv[0], "export"))
+        {
+            //debug 
+            dprintf(2, "->>>>>>>>>>>>>>>>>>>>>>\n");
+            //end debug
+           ft_export(cmd, env, local);
+           return (1);
         }
     }
     //add unset and export here
@@ -255,7 +269,6 @@ void ft_export(t_exec *cmd, t_envvar *env, t_envvar *local)
         }
         i++;
     }
-    exit(0);
 }
 
 //unset
@@ -285,7 +298,6 @@ void ft_unset(t_exec *cmd, t_envvar *env)
         if_exist_delete(env, cmd->argv[i]);
         i++;
     }
-    exit(0);
 }
 
 //echo
