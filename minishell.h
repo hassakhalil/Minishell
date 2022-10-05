@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/04 22:12:26 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/05 11:33:17 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,6 @@ typedef struct s_envvar
   char *value;
   struct s_envvar *next;
 } t_envvar;
-
-typedef struct s_localvar
-{
-  char *name;
-  char *value;
-  struct s_localvar *next;
-} t_localvar;
 
 typedef struct s_env
 {

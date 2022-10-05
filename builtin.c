@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/04 23:32:23 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/05 12:04:23 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,46 +149,84 @@ void ft_cd(t_exec *cmd, t_envvar *env)
         GLOBAL = 0;
 }
 
-/*int if_varexist(t_envvar *env, char **s)
+//export
+
+char **if_varexist(t_envvar *env, char **s)
 {
+    char    **v;
     while (env)
     {
         if (!ft_strcmp(env->name, s[0]))
         {
-            env->value = s[1];
-            return 1;
+            v = malloc(sizeof(char *) *3);
+            v[0] = ft_strdup(s[0]);
+            if (s[1])
+            {
+                env->value = s[1];
+                v[1] = ft_strdup(s[1]);
+            }
+            else
+                v[1] = 0;
+            v[2]= 0;
+            return (v);
         }
         env = env->next;
     }
-    return 0;
-}*/
+    return (0);
+}
 
-void ft_export(t_exec *cmd, t_envvar *env)
+void ft_export(t_exec *cmd, t_envvar *env, t_envvar *local)
 {
-    //check the name (syntax)if its not valid display error
-    //check if its already there if yes replace it with the new value (if there is no value do nothing)
-    //else check local if you find it ->export
-    //create it
+    int i = 1;
+    char    **v;
+    char    **tmp;
 
-    //char **p;
-    ///if (!ft_strcmp(cmd->argv[0], "export"))
-       // if (cherche(cmd->argv[1], "="))
-        //{
-          //  p = ft_split(cmd->argv[1], '=');
-            //if (!if_varexist(env, p))
-              //  ft_lstadd_back(&env, ft_lstadd_new(p[0], p[1]));
-        //}
-    //exit(?)
-    return ;
+    while (cmd->argv[i])
+    {
+        if (ft_strchr(cmd->argv[i], '='))
+        {
+            v = ft_split(cmd->argv[i], '=');
+            if (if_varexist(env, v))
+            {
+             //free  
+            ;
+            }
+            else
+            {
+                //check the name (syntax)if its not valid display error;
+                ft_lstadd_back(&env, ft_lstadd_new(v[0], v[1]));
+            }
+        }
+        else if (if_varexist(local, v))
+        {
+            tmp = if_varexist(local, v);
+            if(if_varexist(env, tmp))
+            {
+                //free
+            ;
+            }
+            else
+            {
+                //check the name (syntax)if its not valid display error (not here when addin it to local var list)
+                ft_lstadd_back(&env, ft_lstadd_new(tmp[0], tmp[1]));
+            }
+        }
+        i++;
+    }
+    exit(0);
 }
 
 void ft_unset(t_exec *cmd, t_envvar *env)
 {
+    int i = 1;
     //unset alone does nothing
-    //check every variable if it exist remove it else diplay  error
     //ft_list_remove_if(&env, cmd->argv[1], ft_strcmp);
-    //exit(?)
-     return ;
+    while (cmd->argv[i])
+    {
+        //if its there ->delete
+        i++;
+    }
+    exit(0);
 }
 
 //echo
@@ -243,34 +281,3 @@ void ft_echo(t_exec *cmd)
         printf("\n");
     exit(0);
 }
-
-/*int if_localexist(t_localvar *local, char **s)
-{
-    while (local)
-    {
-        if (!ft_strcmp(local->name, s[0]))
-        {
-            local->value = s[1];
-            return 1;
-        }
-        local = local->next;
-    }
-    return 0;
-}
-
-void ft_localvar(t_exec *cmd, t_localvar *local)
-{
-    char **p;
-
-    if (cherche(cmd->argv[0], "="))
-    {
-        p = ft_split(cmd->argv[0], '=');
-        if (!if_localexist(local, p))
-            ft_lstadd_localback(&local, ft_lstadd_localnew(p[0], p[1]));
-        while (local)
-        {
-            printf("%s = %s\n",local->name, local->value);
-            local = local->next;
-        }
-    }
-}*/

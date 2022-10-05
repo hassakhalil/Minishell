@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envvariables.c                                     :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iakry <iakry@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 16:17:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/30 16:36:05 by iakry            ###   ########.fr       */
+/*   Updated: 2022/10/05 11:33:36 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,34 +35,6 @@ void	ft_list_remove_if(t_envvar **begin_list, void *data_ref, int (*cmp)())
 		last = current;
 		current = next;
 	}	
-}
-
-void	ft_lstadd_localback(t_localvar **head, t_localvar *new)
-{
-	t_localvar	*temp;
-
-	if (!(*head))
-	{
-		(*head) = new;
-		return ;
-	}
-	temp = (*head);
-	while (temp->next)
-		temp = temp->next;
-	temp->next = new;
-}
-
-t_localvar *ft_lstadd_localnew(void *n, void *v)
-{
-    t_localvar *env;
-    
-    env = malloc(sizeof(*env));
-    if (!env)
-        return NULL;
-    env->name = n;
-    env->value = v;
-    env->next = NULL;
-    return (env);
 }
 
 void	ft_lstadd_back(t_envvar **head, t_envvar *new)

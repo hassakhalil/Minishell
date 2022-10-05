@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/04 16:29:33 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/05 12:06:16 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int main(int argc, char *argv[], char **env)
     int             flag_out = 0;
     int             exits;
     t_envvar        *env_list;
-    //t_localvar      *local_list;
+    t_envvar        *local;
 
     //silencing warnings
     argv[argc] = 0;
@@ -95,6 +95,7 @@ int main(int argc, char *argv[], char **env)
         }
         if (buff && *buff)
             add_history(buff);
+        //add local in builtin
         if (!empty_cmd(buff) || builtin(buff, env_list))
         {
             free(buff);
@@ -107,6 +108,7 @@ int main(int argc, char *argv[], char **env)
 	        signal(SIGINT, SIG_DFL);
             tree = parsecmd(buff);
             free(buff);
+            //pass local to executor
             executor(tree, env, envp,&flag_out, &flag_in, env_list);
             //parsing_tester(tree);
         }
