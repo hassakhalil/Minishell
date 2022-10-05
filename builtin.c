@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/05 14:56:16 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/05 16:12:29 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int builtin(char *buff, t_envvar *env, t_envvar *local)
            add_local(cmd, local);
         }
     }
+    //add unset and export here
     //clear 
     return (0);
 }
@@ -123,7 +124,7 @@ int ft_check_for_env(char *s)
     return (0);
 }
 
-void ft_env(t_exec *cmd, t_envvar *var)
+void ft_env(t_exec *cmd, t_envvar *env)
 {
     if (cmd->argv[1])
     {
@@ -131,10 +132,10 @@ void ft_env(t_exec *cmd, t_envvar *var)
         exit(127);
     } 
     else
-        while (var)
+        while (env)
         {
-            printf("%s=%s\n", var->name, var->value);
-            var = var->next;
+            printf("%s=%s\n", env->name, env->value);
+            env = env->next;
         }
     exit(0);
 }
@@ -220,11 +221,19 @@ void ft_export(t_exec *cmd, t_envvar *env, t_envvar *local)
             v = ft_split(cmd->argv[i], '=');
             if (if_exist_add(env, v))
             {
+
+            //debug
+                dprintf(2, "exported (already exist) name=value\n");
+                //end debug
              //free  
-            ;
             }
             else  if (valid_name(v[0]))
-                    ft_lstadd_back(&env, ft_lstadd_new(v[0], v[1]));
+            {
+                //debug
+                dprintf(2, "exported (new) name=value\n");
+                //end debug
+                ft_lstadd_back(&env, ft_lstadd_new(v[0], v[1]));
+            }
         }
         else if (if_exist_add(local, v))
         {
@@ -232,10 +241,17 @@ void ft_export(t_exec *cmd, t_envvar *env, t_envvar *local)
             if(if_exist_add(env, tmp))
             {
                 //free
-                ;
+                //debug
+                dprintf(2, "exported from local(already exist)\n");
+                //end debug
             }
             else
+            {
+                //debug
+                dprintf(2, "exported from local(new)\n");
+                //end debug
                 ft_lstadd_back(&env, ft_lstadd_new(tmp[0], tmp[1]));
+            }
         }
         i++;
     }
