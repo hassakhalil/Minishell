@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/04 23:04:21 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/05 14:57:13 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void find_in_redir(t_cmd *tree)
     }
 }
 
-void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_in, t_envvar *env_list)
+void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_in, t_envvar *env_list, t_envvar *local)
 {
     char    *s;
     int     p[2];
@@ -109,7 +109,7 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
             close(p[0]);
             dup2(p[1], 1);
             close(p[1]);
-            executor(tree1->left, env, envp,flag_out, flag_in, env_list);
+            executor(tree1->left, env, envp,flag_out, flag_in, env_list, local);
         }
         id = forkk();
         if (id == 0)
@@ -117,7 +117,7 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
             close(p[1]);
             dup2(p[0], 0);
             close(p[0]);
-            executor(tree1->right, env, envp,flag_out, flag_in, env_list);
+            executor(tree1->right, env, envp,flag_out, flag_in, env_list, local);
         }
         close(p[0]);
         close(p[1]);
@@ -144,7 +144,7 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
             dup2(open_fd, tree2->fd);
         }
         close(open_fd);
-        executor(tree2->cmd, env, envp,flag_out, flag_in, env_list);
+        executor(tree2->cmd, env, envp,flag_out, flag_in, env_list, local);
     }
     else
     {
@@ -173,9 +173,14 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
         if (ft_check_for_env(tree3->argv[0]))
             ft_env(tree3, env_list);
         if (!ft_strcmp(tree3->argv[0], "export"))
-            ft_export(tree3, env_list);
+            ft_export(tree3, env_list, local);
         if (!ft_strcmp(tree3->argv[0], "unset"))
-            t_unset(tree3, env_list);
+            ft_unset(tree3, env_list);
+        if (ft_strchr(tree3->argv[0], '='))
+        {
+            add_local(tree3, local);
+            exit(0);
+        }
         //end of function
         dir = opendir(tree3->argv[0]);
         if (dir)

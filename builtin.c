@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/05 12:04:23 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/05 14:56:16 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,36 @@ int	ft_tolower(int c)
 	return (c);
 }
 
+int valid_name(char *s)
+{
+    int i = 0;
 
-int builtin(char *buff, t_envvar *env)
+    if (!ft_isalpha(s[i]))
+    {
+        dprintf(2, "invalid name\n");
+        return(0);
+    }
+    while (s[i])
+    {
+        if (!ft_isalpha(s[i]) && !ft_isdigit(s[i]) && s[i] != '_')
+        {
+                    dprintf(2, "invalid name\n");
+            return (0);
+        }
+        i++;
+    }
+    return (1);
+}
+
+void    add_local(t_exec *cmd, t_envvar *local)
+{
+    char **v = ft_split(cmd->argv[0], '=');
+    if (v[0] && v[1] && valid_name(v[0]))
+        ft_lstadd_back(&local, ft_lstadd_new(v[0], v[1]));
+        //free
+}
+
+int builtin(char *buff, t_envvar *env, t_envvar *local)
 {
     t_cmd   *tree;
     t_exec  *cmd;
@@ -38,6 +66,10 @@ int builtin(char *buff, t_envvar *env)
         {
             ft_cd(cmd, env);
             return (1);
+        }
+        else if (ft_strchr(cmd->argv[0],'='))
+        {
+           add_local(cmd, local);
         }
     }
     //clear 
@@ -151,7 +183,7 @@ void ft_cd(t_exec *cmd, t_envvar *env)
 
 //export
 
-char **if_varexist(t_envvar *env, char **s)
+char **if_exist_add(t_envvar *env, char **s)
 {
     char    **v;
     while (env)
@@ -186,44 +218,55 @@ void ft_export(t_exec *cmd, t_envvar *env, t_envvar *local)
         if (ft_strchr(cmd->argv[i], '='))
         {
             v = ft_split(cmd->argv[i], '=');
-            if (if_varexist(env, v))
+            if (if_exist_add(env, v))
             {
              //free  
             ;
             }
-            else
-            {
-                //check the name (syntax)if its not valid display error;
-                ft_lstadd_back(&env, ft_lstadd_new(v[0], v[1]));
-            }
+            else  if (valid_name(v[0]))
+                    ft_lstadd_back(&env, ft_lstadd_new(v[0], v[1]));
         }
-        else if (if_varexist(local, v))
+        else if (if_exist_add(local, v))
         {
-            tmp = if_varexist(local, v);
-            if(if_varexist(env, tmp))
+            tmp = if_exist_add(local, v);
+            if(if_exist_add(env, tmp))
             {
                 //free
-            ;
+                ;
             }
             else
-            {
-                //check the name (syntax)if its not valid display error (not here when addin it to local var list)
                 ft_lstadd_back(&env, ft_lstadd_new(tmp[0], tmp[1]));
-            }
         }
         i++;
     }
     exit(0);
 }
 
+//unset
+
+
+char *if_exist_delete(t_envvar *env, char *s)
+{
+    while (env)
+    {
+        if (!ft_strcmp(env->name, s))
+        {
+            //delete
+            env->name= NULL;
+            env->value = NULL;
+        }
+        env = env->next;
+    }
+    return (0);
+}
+
 void ft_unset(t_exec *cmd, t_envvar *env)
 {
     int i = 1;
-    //unset alone does nothing
-    //ft_list_remove_if(&env, cmd->argv[1], ft_strcmp);
+
     while (cmd->argv[i])
     {
-        //if its there ->delete
+        if_exist_delete(env, cmd->argv[i]);
         i++;
     }
     exit(0);

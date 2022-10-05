@@ -6,36 +6,11 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 16:17:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/05 11:33:36 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/05 14:47:14 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_list_remove_if(t_envvar **begin_list, void *data_ref, int (*cmp)())
-{
-	t_envvar	*current;
-	t_envvar	*last;
-	t_envvar	*next;
-
-	current = *begin_list;
-	last = ((void *)0);
-	while (current)
-	{
-		next = current->next;
-		if (cmp(current->name, data_ref) == 0)
-		{
-			if (last)
-				last->next = current->next;
-			else
-				*begin_list = current->next;
-			free(current);
-			current = ((void *)0);
-		}
-		last = current;
-		current = next;
-	}	
-}
 
 void	ft_lstadd_back(t_envvar **head, t_envvar *new)
 {
@@ -79,3 +54,4 @@ t_envvar *init_envvar(char **env)
     }
     return (new);
 }
+
