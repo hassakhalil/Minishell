@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/07 18:43:58 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/07 18:52:17 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,12 +218,7 @@ char **if_exist_add(t_envvar **env, char **s, int   flag)
                     v[1] = 0;
             }
             else
-            {
-                //debug
-                dprintf(2, "beforrrrrre seg\n");
-                //end debug
                 v[1] = ft_strdup((*env)->value);
-            }
             v[2]=0;
             return (v);
         }
@@ -246,48 +241,16 @@ void ft_export(t_exec *cmd, t_envvar **env, t_envvar **local)
         if (ft_strchr(cmd->argv[i], '='))
         {
            
-            if (if_exist_add(&addr, v, 1))
-            {
-
-            //debug
-                dprintf(2, "exported (already exist) name=value\n");
-                //end debug
-             //free  
-            }
+            if (if_exist_add(&addr, v, 1));
             else  if (valid_name(v[0]))
-            {
-                //debug
-                dprintf(2, "exported (new) name=value\n");
-                //end debug
                 ft_lstadd_back(env, ft_lstadd_new(v[0], v[1]));
-            }
         }
         else
         {
-            //debug
-            dprintf(2, "ready to export from local\n");
-            //end debug
-            
             tmp = if_exist_add(local, v, 0);
-            //debug
-            dprintf(2, "passed first step\n");
-            dprintf(2, "{ %s }\n", tmp[0]);
-            dprintf(2, "{ %s }\n", tmp[1]);
-            //end debug
-            if(if_exist_add(&addr, tmp, 1))
-            {
-                //free
-                //debug
-                dprintf(2, "exported from local(already exist)\n");
-                //end debug
-            }
+            if(if_exist_add(&addr, tmp, 1));
             else if (tmp[1])
-            {
-                //debug
-                dprintf(2, "exported from local(new)\n");
-                //end debug
                 ft_lstadd_back(env, ft_lstadd_new(tmp[0], tmp[1]));
-            }
         }
         i++;
     }
