@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/05 16:19:51 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/07 18:43:58 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,15 @@ int valid_name(char *s)
     return (1);
 }
 
-void    add_local(t_exec *cmd, t_envvar *local)
+void    add_local(t_exec *cmd, t_envvar **local)
 {
     char **v = ft_split(cmd->argv[0], '=');
     if (v[0] && v[1] && valid_name(v[0]))
-        ft_lstadd_back(&local, ft_lstadd_new(v[0], v[1]));
+        ft_lstadd_back(local, ft_lstadd_new(v[0], v[1]));
         //free
 }
 
-int builtin(char *buff, t_envvar *env, t_envvar *local)
+int builtin(char *buff, t_envvar **env, t_envvar **local)
 {
     t_cmd   *tree;
     t_exec  *cmd;
@@ -64,7 +64,7 @@ int builtin(char *buff, t_envvar *env, t_envvar *local)
         }
         else if (!ft_strcmp(cmd->argv[0], "cd"))
         {
-            ft_cd(cmd, env);
+            ft_cd(cmd, *env);
             return (1);
         }
         else if (ft_strchr(cmd->argv[0],'='))
@@ -79,9 +79,6 @@ int builtin(char *buff, t_envvar *env, t_envvar *local)
         }
         else if (!ft_strcmp(cmd->argv[0], "export"))
         {
-            //debug 
-            dprintf(2, "->>>>>>>>>>>>>>>>>>>>>>\n");
-            //end debug
            ft_export(cmd, env, local);
            return (1);
         }
@@ -146,11 +143,13 @@ void ft_env(t_exec *cmd, t_envvar *env)
         exit(127);
     } 
     else
+    {
         while (env)
         {
             printf("%s=%s\n", env->name, env->value);
             env = env->next;
         }
+    }
     exit(0);
 }
 
@@ -198,42 +197,56 @@ void ft_cd(t_exec *cmd, t_envvar *env)
 
 //export
 
-char **if_exist_add(t_envvar *env, char **s)
+char **if_exist_add(t_envvar **env, char **s, int   flag)
 {
-    char    **v;
-    while (env)
+    char    **v= NULL;
+
+    while (*env)
     {
-        if (!ft_strcmp(env->name, s[0]))
+        if (!ft_strcmp((*env)->name, s[0]))
         {
             v = malloc(sizeof(char *) *3);
             v[0] = ft_strdup(s[0]);
-            if (s[1])
+            if (flag)
             {
-                env->value = s[1];
-                v[1] = ft_strdup(s[1]);
+                if (s[1])
+                {
+                    (*env)->value = s[1];
+                    v[1] = ft_strdup(s[1]);
+                }
+                else
+                    v[1] = 0;
             }
             else
-                v[1] = 0;
-            v[2]= 0;
+            {
+                //debug
+                dprintf(2, "beforrrrrre seg\n");
+                //end debug
+                v[1] = ft_strdup((*env)->value);
+            }
+            v[2]=0;
             return (v);
         }
-        env = env->next;
+        (*env) = (*env)->next;
     }
     return (0);
 }
 
-void ft_export(t_exec *cmd, t_envvar *env, t_envvar *local)
+void ft_export(t_exec *cmd, t_envvar **env, t_envvar **local)
 {
     int i = 1;
     char    **v;
     char    **tmp;
+    t_envvar    *addr;
 
     while (cmd->argv[i])
     {
+        addr = *env;
+        v = ft_split(cmd->argv[i], '=');
         if (ft_strchr(cmd->argv[i], '='))
         {
-            v = ft_split(cmd->argv[i], '=');
-            if (if_exist_add(env, v))
+           
+            if (if_exist_add(&addr, v, 1))
             {
 
             //debug
@@ -246,25 +259,34 @@ void ft_export(t_exec *cmd, t_envvar *env, t_envvar *local)
                 //debug
                 dprintf(2, "exported (new) name=value\n");
                 //end debug
-                ft_lstadd_back(&env, ft_lstadd_new(v[0], v[1]));
+                ft_lstadd_back(env, ft_lstadd_new(v[0], v[1]));
             }
         }
-        else if (if_exist_add(local, v))
+        else
         {
-            tmp = if_exist_add(local, v);
-            if(if_exist_add(env, tmp))
+            //debug
+            dprintf(2, "ready to export from local\n");
+            //end debug
+            
+            tmp = if_exist_add(local, v, 0);
+            //debug
+            dprintf(2, "passed first step\n");
+            dprintf(2, "{ %s }\n", tmp[0]);
+            dprintf(2, "{ %s }\n", tmp[1]);
+            //end debug
+            if(if_exist_add(&addr, tmp, 1))
             {
                 //free
                 //debug
                 dprintf(2, "exported from local(already exist)\n");
                 //end debug
             }
-            else
+            else if (tmp[1])
             {
                 //debug
                 dprintf(2, "exported from local(new)\n");
                 //end debug
-                ft_lstadd_back(&env, ft_lstadd_new(tmp[0], tmp[1]));
+                ft_lstadd_back(env, ft_lstadd_new(tmp[0], tmp[1]));
             }
         }
         i++;
@@ -274,22 +296,22 @@ void ft_export(t_exec *cmd, t_envvar *env, t_envvar *local)
 //unset
 
 
-char *if_exist_delete(t_envvar *env, char *s)
+char *if_exist_delete(t_envvar **env, char *s)
 {
-    while (env)
+    while (*env)
     {
-        if (!ft_strcmp(env->name, s))
+        if (!ft_strcmp((*env)->name, s))
         {
             //delete
-            env->name= NULL;
-            env->value = NULL;
+            (*env)->name= NULL;
+            (*env)->value = NULL;
         }
-        env = env->next;
+        (*env) = (*env)->next;
     }
     return (0);
 }
 
-void ft_unset(t_exec *cmd, t_envvar *env)
+void ft_unset(t_exec *cmd, t_envvar **env)
 {
     int i = 1;
 

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/05 14:55:12 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/07 18:32:47 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int main(int argc, char *argv[], char **env)
         if (buff && *buff)
             add_history(buff);
         //add local in builtin
-        if (!empty_cmd(buff) || builtin(buff, env_list, local))
+        if (!empty_cmd(buff) || builtin(buff, &env_list, &local))
         {
             free(buff);
             continue;
@@ -109,7 +109,7 @@ int main(int argc, char *argv[], char **env)
             tree = parsecmd(buff);
             free(buff);
             //pass local to executor
-            executor(tree, env, envp,&flag_out, &flag_in, env_list, local);
+            executor(tree, env, envp,&flag_out, &flag_in, &env_list, &local);
             //parsing_tester(tree);
         }
         signal(SIGINT,SIG_IGN);
@@ -119,6 +119,7 @@ int main(int argc, char *argv[], char **env)
         else
             GLOBAL = WEXITSTATUS(exits);
         //free(buff);
+        
     }
     return(0);
 }

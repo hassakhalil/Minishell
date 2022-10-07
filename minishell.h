@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/05 14:53:35 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/07 18:26:51 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ t_env *envpath(void);
 char    *getpath(char *buff);
 
 // builtins
-int builtin(char *buff, t_envvar *env_list, t_envvar *local);
+int builtin(char *buff, t_envvar **env_list, t_envvar **local);
 t_envvar *init_envvar(char **env);
 void ft_exit(t_exec *cmd);
 void ft_cd(t_exec *cmd, t_envvar *env);
@@ -119,13 +119,13 @@ int ft_check_for_pwd(char *s);
 void ft_echo(t_exec *cmd);
 int ft_check_for_echo(char *s);
 void  ft_env(t_exec *cmd, t_envvar *env_list);
-void    add_local(t_exec *cmd, t_envvar *local);
+void    add_local(t_exec *cmd, t_envvar **local);
 int ft_check_for_env(char *s);
-void ft_export(t_exec *cmd, t_envvar *env, t_envvar *local);
-void ft_unset(t_exec *cmd, t_envvar *env);
+void ft_export(t_exec *cmd, t_envvar **env, t_envvar **local);
+void ft_unset(t_exec *cmd, t_envvar **env);
 
 // executor
-void    executor(t_cmd *tree, char **env, t_env *envp, int *flag_out, int *flag_in, t_envvar *env_list, t_envvar *local);
+void    executor(t_cmd *tree, char **env, t_env *envp, int *flag_out, int *flag_in, t_envvar **env_list, t_envvar **local);
 void    parsing_tester(t_cmd *result_tree);
 void     check_in_files(t_cmd *redir);
 void    find_in_redir(t_cmd *tree);

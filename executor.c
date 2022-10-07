@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/05 15:53:52 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/07 18:28:27 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void find_in_redir(t_cmd *tree)
     }
 }
 
-void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_in, t_envvar *env_list, t_envvar *local)
+void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_in, t_envvar **env_list, t_envvar **local)
 {
     char    *s;
     int     p[2];
@@ -161,7 +161,7 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
         }
         if (!ft_strcmp(tree3->argv[0], "cd"))
         {
-            ft_cd(tree3, env_list);
+            ft_cd(tree3, *env_list);
             if (errno == 13 || errno == 2)
                 exit(1);
             exit(0);
@@ -171,7 +171,7 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
         if (ft_check_for_echo(tree3->argv[0]))
             ft_echo(tree3);
         if (ft_check_for_env(tree3->argv[0]))
-            ft_env(tree3, env_list);
+            ft_env(tree3, *env_list);
         if (!ft_strcmp(tree3->argv[0], "export"))
         {
             //debug 
