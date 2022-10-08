@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/07 18:52:17 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/08 17:21:19 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,14 @@ int valid_name(char *s)
 
 void    add_local(t_exec *cmd, t_envvar **local)
 {
+    //check if its already there 
     char **v = ft_split(cmd->argv[0], '=');
     if (v[0] && v[1] && valid_name(v[0]))
-        ft_lstadd_back(local, ft_lstadd_new(v[0], v[1]));
+    {
+        if (if_exist_add(local, v, 1));
+        else
+            ft_lstadd_back(local, ft_lstadd_new(v[0], v[1]));
+    }
         //free
 }
 

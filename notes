@@ -1,13 +1,12 @@
 // leaks
 
-//before adding local check if its already there
+//work with you env in everything inside minishell
 
 //watch for seg fault (unset.....)
 
 //norm
 
 //*• Your shell must implement the following builtins:
-◦ export with no options
 ◦ unset with no options
 
 
