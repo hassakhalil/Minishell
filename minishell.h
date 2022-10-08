@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/08 17:21:56 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/08 17:41:27 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int	ft_isdigit(int c);
 int	ft_isalpha(int c);
 void	ft_lstadd_back(t_envvar **head, t_envvar *new);
 t_envvar *ft_lstadd_new(void *n, void *v);
+int	ft_lstsize(t_envvar *lst);
 
 //minishell utils
 int     forkk(void);

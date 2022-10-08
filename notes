@@ -7,7 +7,9 @@
 //norm
 
 //*• Your shell must implement the following builtins:
-◦ unset with no options
+>name1="" name2=""
+>export name1 name2
+//fix return value and error msgs
 
 
 //el

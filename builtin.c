@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/08 17:21:19 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/08 19:41:25 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,29 @@ int valid_name(char *s)
 
 void    add_local(t_exec *cmd, t_envvar **local)
 {
-    //check if its already there 
-    char **v = ft_split(cmd->argv[0], '=');
-    if (v[0] && v[1] && valid_name(v[0]))
-    {
-        if (if_exist_add(local, v, 1));
-        else
-            ft_lstadd_back(local, ft_lstadd_new(v[0], v[1]));
-    }
+    int i = 0;
+    //check if its already there
+    t_envvar    *addr = *local;
+
+   
+    while (cmd->argv[i])
+    { 
+        addr = *local;
+        char **v = ft_split(cmd->argv[i], '=');
+        if (v && v[0] && v[1] && valid_name(v[0]))
+        {
+            if (if_exist_add(&addr, v, 1))
+            { 
+                //debug
+                char **tmp=if
+                //end debug
+            }
+            else
+                ft_lstadd_back(&addr, ft_lstadd_new(v[0], v[1]));
+        }
         //free
+        i++;
+    }
 }
 
 int builtin(char *buff, t_envvar **env, t_envvar **local)
@@ -211,13 +225,13 @@ char **if_exist_add(t_envvar **env, char **s, int   flag)
         if (!ft_strcmp((*env)->name, s[0]))
         {
             v = malloc(sizeof(char *) *3);
-            v[0] = ft_strdup(s[0]);
+            v[0] = ft_strdup((*env)->name);
             if (flag)
             {
                 if (s[1])
                 {
-                    (*env)->value = s[1];
-                    v[1] = ft_strdup(s[1]);
+                    (*env)->value = ft_strdup(s[1]);
+                    v[1] = ft_strdup((*env)->value);
                 }
                 else
                     v[1] = 0;
@@ -238,21 +252,27 @@ void ft_export(t_exec *cmd, t_envvar **env, t_envvar **local)
     char    **v;
     char    **tmp;
     t_envvar    *addr;
-
+    t_envvar    *local_addr;
+    
+    addr = *env;
+    local_addr = *local;
     while (cmd->argv[i])
     {
-        addr = *env;
+       
         v = ft_split(cmd->argv[i], '=');
         if (ft_strchr(cmd->argv[i], '='))
         {
-           
             if (if_exist_add(&addr, v, 1));
             else  if (valid_name(v[0]))
                 ft_lstadd_back(env, ft_lstadd_new(v[0], v[1]));
+            
         }
         else
         {
-            tmp = if_exist_add(local, v, 0);
+            tmp = if_exist_add(local, &cmd->argv[i], 0);
+            //debug
+            dprintf(2, "--{ %s }---\n", tmp[0]);
+            //end debug
             if(if_exist_add(&addr, tmp, 1));
             else if (tmp[1])
                 ft_lstadd_back(env, ft_lstadd_new(tmp[0], tmp[1]));
@@ -266,15 +286,50 @@ void ft_export(t_exec *cmd, t_envvar **env, t_envvar **local)
 
 char *if_exist_delete(t_envvar **env, char *s)
 {
-    while (*env)
+    t_envvar    *tmp;
+    t_envvar    *prev;
+    t_envvar    *next;
+    t_envvar    *list;
+    int         i = 0;
+    int         n = ft_lstsize(*env);
+
+    prev = *env;
+    list = *env;
+    while (list)
     {
-        if (!ft_strcmp((*env)->name, s))
+        tmp= list;
+        if (!ft_strcmp(list->name, s))
         {
-            //delete
-            (*env)->name= NULL;
-            (*env)->value = NULL;
+            if (i == 0)
+            {
+                tmp = list;
+                env = &(tmp->next);
+                free(tmp->name);
+                free(tmp->value);
+                free(tmp);
+            }
+            else if (i + 1 == n)
+            {
+                tmp = list;
+                free(tmp->name);
+                free(tmp->value);
+                free(tmp);
+                prev->next = NULL;
+            }
+            else
+            {
+                tmp = list;
+                next = tmp->next;
+                free(tmp->name);
+                free(tmp->value);
+                free(tmp);
+                prev->next=next;
+            }
+            break;
         }
-        (*env) = (*env)->next;
+        prev = list;
+        list = list->next;
+        i++;
     }
     return (0);
 }

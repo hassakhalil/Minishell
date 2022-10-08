@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/07 18:32:47 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/08 18:27:02 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,7 @@ int main(int argc, char *argv[], char **env)
             GLOBAL = 128 + WTERMSIG(exits);
         else
             GLOBAL = WEXITSTATUS(exits);
-        //free(buff);
-        
+        //free(buff); 
     }
     return(0);
 }

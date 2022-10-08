@@ -6,11 +6,24 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 16:17:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/05 14:47:14 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/08 17:41:01 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_lstsize(t_envvar *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
+}
 
 void	ft_lstadd_back(t_envvar **head, t_envvar *new)
 {
