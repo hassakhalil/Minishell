@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/08 23:50:54 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/09 00:03:16 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,6 @@ void    add_local(t_exec *cmd, t_envvar **local)
     while (cmd->argv[i])
     { 
         char **v = ft_split(cmd->argv[i], '=');
-          //debug 
-        dprintf(2,"{ %s } = {  %s }\n", v[0], v[1]);
-        //end debug
         if (v && v[0] && v[1] && valid_name(v[0]))
         {
             if (if_exist_add(&addr, v, 1));
@@ -218,14 +215,13 @@ void ft_cd(t_exec *cmd, t_envvar *env)
 
 char **if_exist_add(t_envvar **env, char **s, int   flag)
 {
-    char    **v= NULL;
+    char    **v= malloc(sizeof(char *) *3);
 
+    v[0] = 0;
+    v[1] = 0;
+    v[2] = 0;
     while ( env && *env)
     {
-        //debug 
-        dprintf(2,"{ %s } = {  %s }, s[0]= {{ %s }}\n", (*env)->name, (*env)->value, s[0]);
-        //end debug
-        
         if (!ft_strcmp((*env)->name, s[0]))
         {
             v = malloc(sizeof(char *) *3);
@@ -254,15 +250,12 @@ void ft_export(t_exec *cmd, t_envvar **env, t_envvar **local)
 {
     int i = 1;
     char    **v;
-    char    **tmp;
+    char    **tmp = NULL;
     t_envvar    *addr;
     t_envvar    *local_addr;
     
     addr = *env;
     local_addr = *local;
-    //debug 
-            dprintf(2, "found export\n");
-            //end debug
     while (cmd->argv[i])
     {
        
@@ -271,18 +264,13 @@ void ft_export(t_exec *cmd, t_envvar **env, t_envvar **local)
         {
             if (if_exist_add(&addr, v, 1));
             else  if (valid_name(v[0]))
-                ft_lstadd_back(env, ft_lstadd_new(v[0], v[1]));
-            
+                ft_lstadd_back(env, ft_lstadd_new(v[0], v[1])); 
         }
         else
         {
-            //debug
-            dprintf(2,"before segfault\n");
-            dprintf(2,"{ %s } = {  %s }\n", (*local)->name, (*local)->value);
-            //end debug
             tmp = if_exist_add(local, &cmd->argv[i], 0);
             if(if_exist_add(&addr, tmp, 1));
-            else if (tmp[1])
+            else if (tmp && tmp[1])
                 ft_lstadd_back(env, ft_lstadd_new(tmp[0], tmp[1]));
         }
         i++;

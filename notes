@@ -1,5 +1,6 @@
 // leaks
 
+
 //work with you env in everything inside minishell
 
 //watch for seg fault (unset.....)
@@ -7,8 +8,10 @@
 //norm
 
 //*• Your shell must implement the following builtins:
->name1="" name2=""
->export name1 name2
+>set env_local
+>export
+>unset
+>export
 //fix return value and error msgs
 
 
