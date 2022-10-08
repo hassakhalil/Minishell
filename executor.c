@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/07 18:28:27 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/08 23:42:39 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,9 +174,6 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
             ft_env(tree3, *env_list);
         if (!ft_strcmp(tree3->argv[0], "export"))
         {
-            //debug 
-            dprintf(2, "found export\n");
-            //end debug
             ft_export(tree3, env_list, local);
             exit(0);
         }
