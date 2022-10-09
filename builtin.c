@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/09 01:14:08 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/09 16:42:52 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ int valid_name(char *s)
 
     if (!ft_isalpha(s[i]))
     {
-        dprintf(2, "invalid name\n");
+        GLOBAL = -2;
         return(0);
     }
     while (s[i])
     {
         if (!ft_isalpha(s[i]) && !ft_isdigit(s[i]) && s[i] != '_')
         {
-                    dprintf(2, "invalid name\n");
+            GLOBAL = -2;
             return (0);
         }
         i++;
@@ -40,31 +40,7 @@ int valid_name(char *s)
     return (1);
 }
 
-void    add_local(t_exec *cmd, t_envvar **local)
-{
-    int i = 0;
-    //check if its already there
-    t_envvar    *addr = *local;
-
-   
-    while (cmd->argv[i])
-    { 
-        char **v = ft_split(cmd->argv[i], '=');
-        if (v && v[0] && v[1] && valid_name(v[0]))
-        {
-            if (if_exist_add(&addr, v, 1));
-            else
-            {
-                addr = *local; 
-                ft_lstadd_back(local, ft_lstadd_new(v[0], v[1]));
-            }
-        }
-        //free
-        i++;
-    }
-}
-
-int builtin(char *buff, t_envvar **env, t_envvar **local)
+int builtin(char *buff, t_envvar **env)
 {
     t_cmd   *tree;
     t_exec  *cmd;
@@ -83,20 +59,22 @@ int builtin(char *buff, t_envvar **env, t_envvar **local)
             ft_cd(cmd, *env);
             return (1);
         }
-        else if (ft_strchr(cmd->argv[0],'='))
-        {
-            
-           add_local(cmd, local);
-           return(1);
-        }
         else if (!ft_strcmp(cmd->argv[0], "unset"))
         {
            ft_unset(cmd, env);
+           if (GLOBAL == -2)
+                GLOBAL = 1;
+           else
+                GLOBAL = 0;
            return (1);
         }
         else if (!ft_strcmp(cmd->argv[0], "export"))
         {
-           ft_export(cmd, env, local);
+           ft_export(cmd, env);
+           if (GLOBAL == -2)
+                GLOBAL = 1;
+           else
+                GLOBAL = 0;
            return (1);
         }
     }
@@ -247,34 +225,30 @@ char **if_exist_add(t_envvar **env, char **s, int   flag)
     return (0);
 }
 
-void ft_export(t_exec *cmd, t_envvar **env, t_envvar **local)
+void ft_export(t_exec *cmd, t_envvar **env)
 {
     int i = 1;
     char    **v;
-    char    **tmp = NULL;
-    t_envvar    *tmp_local;
     t_envvar    *addr;
-    t_envvar    *local_addr;
     
-    addr = *env;
-    local_addr = *local;
+    
     while (cmd->argv[i])
     {
-       
+        addr = *env;
         v = ft_split(cmd->argv[i], '=');
         if (ft_strchr(cmd->argv[i], '='))
         {
             if (if_exist_add(&addr, v, 1));
-            else  if (valid_name(v[0]))
-                ft_lstadd_back(env, ft_lstadd_new(v[0], v[1])); 
-        }
-        else
-        {   
-            tmp_local = *local;
-            tmp = if_exist_add(&tmp_local, &cmd->argv[i], 0);
-            if(if_exist_add(&addr, tmp, 1));
-            else if (tmp && tmp[1])
-                ft_lstadd_back(env, ft_lstadd_new(tmp[0], tmp[1]));
+            else
+            { 
+                if (valid_name(v[0]))
+                    ft_lstadd_back(env, ft_lstadd_new(v[0], v[1]));
+                else
+                {  
+                    GLOBAL = -2;
+                    printf("export: `%s': not a valid identifier\n", cmd->argv[i]);
+                }
+            }
         }
         i++;
     }
@@ -300,7 +274,7 @@ char *if_exist_delete(t_envvar **env, char *s)
         if (!ft_strcmp(list->name, s))
         {
             if (i == 0)
-            {
+             {
                 tmp = list;
                 env = &(tmp->next);
                 free(tmp->name);
@@ -321,7 +295,7 @@ char *if_exist_delete(t_envvar **env, char *s)
                 next = tmp->next;
                 free(tmp->name);
                 free(tmp->value);
-                free(tmp);
+                 free(tmp);
                 prev->next=next;
             }
             break;
@@ -339,7 +313,13 @@ void ft_unset(t_exec *cmd, t_envvar **env)
 
     while (cmd->argv[i])
     {
-        if_exist_delete(env, cmd->argv[i]);
+        if (!valid_name(cmd->argv[i]))
+        {
+            GLOBAL = -2;
+            printf("unset: `%s': not a valid identifier\n",cmd->argv[i]);
+        }
+        else
+            if_exist_delete(env, cmd->argv[i]);
         i++;
     }
 }
