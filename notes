@@ -8,10 +8,6 @@
 //norm
 
 //*• Your shell must implement the following builtins:
->set env_local
->export
->unset
->export
 //fix return value and error msgs
 
 

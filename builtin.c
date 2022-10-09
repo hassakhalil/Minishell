@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/09 00:03:16 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/09 01:14:08 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int builtin(char *buff, t_envvar **env, t_envvar **local)
         }
         else if (ft_strchr(cmd->argv[0],'='))
         {
+            
            add_local(cmd, local);
            return(1);
         }
@@ -251,6 +252,7 @@ void ft_export(t_exec *cmd, t_envvar **env, t_envvar **local)
     int i = 1;
     char    **v;
     char    **tmp = NULL;
+    t_envvar    *tmp_local;
     t_envvar    *addr;
     t_envvar    *local_addr;
     
@@ -267,8 +269,9 @@ void ft_export(t_exec *cmd, t_envvar **env, t_envvar **local)
                 ft_lstadd_back(env, ft_lstadd_new(v[0], v[1])); 
         }
         else
-        {
-            tmp = if_exist_add(local, &cmd->argv[i], 0);
+        {   
+            tmp_local = *local;
+            tmp = if_exist_add(&tmp_local, &cmd->argv[i], 0);
             if(if_exist_add(&addr, tmp, 1));
             else if (tmp && tmp[1])
                 ft_lstadd_back(env, ft_lstadd_new(tmp[0], tmp[1]));
