@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/03 19:54:38 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/10 18:36:33 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char    *ft_env_name(char *s)
     return (ft_substr(s, 0, i));
 }
 
-char    *expander(char *arg)
+char    *expander(char *arg, t_envvar *env)
 {
     char    *new_arg;
     char    *v;
@@ -68,9 +68,9 @@ char    *expander(char *arg)
                 else
                 {
                     c = ft_env_name(&arg[i + 1]);
-                    if (getenv(c))
+                    if (my_getenv(c, env))
                     {
-                        v = getenv(c);
+                        v = ft_strdup(my_getenv(c, env));
                         new_arg = ft_strjoin3(ft_strjoin3(ft_substr(arg, 0, i), v), &arg[i + ft_strlen(c) + 1]);
                         free(arg);
                         arg = ft_strdup(new_arg);

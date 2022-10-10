@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/10 17:35:30 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/10 18:39:28 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void find_in_redir(t_cmd *tree)
     }
 }
 
-void    executor(t_cmd *tree, char **env,int *flag_out, int *flag_in, t_envvar **env_list)
+void    executor(t_cmd *tree, int *flag_out, int *flag_in, t_envvar **env_list)
 {
     char    *s;
     int     p[2];
@@ -109,7 +109,7 @@ void    executor(t_cmd *tree, char **env,int *flag_out, int *flag_in, t_envvar *
             close(p[0]);
             dup2(p[1], 1);
             close(p[1]);
-            executor(tree1->left, env,flag_out, flag_in, env_list);
+            executor(tree1->left, flag_out, flag_in, env_list);
         }
         id = forkk();
         if (id == 0)
@@ -117,7 +117,7 @@ void    executor(t_cmd *tree, char **env,int *flag_out, int *flag_in, t_envvar *
             close(p[1]);
             dup2(p[0], 0);
             close(p[0]);
-            executor(tree1->right, env,flag_out, flag_in, env_list);
+            executor(tree1->right, flag_out, flag_in, env_list);
         }
         close(p[0]);
         close(p[1]);
@@ -144,7 +144,7 @@ void    executor(t_cmd *tree, char **env,int *flag_out, int *flag_in, t_envvar *
             dup2(open_fd, tree2->fd);
         }
         close(open_fd);
-        executor(tree2->cmd, env,flag_out, flag_in, env_list);
+        executor(tree2->cmd,flag_out, flag_in, env_list);
     }
     else
     {

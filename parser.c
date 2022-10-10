@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/02 18:54:19 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/10 18:33:00 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es)
     return cmd;
 }
 
-t_cmd* parseexec(char **ss, char *es)
+t_cmd* parseexec(char **ss, char *es, t_envvar **env)
 {
     char *q, *eq;
     int tok, argc;
@@ -76,7 +76,7 @@ t_cmd* parseexec(char **ss, char *es)
             perror("syntax error");
             exit(EXIT_FAILURE);
         }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-        cmd->argv[argc] = quote_remover(expander(mkcopy(q, eq)));
+        cmd->argv[argc] = quote_remover(expander(mkcopy(q, eq), *env));
         argc++;
         if(argc >= MAXARGS)
         {
@@ -89,13 +89,13 @@ t_cmd* parseexec(char **ss, char *es)
     return ret;
 }
 
-t_cmd* parsepipe(char **ss, char *es)
+t_cmd* parsepipe(char **ss, char *es, t_envvar **env)
 {
     t_cmd *cmd;
     t_exec *check_empty;
     char    **tt;
     
-    cmd = parseexec(ss, es);
+    cmd = parseexec(ss, es, env);
     if(peek(ss, es, "|"))
     {
         gettoken(ss, es, 0, 0);
@@ -107,18 +107,18 @@ t_cmd* parsepipe(char **ss, char *es)
             //cleaning should be done here
             exit(58);
         }
-        cmd = pipecmd(cmd, parsepipe(ss, es));
+        cmd = pipecmd(cmd, parsepipe(ss, es, env));
     }
     return cmd;
 }
 
-t_cmd   *parsecmd(char *s)
+t_cmd   *parsecmd(char *s, t_envvar **env)
 {
     t_cmd *cmd;
     char *es;
 
     es = s + ft_strlen(s);
-    cmd = parsepipe(&s, es);
+    cmd = parsepipe(&s, es, env);
     peek(&s, es, "");
     if(s != es)
     {

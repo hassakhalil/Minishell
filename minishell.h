@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/10 17:34:52 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/10 18:39:54 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ t_cmd  *execcmd(void);
 int empty_cmd(char *buff);
 int complete_pipe(char *buff);
 char    **list_to_table(t_envvar *env);
+char    *my_getenv(char *s, t_envvar *env);
 
 // path
 char **envpath(t_envvar *env);
@@ -121,15 +122,15 @@ void ft_export(t_exec *cmd, t_envvar **env);
 void ft_unset(t_exec *cmd, t_envvar **env);
 
 // executor
-void    executor(t_cmd *tree, char **env, int *flag_out, int *flag_in, t_envvar **env_list);
+void    executor(t_cmd *tree, int *flag_out, int *flag_in, t_envvar **env_list);
 void    parsing_tester(t_cmd *result_tree);
 void     check_in_files(t_cmd *redir);
 void    find_in_redir(t_cmd *tree);
 
 //parser
-t_cmd* parsepipe(char **ps, char *es);
-t_cmd* parsecmd(char *s);
-t_cmd* parseexec(char **ss, char *es);
+t_cmd* parsepipe(char **ps, char *es, t_envvar **env);
+t_cmd* parsecmd(char *s, t_envvar **env);
+t_cmd* parseexec(char **ss, char *es, t_envvar **env);
 t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es);
 
 //lexer
@@ -137,7 +138,7 @@ int       gettoken(char **ps, char *es, char **q, char **eq);
 int       peek(char **ps, char *es, char *toks);
 
 //expander
-char  *expander(char *arg);
+char  *expander(char *arg, t_envvar *env);
 int is_white_space(int c);
 
 //quotes

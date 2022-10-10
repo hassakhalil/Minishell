@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/10 17:13:51 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/10 18:27:00 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,4 +138,15 @@ char    **list_to_table(t_envvar *env)
     }
     tab[i] = 0;
     return(tab);
+}
+
+char    *my_getenv(char *s, t_envvar *env)
+{
+    while (env)
+    {
+        if (!ft_strcmp(env->name, s))
+            return(env->value);
+        env = env->next;
+    }
+    return (0);
 }

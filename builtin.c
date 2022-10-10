@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/10 16:27:27 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/10 18:30:09 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int builtin(char *buff, t_envvar **env)
     t_cmd   *tree;
     t_exec  *cmd;
 
-    tree = parsecmd(buff);
+    tree = parsecmd(buff, env);
     if (tree->type == EXEC)
     {
         cmd = (t_exec *)tree;
