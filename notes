@@ -1,7 +1,5 @@
 // leaks
 
-//export (no args)
-//adpate print env to not print the env=(null)
 
 //watch for seg fault (unset.....)
 

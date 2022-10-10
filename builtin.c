@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/10 20:47:40 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/10 21:17:23 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,8 @@ void ft_env(t_exec *cmd, t_envvar *env)
         while (env)
         {
             //dont print locals
-            printf("%s=%s\n", env->name, env->value);
+            if(env->value)
+                printf("%s=%s\n", env->name, env->value);
             env = env->next;
         }
     }
@@ -228,6 +229,7 @@ void    export_noargs(t_envvar  **env)
                 if (ft_strcmp(tmp->name, c) > 0)
                 {
                     min[0] = ft_strdup(tmp->name);
+                    min[1] = ft_strdup(tmp->value);
                     break;
                 }
                 tmp = tmp->next;
@@ -242,7 +244,10 @@ void    export_noargs(t_envvar  **env)
             }
             tmp = tmp->next;
         }
-        printf("declare -x %s=\"%s\"\n", min[0], min[1]);
+        if(min[1])
+            printf("declare -x %s=\"%s\"\n", min[0], min[1]);
+        else
+            printf("declare -x %s\n", min[0]);
         free(c);
         c = ft_strdup(min[0]);
         n--;
@@ -336,7 +341,7 @@ char *if_exist_delete(t_envvar **env, char *s)
                 next = tmp->next;
                 free(tmp->name);
                 free(tmp->value);
-                 free(tmp);
+                free(tmp);
                 prev->next=next;
             }
             break;
