@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/10 18:39:28 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/10 22:49:55 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,40 +152,7 @@ void    executor(t_cmd *tree, int *flag_out, int *flag_in, t_envvar **env_list)
         char *str = NULL;
         tree3 = (t_exec *)tree;
         //start of function
-        if (!empty_cmd(tree3->argv[0]))
-            exit(0);
-        if (!ft_strcmp(tree3->argv[0], "exit"))
-        {
-            ft_exit(tree3);
-            exit(GLOBAL);
-        }
-        if (!ft_strcmp(tree3->argv[0], "cd"))
-        {
-            ft_cd(tree3, *env_list);
-            if (errno == 13 || errno == 2)
-                exit(1);
-            exit(0);
-        }
-        if (ft_check_for_pwd(tree3->argv[0]))
-            ft_pwd();
-        if (ft_check_for_echo(tree3->argv[0]))
-            ft_echo(tree3);
-        if (ft_check_for_env(tree3->argv[0]))
-            ft_env(tree3, *env_list);
-        if (!ft_strcmp(tree3->argv[0], "export"))
-        {
-            ft_export(tree3, env_list);
-            if (GLOBAL == -2)
-                exit(1);
-            exit(0);
-        }
-        if (!ft_strcmp(tree3->argv[0], "unset"))
-        {
-            ft_unset(tree3, env_list);
-             if (GLOBAL == -2)
-                exit(1);
-            exit (0);
-        }
+        executor_builtin(tree3, env_list);
         //end of function
         dir = opendir(tree3->argv[0]);
         if (dir)
