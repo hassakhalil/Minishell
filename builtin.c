@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/10 19:03:01 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/10 20:47:40 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,47 @@ int if_exist_add(t_envvar **env, char **s)
     return (0);
 }
 
+void    export_noargs(t_envvar  **env)
+{
+    t_envvar    *tmp;
+    char        **min;
+    char        *c = ft_strdup("");
+    int         n = 0;
+
+    if (!env && !(*env))
+        return ;
+    tmp = *env;
+    min = malloc(sizeof(char *) * 2);
+    n = ft_lstsize(tmp);
+    while (n)
+    {
+        tmp = *env;
+            while (tmp)
+            {
+                if (ft_strcmp(tmp->name, c) > 0)
+                {
+                    min[0] = ft_strdup(tmp->name);
+                    break;
+                }
+                tmp = tmp->next;
+            }
+        tmp = *env;
+        while (tmp)
+        {
+            if ((ft_strcmp(min[0], tmp->name) > 0) && (ft_strcmp(tmp->name, c) > 0))
+            {
+                min[0] = ft_strdup(tmp->name);
+                min[1] = ft_strdup(tmp->value);
+            }
+            tmp = tmp->next;
+        }
+        printf("declare -x %s=\"%s\"\n", min[0], min[1]);
+        free(c);
+        c = ft_strdup(min[0]);
+        n--;
+    }
+}
+
 void ft_export(t_exec *cmd, t_envvar **env)
 {
     int i = 1;
@@ -215,9 +256,8 @@ void ft_export(t_exec *cmd, t_envvar **env)
     char    **tmp;
     t_envvar    *addr;
 
-    //if there is no aargs sort
-    
-    
+    if (!cmd->argv[i])
+        export_noargs(env);
     while (cmd->argv[i])
     {
         addr = *env;
