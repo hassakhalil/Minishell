@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/09 16:14:05 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/10 17:29:18 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	handler(int sig)
 int main(int argc, char *argv[], char **env)
 {
     static char     *buff = "";
-    t_env           *envp;
     t_cmd           *tree;
     int             flag_in = 0;
     int             flag_out = 0;
@@ -79,7 +78,6 @@ int main(int argc, char *argv[], char **env)
     argv[argc] = 0;
     //
     printf("\e[1;1H\e[2J");
-    envp = envpath();
     env_list = init_envvar(env);
     while (1)
     {
@@ -108,7 +106,7 @@ int main(int argc, char *argv[], char **env)
             tree = parsecmd(buff);
             free(buff);
             //pass local to executor
-            executor(tree, env, envp,&flag_out, &flag_in, &env_list);
+            executor(tree, env, &flag_out, &flag_in, &env_list);
             //parsing_tester(tree);
         }
         signal(SIGINT,SIG_IGN);

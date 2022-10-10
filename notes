@@ -4,6 +4,7 @@
 //adpate print env to not print the env=(null)
 
 //work with you env in everything inside minishell
+>replace getenv with my getnv and pay attention to locals
 
 //watch for seg fault (unset.....)
 

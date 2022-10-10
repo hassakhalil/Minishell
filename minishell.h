@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/10 16:18:05 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/10 17:34:52 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,6 @@ typedef struct s_envvar
   char *value;
   struct s_envvar *next;
 } t_envvar;
-
-typedef struct s_env
-{
-  char **path;
-} t_env;
 
 typedef struct s_cmd
 {
@@ -105,10 +100,10 @@ t_cmd *pipecmd(t_cmd *left, t_cmd *right);
 t_cmd  *execcmd(void);
 int empty_cmd(char *buff);
 int complete_pipe(char *buff);
+char    **list_to_table(t_envvar *env);
 
 // path
-t_env *envpath(void);
-char    *getpath(char *buff);
+char **envpath(t_envvar *env);
 
 // builtins
 int builtin(char *buff, t_envvar **env_list);
@@ -126,7 +121,7 @@ void ft_export(t_exec *cmd, t_envvar **env);
 void ft_unset(t_exec *cmd, t_envvar **env);
 
 // executor
-void    executor(t_cmd *tree, char **env, t_env *envp, int *flag_out, int *flag_in, t_envvar **env_list);
+void    executor(t_cmd *tree, char **env, int *flag_out, int *flag_in, t_envvar **env_list);
 void    parsing_tester(t_cmd *result_tree);
 void     check_in_files(t_cmd *redir);
 void    find_in_redir(t_cmd *tree);

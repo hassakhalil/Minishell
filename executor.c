@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/09 16:40:31 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/10 17:35:30 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void find_in_redir(t_cmd *tree)
     }
 }
 
-void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_in, t_envvar **env_list)
+void    executor(t_cmd *tree, char **env,int *flag_out, int *flag_in, t_envvar **env_list)
 {
     char    *s;
     int     p[2];
@@ -90,7 +90,7 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
     int     i;
     int     last;
     int     mid;
-    int     open_fd;
+    int       open_fd;
     t_pip     *tree1;
     t_redir   *tree2;
     t_exec    *tree3;
@@ -109,7 +109,7 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
             close(p[0]);
             dup2(p[1], 1);
             close(p[1]);
-            executor(tree1->left, env, envp,flag_out, flag_in, env_list);
+            executor(tree1->left, env,flag_out, flag_in, env_list);
         }
         id = forkk();
         if (id == 0)
@@ -117,7 +117,7 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
             close(p[1]);
             dup2(p[0], 0);
             close(p[0]);
-            executor(tree1->right, env, envp,flag_out, flag_in, env_list);
+            executor(tree1->right, env,flag_out, flag_in, env_list);
         }
         close(p[0]);
         close(p[1]);
@@ -144,7 +144,7 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
             dup2(open_fd, tree2->fd);
         }
         close(open_fd);
-        executor(tree2->cmd, env, envp,flag_out, flag_in, env_list);
+        executor(tree2->cmd, env,flag_out, flag_in, env_list);
     }
     else
     {
@@ -203,16 +203,18 @@ void    executor(t_cmd *tree, char **env, t_env *envp,int *flag_out, int *flag_i
         else
         {
             i = -1;
-            while (envp && envp->path[++i])
+            char    **path = envpath(*env_list);
+            while (path && path[++i])
             {
-                s  = ft_strjoin3(ft_strjoin(envp->path[i], "/"), tree3->argv[0]);
+                s  = ft_strjoin3(ft_strjoin(path[i], "/"), tree3->argv[0]);
                 if (access(s, F_OK) != -1)
                     str = ft_strdup(s);
             }
             if (!str)
                    str = ft_strdup(tree3->argv[0]);
         }
-        execve(str, tree3->argv, env);
+        //add list_totable here
+        execve(str, tree3->argv, list_to_table(*env_list));
         free(str);
         errors(tree3->argv[0], 0);
     }

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/01 11:21:18 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/10 17:13:51 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,23 @@ char    *create_heredoc(char *delimiter)
     if (WEXITSTATUS(exits) == 1)
         exit(1);
     return (path);
+}
+
+char    **list_to_table(t_envvar *env)
+{
+    int n = ft_lstsize(env);
+    int i = 0;
+    char    **tab=malloc(sizeof(char *) * (n +1));
+
+    while (env)
+    {
+        if (env->value)
+        {
+            tab[i] = ft_strjoin3(ft_strjoin(env->name, "="), env->value);
+            i++;
+        }
+        env = env->next;
+    }
+    tab[i] = 0;
+    return(tab);
 }
