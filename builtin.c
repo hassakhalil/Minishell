@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/09 16:42:52 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/10 16:27:27 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,33 +192,15 @@ void ft_cd(t_exec *cmd, t_envvar *env)
 
 //export
 
-char **if_exist_add(t_envvar **env, char **s, int   flag)
+int if_exist_add(t_envvar **env, char **s)
 {
-    char    **v= malloc(sizeof(char *) *3);
-
-    v[0] = 0;
-    v[1] = 0;
-    v[2] = 0;
     while ( env && *env)
     {
         if (!ft_strcmp((*env)->name, s[0]))
         {
-            v = malloc(sizeof(char *) *3);
-            v[0] = ft_strdup((*env)->name);
-            if (flag)
-            {
-                if (s[1])
-                {
-                    (*env)->value = ft_strdup(s[1]);
-                    v[1] = ft_strdup((*env)->value);
-                }
-                else
-                    v[1] = 0;
-            }
-            else
-                v[1] = ft_strdup((*env)->value);
-            v[2]=0;
-            return (v);
+            if (s[1])
+                (*env)->value = ft_strdup(s[1]);
+            return (1);
         }
         (*env) = (*env)->next;
     }
@@ -229,6 +211,7 @@ void ft_export(t_exec *cmd, t_envvar **env)
 {
     int i = 1;
     char    **v;
+    char    **tmp;
     t_envvar    *addr;
     
     
@@ -236,9 +219,12 @@ void ft_export(t_exec *cmd, t_envvar **env)
     {
         addr = *env;
         v = ft_split(cmd->argv[i], '=');
+        tmp = malloc(sizeof(char *) * 2);
+        tmp[0] = ft_strdup(cmd->argv[i]);
+        tmp[1] = 0;
         if (ft_strchr(cmd->argv[i], '='))
         {
-            if (if_exist_add(&addr, v, 1));
+            if (if_exist_add(&addr, v));
             else
             { 
                 if (valid_name(v[0]))
@@ -248,6 +234,16 @@ void ft_export(t_exec *cmd, t_envvar **env)
                     GLOBAL = -2;
                     printf("export: `%s': not a valid identifier\n", cmd->argv[i]);
                 }
+            }
+        }
+        else if (!if_exist_add(&addr, tmp))
+        {
+            if (valid_name(cmd->argv[i]))
+                ft_lstadd_back(env, ft_lstadd_new(cmd->argv[i], NULL));
+            else
+            {  
+                GLOBAL = -2;
+                printf("export: `%s': not a valid identifier\n", cmd->argv[i]);
             }
         }
         i++;

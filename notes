@@ -1,5 +1,8 @@
 // leaks
 
+//export (no args)
+//adpate print env to not print the env=(null)
+
 //work with you env in everything inside minishell
 
 //watch for seg fault (unset.....)
