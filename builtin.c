@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/10 18:30:09 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/10 18:48:23 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void ft_env(t_exec *cmd, t_envvar *env)
     {
         while (env)
         {
+            //dont print locals
             printf("%s=%s\n", env->name, env->value);
             env = env->next;
         }
