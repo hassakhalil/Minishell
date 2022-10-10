@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/10 18:48:23 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/10 19:03:01 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,8 @@ void ft_export(t_exec *cmd, t_envvar **env)
     char    **v;
     char    **tmp;
     t_envvar    *addr;
+
+    //if there is no aargs sort
     
     
     while (cmd->argv[i])
@@ -225,6 +227,8 @@ void ft_export(t_exec *cmd, t_envvar **env)
         tmp[1] = 0;
         if (ft_strchr(cmd->argv[i], '='))
         {
+            if (!v[1])
+                v[1] = ft_strdup("");
             if (if_exist_add(&addr, v));
             else
             { 
