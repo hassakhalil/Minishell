@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/10 22:49:55 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/11 19:15:24 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,9 +151,7 @@ void    executor(t_cmd *tree, int *flag_out, int *flag_in, t_envvar **env_list)
         DIR *dir;
         char *str = NULL;
         tree3 = (t_exec *)tree;
-        //start of function
         executor_builtin(tree3, env_list);
-        //end of function
         dir = opendir(tree3->argv[0]);
         if (dir)
         {
@@ -176,6 +174,7 @@ void    executor(t_cmd *tree, int *flag_out, int *flag_in, t_envvar **env_list)
                 s  = ft_strjoin3(ft_strjoin(path[i], "/"), tree3->argv[0]);
                 if (access(s, F_OK) != -1)
                     str = ft_strdup(s);
+                free(s);
             }
             if (!str)
                    str = ft_strdup(tree3->argv[0]);
