@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/11 18:49:59 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/11 21:23:09 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,13 +130,13 @@ void     check_in_files(t_cmd *redir);
 void    find_in_redir(t_cmd *tree);
 
 //parser
-t_cmd* parsepipe(char **ps, char *es, t_envvar **env);
-t_cmd* parsecmd(char *s, t_envvar **env);
-t_cmd* parseexec(char **ss, char *es, t_envvar **env);
-t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es);
+t_cmd* parsepipe(char **ps, char *es, t_envvar **env, int flag);
+t_cmd* parsecmd(char *s, t_envvar **env, int flag);
+t_cmd* parseexec(char **ss, char *es, t_envvar **env, int flag);
+t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es, int flag);
 
 //lexer
-int       gettoken(char **ps, char *es, char **q, char **eq);
+int       gettoken(char **ps, char *es, char **q, char **eq, int flag);
 int       peek(char **ps, char *es, char *toks);
 
 //expander

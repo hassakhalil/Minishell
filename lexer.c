@@ -6,13 +6,13 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:26:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/26 21:55:59 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/11 21:50:42 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int gettoken(char **ss, char *es, char **q, char **eq)
+int gettoken(char **ss, char *es, char **q, char **eq, int flag)
 {
     char *s;
     int ret;
@@ -59,8 +59,11 @@ int gettoken(char **ss, char *es, char **q, char **eq)
                     s++;
                 if (s == es)
                 {
-                    write(2, "syntax error\n", 14);
-                    exit (1);
+                    if (flag)
+                    {
+                        write(2, "syntax error\n", 14);
+                        exit(1);
+                    }
                 }
             }
             if (s!= es)
