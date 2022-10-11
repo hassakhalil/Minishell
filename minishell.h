@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/10 22:49:37 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/11 18:49:59 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,4 +154,6 @@ char    *create_heredoc(char *delimiter);
 //readline
 void rl_replace_line (const char *text, int clear_undo);
 
+//leaks
+void    clean(t_cmd *tree);
 #endif

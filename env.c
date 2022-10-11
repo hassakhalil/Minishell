@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 16:17:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/08 17:41:01 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/11 18:43:32 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,10 @@ t_envvar *init_envvar(char **env)
     new = NULL;
     while (env[i])
     {
-        p = ft_split(env[i++], '=');
+        p = ft_split(env[i], '=');
         ft_lstadd_back(&new, ft_lstadd_new(p[0], p[1]));
+        free(p);
+        i++;
     }
     return (new);
 }

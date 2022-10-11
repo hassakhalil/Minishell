@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/10 22:48:38 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/11 19:08:27 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int builtin(char *buff, t_envvar **env)
            return (1);
         }
     }
-    //clear 
+    clean(tree);
     return (0);
 }
 
@@ -249,13 +249,16 @@ void    export_noargs(t_envvar  **env)
 {
     t_envvar    *tmp;
     char        **min;
-    char        *c = ft_strdup("");
+    char        *c;
     int         n = 0;
 
     if (!env && !(*env))
         return ;
+    c = ft_strdup("");
     tmp = *env;
     min = malloc(sizeof(char *) * 2);
+    min[0] = ft_strdup(tmp->name);
+    min[1] = ft_strdup(tmp->value);
     n = ft_lstsize(tmp);
     while (n)
     {
@@ -264,6 +267,8 @@ void    export_noargs(t_envvar  **env)
             {
                 if (ft_strcmp(tmp->name, c) > 0)
                 {
+                    free(min[0]);
+                    free(min[1]);
                     min[0] = ft_strdup(tmp->name);
                     min[1] = ft_strdup(tmp->value);
                     break;
@@ -275,6 +280,8 @@ void    export_noargs(t_envvar  **env)
         {
             if ((ft_strcmp(min[0], tmp->name) > 0) && (ft_strcmp(tmp->name, c) > 0))
             {
+                free(min[0]);
+                free(min[1]);
                 min[0] = ft_strdup(tmp->name);
                 min[1] = ft_strdup(tmp->value);
             }
@@ -288,6 +295,10 @@ void    export_noargs(t_envvar  **env)
         c = ft_strdup(min[0]);
         n--;
     }
+    free(min[0]);
+    free(min[1]);
+    free(c);
+    free(min);
 }
 
 void ft_export(t_exec *cmd, t_envvar **env)
@@ -310,26 +321,61 @@ void ft_export(t_exec *cmd, t_envvar **env)
         {
             if (!v[1])
                 v[1] = ft_strdup("");
-            if (if_exist_add(&addr, v));
+            if (if_exist_add(&addr, v))
+            {
+                free(v[0]);
+                free(v[1]);
+                free(v);
+                free(tmp[0]);
+                free(tmp[1]);
+                free(tmp);
+            }
             else
             { 
                 if (valid_name(v[0]))
+                {
                     ft_lstadd_back(env, ft_lstadd_new(v[0], v[1]));
+                    free(v);
+                    free(tmp[0]);
+                    free(tmp[1]);
+                    free(tmp);
+                }
                 else
                 {  
                     GLOBAL = -2;
                     printf("export: `%s': not a valid identifier\n", cmd->argv[i]);
+                    free(v[0]);
+                    free(v[1]);
+                    free(v);
+                    free(tmp[0]);
+                    free(tmp[1]);
+                    free(tmp);
                 }
             }
+            
         }
         else if (!if_exist_add(&addr, tmp))
         {
             if (valid_name(cmd->argv[i]))
+            {
                 ft_lstadd_back(env, ft_lstadd_new(cmd->argv[i], NULL));
+                free(v[0]);
+                free(v[1]);
+                free(v);
+                free(tmp[0]);
+                free(tmp[1]);
+                free(tmp);
+            }
             else
             {  
                 GLOBAL = -2;
                 printf("export: `%s': not a valid identifier\n", cmd->argv[i]);
+                free(tmp[0]);
+                free(tmp[1]);
+                free(tmp);
+                free(v[0]);
+                free(v[1]);
+                free(v);
             }
         }
         i++;

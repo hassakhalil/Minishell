@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 20:31:23 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/09/29 22:11:09 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/11 18:51:43 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ void    free_exec(t_exec *node)
 
     while (node->argv[i])
     {
-        dprintf(2, "before free\n");
         free(node->argv[i]);
-        //debug
-        dprintf(2, "freed node->argv[ %d ]\n", i);
-        //end debug
         i++;
     }
     free(node);
@@ -62,9 +58,6 @@ void    clean(t_cmd *tree)
     else
     {
         tree3 = (t_exec *)tree;
-        //debug
-        dprintf(2, "before entering the free exec\n");
-        //end debug
         free_exec(tree3);
     }
 }

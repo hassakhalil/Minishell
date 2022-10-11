@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/10 18:45:21 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/11 19:10:37 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	handler(int sig)
 
 int main(int argc, char *argv[], char **env)
 {
-    static char     *buff = "";
+    static char     *buff;
     t_cmd           *tree;
     int             flag_in = 0;
     int             flag_out = 0;
@@ -87,6 +87,7 @@ int main(int argc, char *argv[], char **env)
         if (!buff)
         {
             //clear everything
+            //free env_list
             write(1, "exit\n", 5);
             exit (GLOBAL);
         }
@@ -113,7 +114,7 @@ int main(int argc, char *argv[], char **env)
             GLOBAL = 128 + WTERMSIG(exits);
         else
             GLOBAL = WEXITSTATUS(exits);
-        //free(buff); 
+        free(buff); 
     }
     return(0);
 }
