@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 20:31:23 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/11 23:27:24 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/12 00:07:44 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ void    free_exec(t_exec *node)
 
 void    free_redir(t_redir *node)
 {
+    //debug
+    dprintf(2, "{ %s }\n", node->file);
+    //end debug
     free(node->file);
     free(node);
 }
