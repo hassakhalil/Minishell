@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/11 21:22:03 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/11 22:30:42 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,63 +321,47 @@ void ft_export(t_exec *cmd, t_envvar **env)
         if (ft_strchr(cmd->argv[i], '='))
         {
             if (!v[1])
+            {
+                free(v[1]);
                 v[1] = ft_strdup("");
+            }
             if (if_exist_add(&addr, v))
             {
                 free(v[0]);
                 free(v[1]);
-                free(v);
-                free(tmp[0]);
-                free(tmp[1]);
-                free(tmp);
             }
             else
             { 
                 if (valid_name(v[0]))
-                {
                     ft_lstadd_back(env, ft_lstadd_new(v[0], v[1]));
-                    free(v);
-                    free(tmp[0]);
-                    free(tmp[1]);
-                    free(tmp);
-                }
                 else
                 {  
                     GLOBAL = -2;
                     printf("export: `%s': not a valid identifier\n", cmd->argv[i]);
                     free(v[0]);
                     free(v[1]);
-                    free(v);
-                    free(tmp[0]);
-                    free(tmp[1]);
-                    free(tmp);
-                }
+                }  
             }
-            
+            free(v);
+            free(tmp[0]);
+            free(tmp[1]);
+            free(tmp); 
         }
         else if (!if_exist_add(&addr, tmp))
         {
             if (valid_name(cmd->argv[i]))
-            {
                 ft_lstadd_back(env, ft_lstadd_new(cmd->argv[i], NULL));
-                free(v[0]);
-                free(v[1]);
-                free(v);
-                free(tmp[0]);
-                free(tmp[1]);
-                free(tmp);
-            }
             else
             {  
                 GLOBAL = -2;
                 printf("export: `%s': not a valid identifier\n", cmd->argv[i]);
-                free(tmp[0]);
-                free(tmp[1]);
-                free(tmp);
-                free(v[0]);
-                free(v[1]);
-                free(v);
             }
+            free(v[0]);
+            free(v[1]);
+            free(v);
+            free(tmp[0]);
+            free(tmp[1]);
+            free(tmp);
         }
         i++;
     }
