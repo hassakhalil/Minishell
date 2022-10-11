@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/10 18:27:00 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/11 23:24:17 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_cmd* execcmd(void)
     
     cmd = malloc(sizeof(*cmd));
     //memset(cmd, 0, sizeof(*cmd));
+    cmd->argv = malloc(sizeof(char *) * (MAXARGS + 1));
     cmd->type = EXEC;
     return (t_cmd*)cmd;
 }

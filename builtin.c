@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/11 22:30:42 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/11 23:32:47 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,13 @@ int builtin(char *buff, t_envvar **env)
         if (!ft_strcmp(cmd->argv[0], "exit"))
         {
             ft_exit(cmd);
+            clean(tree);
             return (1);
         }
         else if (!ft_strcmp(cmd->argv[0], "cd"))
         {
             ft_cd(cmd, *env);
+            clean(tree);
             return (1);
         }
         else if (!ft_strcmp(cmd->argv[0], "unset"))
@@ -67,6 +69,7 @@ int builtin(char *buff, t_envvar **env)
                 GLOBAL = 1;
            else
                 GLOBAL = 0;
+            clean(tree);
            return (1);
         }
         else if (!ft_strcmp(cmd->argv[0], "export"))
@@ -76,10 +79,11 @@ int builtin(char *buff, t_envvar **env)
                 GLOBAL = 1;
            else
                 GLOBAL = 0;
+            clean(tree);
            return (1);
         }
     }
-    clean(tree);
+   clean(tree);
     return (0);
 }
 

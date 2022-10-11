@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 20:31:23 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/11 18:51:43 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/11 23:27:24 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,13 @@ void    free_exec(t_exec *node)
 
     while (node->argv[i])
     {
+        //debug 
+        dprintf(2, "freeing now { %s }\n", node->argv[i]);
+        //end debug
         free(node->argv[i]);
         i++;
     }
+    free(node->argv);
     free(node);
 }
 
@@ -40,7 +44,6 @@ void    clean(t_cmd *tree)
     t_pip     *tree1;
     t_redir   *tree2;
     t_exec    *tree3;
-
 
     if (tree->type == PIPE)
     {
