@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/11 21:09:10 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/12 00:25:54 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,6 @@ void    executor(t_cmd *tree, int *flag_out, int *flag_in, t_envvar **env_list)
             if (!str)
                    str = ft_strdup(tree3->argv[0]);
         }
-        //add list_totable here
         execve(str, tree3->argv, list_to_table(*env_list));
         free(str);
         errors(tree3->argv[0], 0);

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/12 00:15:43 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/12 00:30:02 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ char    *create_heredoc(char *delimiter)
         signal(SIGQUIT,SIG_IGN);
 	    signal(SIGINT, hd_handler);
         fd = open(path, O_WRONLY|O_CREAT|O_TRUNC, 0666);
+        free(path);
         buff = readline("> ");
         while(buff && ft_strcmp(buff, delimiter))
         {
