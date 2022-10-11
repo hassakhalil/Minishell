@@ -1,4 +1,11 @@
-// leaks
+// leaks:
+        //main leaks
+        //parsecmd leaks
+        //executor leaks    
+
+bash: syntax error near unexpected token `|'
+bash-3.2$ $?
+bash: 258: command not found
 
 //watch for seg fault (unset.....)
 
