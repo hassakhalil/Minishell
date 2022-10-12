@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/11 23:32:47 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/12 18:15:13 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int builtin(char *buff, t_envvar **env)
            return (1);
         }
     }
-   clean(tree);
+    clean(tree);
     return (0);
 }
 
@@ -393,7 +393,7 @@ char *if_exist_delete(t_envvar **env, char *s)
             if (i == 0)
              {
                 tmp = list;
-                env = &(tmp->next);
+                env = &(list->next);
                 free(tmp->name);
                 free(tmp->value);
                 free(tmp);
@@ -409,7 +409,7 @@ char *if_exist_delete(t_envvar **env, char *s)
             else
             {
                 tmp = list;
-                next = tmp->next;
+                next = list->next;
                 free(tmp->name);
                 free(tmp->value);
                 free(tmp);

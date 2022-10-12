@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 20:31:23 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/12 00:07:44 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/12 18:17:05 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void    free_exec(t_exec *node)
         free(node->argv[i]);
         i++;
     }
-    free(node->argv);
+    //free(node->argv);
     free(node);
 }
 
