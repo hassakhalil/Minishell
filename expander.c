@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/12 19:46:59 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/12 19:53:31 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ char    *expander(char *arg, t_envvar *env)
                         arg = ft_strdup(new_arg);
                         free(new_arg);
                         i = i + ft_strlen(v);
+                        free(v);
                     }
                     else if (c[0])
                     {
