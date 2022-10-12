@@ -1,6 +1,6 @@
 // leaks:
         //ls >file
-        //heredoc   is opened 2 times
+        //heredoc
 
 //watch for seg fault (unset.....)
 
