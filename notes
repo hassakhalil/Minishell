@@ -1,5 +1,4 @@
 // leaks:
-        //ls >file
         //heredoc
 
 //norm

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/12 19:35:07 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/12 23:39:13 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_cmd* redircmd(t_cmd *subcmd, char *file, int mode, int type)
     //memset(cmd, 0, sizeof(*cmd));
     cmd->type = REDIR;
     cmd->cmd = subcmd;
-    cmd->file = ft_strdup(file);
+    cmd->file = file;
     cmd->mode = mode;
     if (type == '<' || type == '*')
         cmd->fd = 0;
