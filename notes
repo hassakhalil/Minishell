@@ -1,9 +1,4 @@
 // leaks:
         //heredoc
 
-$ $PATH
-/Users/hkhalil/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/hkhalil/.brew/bin: No such file or directory
-$ $?
-126: command not found
-
 //norm

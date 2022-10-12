@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/12 18:47:24 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/12 23:50:06 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ extern int errno ;
 
 void errors(char *name, int flag)
 {
-    if (flag == 4)
+    if (flag == 4 && errno != 2)
     {
         if (errno == 22)
         {
