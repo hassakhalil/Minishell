@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/12 19:57:46 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/12 23:06:00 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es, int flag)
         }
         else if (tok == '*')
         {
-            heredoc = create_heredoc(mkcopy(q, eq));
+            if (flag)
+                heredoc = create_heredoc(mkcopy(q, eq));
+            else
+                heredoc = ft_strdup("heredoc");
             cmd = redircmd(cmd, heredoc, O_RDONLY, tok);
             free(heredoc);
             break;
