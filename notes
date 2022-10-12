@@ -1,7 +1,7 @@
 // leaks:
-        //main leaks
-        //parsecmd leaks
-        //executor leaks    
+        //ls >file
+        //expand
+        //heredoc   
 
 //watch for seg fault (unset.....)
 

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/12 00:21:27 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/12 19:43:02 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_cmd* parseexec(char **ss, char *es, t_envvar **env, int flag)
                 perror("syntax error");
                 exit(EXIT_FAILURE);
             }
-        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
         cmd->argv[argc] = quote_remover(expander(mkcopy(q, eq), *env));
         argc++;
         if(argc >= MAXARGS)

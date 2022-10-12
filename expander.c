@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/10 18:36:33 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/12 19:46:59 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char    *expander(char *arg, t_envvar *env)
     char    *c;
     int     i = 0;
     int     quote = 0;
+    char    *number;
 
     while (arg[i])
     {
@@ -59,7 +60,9 @@ char    *expander(char *arg, t_envvar *env)
                 {
                     if (GLOBAL == 58)
                         GLOBAL = 258;
-                    new_arg = ft_strjoin3(ft_strjoin3(ft_substr(arg, 0, i), ft_itoa(GLOBAL)),&arg[i + 2]);
+                    number = ft_itoa(GLOBAL);
+                    new_arg = ft_strjoin3(ft_strjoin3(ft_substr(arg, 0, i), number),&arg[i + 2]);
+                    free(number);
                     free(arg);
                     arg = ft_strdup(new_arg);
                     free(new_arg);
