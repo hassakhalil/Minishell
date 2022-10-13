@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/12 19:34:21 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/13 01:27:46 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ char    *quote_remover(char *s);
 void    handler(int sig);
 
 //heredoc
-char    *create_heredoc(char *delimiter);
+void    create_heredoc(char *delimiter);
 //readline
 void rl_replace_line (const char *text, int clear_undo);
 

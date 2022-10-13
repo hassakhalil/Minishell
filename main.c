@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/12 23:55:06 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/13 22:26:02 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,9 @@ int main(int argc, char *argv[], char **env)
         int pid = forkk();
         if (pid == 0)
         {
+            //debug
+            dprintf(2, "child 1 pid = { %d }\n", getpid());
+            //end debug
             signal(SIGQUIT,SIG_DFL);
 	        signal(SIGINT, SIG_DFL);
             tree = parsecmd(buff, &env_list, 1);

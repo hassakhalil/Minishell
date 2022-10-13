@@ -2,3 +2,29 @@
         //heredoc
 
 //norm
+
+//bash-3.2$ <<l |<<k |pwd |>|
+> l
+> k
+bash: syntax error near unexpected token `newline'
+bash-3.2$ <l |<k |pwd |>|
+bash: syntax error near unexpected token `newline'
+bash-3.2$ >l |>k |pwd |>|
+bash: syntax error near unexpected token `newline'
+bash-3.2$ <l |<k |pwd |>|
+bash: syntax error near unexpected token `newline'
+bash-3.2$ >>l |>>k |pwd |>|
+bash: syntax error near unexpected token `newline'
+bash-3.2$ 
+bash-3.2$ <,l |<<k |pwd |>|
+> 
+bash-3.2$ export var=" this's file"
+bash-3.2$ > $var
+bash: $var: ambiguous redirect
+bash-3.2$ > "$var"
+bash-3.2$ <<$USER
+> hkhalil
+> $USER
+bash-3.2$ << "$USER"
+> $USER
+bash-3.2$ 

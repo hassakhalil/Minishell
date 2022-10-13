@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/12 23:39:13 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/13 01:28:35 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void    hd_handler(int sig)
         exit(sig);
 }
 
-char    *create_heredoc(char *delimiter)
+void    create_heredoc(char *delimiter)
 {
     int fd;
     int id;
@@ -96,29 +96,34 @@ char    *create_heredoc(char *delimiter)
     id  = forkk();
     if (id == 0)
     {
+        //debug
+        dprintf(2, "child 2 pid = { %d }\n", getpid());
+        //end debug
         signal(SIGQUIT,SIG_IGN);
 	    signal(SIGINT, hd_handler);
         fd = open(path, O_WRONLY|O_CREAT|O_TRUNC, 0666);
         free(path);
         buff = readline("> ");
-        while(buff && ft_strcmp(buff, delimiter))
+        while (buff && ft_strcmp(buff, delimiter))
         {
             write(fd, buff, ft_strlen(buff));
             write(fd, "\n", 1);
             free(buff);
             buff = readline("> ");
         }
+        free(delimiter);
+        close(fd);
         if (buff)
             free(buff);
-        close(fd);
         exit(0);
     }
+    free(delimiter);
+    free(path);
     signal(SIGQUIT, SIG_IGN);
     signal(SIGINT, SIG_IGN);
     waitpid(id, &exits, 0);
     if (WEXITSTATUS(exits) == 1)
         exit(1);
-    return (path);
 }
 
 char    **list_to_table(t_envvar *env)
