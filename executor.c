@@ -6,51 +6,13 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/12 23:50:06 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/14 20:27:44 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int errno ;
 
-void errors(char *name, int flag)
-{
-    if (flag == 4 && errno != 2)
-    {
-        if (errno == 22)
-        {
-            write(2, name, ft_strlen(name));
-            write(2, ": is a directory\n", 18);
-            exit(126);
-        }
-        perror(name);
-        exit(126);
-    }
-    if (flag == 2 || flag == 3)
-    {
-        write(2,name, ft_strlen(name));
-        if (flag == 2)
-            write(2, ": Permission denied\n", 21);
-        else
-             write(2, ": No such file or directory\n", 29);
-        exit(1);
-    }
-    if (errno == 2 || errno == 13)
-    {
-        if (ft_strchr(name, '/'))
-                perror(name);
-        else
-        {
-            write(2, name, ft_strlen(name));
-            write(2, ": command not found\n",21);
-        }
-        if (errno == 2)
-            exit(127);
-        else if (errno == 13)
-            exit(126);
-    } 
-}
 void check_in_files(t_cmd *redir)
 {
     t_redir   *tmp;
@@ -151,7 +113,13 @@ void    executor(t_cmd *tree, int *flag_out, int *flag_in, t_envvar **env_list)
         DIR *dir;
         char *str = NULL;
         tree3 = (t_exec *)tree;
+         //debug
+        dprintf(2, "argv[0] = { %s }\n", tree3->argv[0]);
+        //end debug
         executor_builtin(tree3, env_list);
+        //debug
+        dprintf(2, "after builtin\n");
+        //end debug
         dir = opendir(tree3->argv[0]);
         if (dir)
         {

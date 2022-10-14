@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/14 05:28:23 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/14 20:37:00 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*ft_read(t_envvar **env_list)
 	return (buff);
 }
 
-void	ft_child(char *buff, t_envvar *env_list)
+void	ft_child(char *buff, t_envvar **env_list)
 {
 	int		pid;
 	int		exits;
@@ -98,9 +98,10 @@ void	ft_child(char *buff, t_envvar *env_list)
 	{
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
-		tree = parsecmd(buff, &env_list, 1);
+		tree = parsecmd(buff, env_list, 1);
 		free(buff);
-		executor(tree, &flag_out, &flag_in, &env_list);
+        //parsing_tester(tree);
+		executor(tree, &flag_out, &flag_in, env_list);
 	}
 	signal(SIGINT, SIG_IGN);
 	wait(&exits);
@@ -127,7 +128,7 @@ int	main(int argc, char **argv, char **env)
 			free(buff);
 			continue ;
 		}
-		ft_child(buff, env_list);
+		ft_child(buff, &env_list);
 		free(buff);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/14 03:44:01 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/14 20:14:05 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,4 +159,6 @@ void    clean(t_cmd *tree);
 void    free_env(t_envvar **env);
 //read
 char    *ft_read(t_envvar **env_list);
+//errors
+void errors(char *name, int flag);
 #endif

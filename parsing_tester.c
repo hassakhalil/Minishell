@@ -29,7 +29,8 @@ void    parsing_tester(t_cmd *result_tree)
     }
     else
     {
-        write (2, "|||-----exec-----|||\n", 22);
+         tree3 = (t_exec *)result_tree;
+        dprintf(2, "|||-----exec-----||| = { %s }\n", tree3->argv[0]);
         tree3 = (t_exec *)result_tree;
     }
 }
