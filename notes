@@ -1,7 +1,6 @@
 // leaks:
         //heredoc
 //fix export with no args
+//local not added correctly or freed 
 export name
 //norm
-
-//bash-3.2$ <<l |<<k |pwd |>|

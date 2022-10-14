@@ -6,11 +6,22 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 20:31:23 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/12 23:33:56 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/14 04:30:24 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void    free_env(t_envvar **env)
+{
+    while (env && *env)
+    {
+        free((*env)->name);
+        if ((*env)->value)
+            free((*env)->value);
+        *env = (*env)->next;
+    }
+}
 
 void    free_exec(t_exec *node)
 {

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 16:17:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/11 18:43:32 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/14 04:21:34 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_envvar *init_envvar(char **env)
     t_envvar *new;
 
     new = NULL;
+    printf("\e[1;1H\e[2J");
     while (env[i])
     {
         p = ft_split(env[i], '=');

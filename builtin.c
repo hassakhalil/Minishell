@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/14 01:05:19 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/14 01:46:36 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ void ft_env(t_exec *cmd, t_envvar *env)
     {
         while (env)
         {
-            if(env->value)
+            //if(env->value)
                 printf("%s=%s\n", env->name, env->value);
             env = env->next;
         }
@@ -324,13 +324,14 @@ void ft_export(t_exec *cmd, t_envvar **env)
         {
             if (!v[1])
             {
-                free(v[1]);
+                //free(v[1]);
                 v[1] = ft_strdup("");
             }
             if (if_exist_add(&addr, v))
             {
-                free(v[0]);
-                free(v[1]);
+                //free(v[0]);
+                //free(v[1]);
+                ;
             }
             else
             { 
@@ -340,14 +341,14 @@ void ft_export(t_exec *cmd, t_envvar **env)
                 {  
                     GLOBAL = -2;
                     printf("export: `%s': not a valid identifier\n", cmd->argv[i]);
-                    free(v[0]);
-                    free(v[1]);
+                    //free(v[0]);
+                    //free(v[1]);
                 }  
             }
-            free(v);
-            free(tmp[0]);
-            free(tmp[1]);
-            free(tmp);
+            //free(v);
+            //free(tmp[0]);
+            //free(tmp[1]);
+            //free(tmp);
         }
         else
         {
@@ -359,12 +360,12 @@ void ft_export(t_exec *cmd, t_envvar **env)
                 GLOBAL = -2;
                 printf("export: `%s': not a valid identifier\n", cmd->argv[i]);
             }
-            free(v[0]);
-            free(v[1]);
-            free(v);
-            free(tmp[0]);
-            free(tmp[1]);
-            free(tmp);
+            //free(v[0]);
+            //free(v[1]);
+            //free(v);
+            //free(tmp[0]);
+           // free(tmp[1]);
+            //free(tmp);
         }
         i++;
     }

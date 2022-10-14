@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/13 23:56:59 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/14 01:57:32 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es, int flag, t_envvar **env)
     char *eq;
     char    *heredoc;
 
+
     while (peek(ss, es, "<>"))
     {
         tok = gettoken(ss, es, 0, 0, flag);
@@ -73,6 +74,7 @@ t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es, int flag, t_envvar **env)
         {
             if (flag)
             {
+                
                 //just remove dollar before quotes
                 create_heredoc(quote_remover(expand_file(mkcopy(q, eq))));
                 s = quote_remover(expand_file(mkcopy(q, eq)));
