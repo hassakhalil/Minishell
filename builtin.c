@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/12 23:58:12 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/14 01:05:19 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,6 @@ void ft_env(t_exec *cmd, t_envvar *env)
     {
         while (env)
         {
-            //dont print locals
             if(env->value)
                 printf("%s=%s\n", env->name, env->value);
             env = env->next;
@@ -236,7 +235,7 @@ void ft_cd(t_exec *cmd, t_envvar *env)
 
 int if_exist_add(t_envvar **env, char **s)
 {
-    while ( env && *env)
+    while (env && *env)
     {
         if (!ft_strcmp((*env)->name, s[0]))
         {
@@ -267,25 +266,25 @@ void    export_noargs(t_envvar  **env)
     while (n)
     {
         tmp = *env;
-            while (tmp)
+        while (tmp)
+        {
+            if (ft_strcmp(tmp->name, c) > 0)
             {
-                if (ft_strcmp(tmp->name, c) > 0)
-                {
-                    free(min[0]);
-                    free(min[1]);
-                    min[0] = ft_strdup(tmp->name);
-                    min[1] = ft_strdup(tmp->value);
-                    break;
-                }
-                tmp = tmp->next;
+                //free(min[0]);
+                //free(min[1]);
+                min[0] = ft_strdup(tmp->name);
+                min[1] = ft_strdup(tmp->value);
+                break;
             }
+            tmp = tmp->next;
+        }
         tmp = *env;
         while (tmp)
         {
             if ((ft_strcmp(min[0], tmp->name) > 0) && (ft_strcmp(tmp->name, c) > 0))
             {
-                free(min[0]);
-                free(min[1]);
+                //free(min[0]);
+                //free(min[1]);
                 min[0] = ft_strdup(tmp->name);
                 min[1] = ft_strdup(tmp->value);
             }
@@ -299,10 +298,10 @@ void    export_noargs(t_envvar  **env)
         c = ft_strdup(min[0]);
         n--;
     }
-    free(min[0]);
-    free(min[1]);
-    free(c);
-    free(min);
+    //free(min[0]);
+    //free(min[1]);
+    //free(c);
+    //free(min);
 }
 
 void ft_export(t_exec *cmd, t_envvar **env)
@@ -348,11 +347,12 @@ void ft_export(t_exec *cmd, t_envvar **env)
             free(v);
             free(tmp[0]);
             free(tmp[1]);
-            free(tmp); 
+            free(tmp);
         }
-        else if (!if_exist_add(&addr, tmp))
+        else
         {
-            if (valid_name(cmd->argv[i]))
+            if (if_exist_add(&addr, tmp));
+            else if (valid_name(cmd->argv[i]))
                 ft_lstadd_back(env, ft_lstadd_new(cmd->argv[i], NULL));
             else
             {  
