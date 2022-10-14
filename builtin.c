@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/14 20:26:32 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/14 20:56:22 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,17 +88,8 @@ int builtin(char *buff, t_envvar **env)
 
 void    executor_builtin(t_exec *tree3, t_envvar **env_list)
 {
-    //debug
-    dprintf(2, "start of builtin\n");
-    //end debug
-    /*if (!empty_cmd(tree3->argv[0]))
-    {
-        
-    //debug
-    dprintf(2, "empty cmd = { %s }\n", tree3->argv[0]);
-    //end debug
-         exit(0);
-    }*/
+    if (!empty_cmd(tree3->argv[0]))
+        exit(0);
     if (!ft_strcmp(tree3->argv[0], "exit"))
     {
         ft_exit(tree3);
@@ -131,10 +122,6 @@ void    executor_builtin(t_exec *tree3, t_envvar **env_list)
             exit(1);
         exit (0);
     }
-    
-    //debug
-    dprintf(2, "end of builtin\n");
-    //end debug
 }
 //exit
 

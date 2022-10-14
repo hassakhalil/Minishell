@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/14 20:27:44 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/14 20:55:53 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,7 @@ void    executor(t_cmd *tree, int *flag_out, int *flag_in, t_envvar **env_list)
         DIR *dir;
         char *str = NULL;
         tree3 = (t_exec *)tree;
-         //debug
-        dprintf(2, "argv[0] = { %s }\n", tree3->argv[0]);
-        //end debug
         executor_builtin(tree3, env_list);
-        //debug
-        dprintf(2, "after builtin\n");
-        //end debug
         dir = opendir(tree3->argv[0]);
         if (dir)
         {
