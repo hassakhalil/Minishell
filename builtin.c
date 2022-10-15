@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/14 20:56:22 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 04:07:44 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,39 +124,6 @@ void    executor_builtin(t_exec *tree3, t_envvar **env_list)
     }
 }
 //exit
-
-void ft_exit(t_exec *node)
-{
-    int      i = 0;
-    int      k = 0;
-
-    while (node->argv[k])
-        k++;
-    if (node->argv[1])
-    {
-        i = 0;
-        while (node->argv[1][i])
-        {
-            if (!ft_isdigit(node->argv[1][i]))
-            {
-                write(2, "exit: ", 7);
-                write(2, node->argv[1], ft_strlen(node->argv[1]));
-                write(2, ": numeric argument required\n", 29);
-                exit(255);
-            }
-            i++;
-        }
-        if (k > 2)
-        {
-            write(2, "exit: too many arguments\n", 26);
-            GLOBAL = 1;
-            //clean everything
-            return ;
-        }
-        exit(ft_atoi(node->argv[1]));
-    }
-    exit(GLOBAL);
-}
 
 
 //env
