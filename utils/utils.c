@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 21:12:15 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 21:14:56 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,4 +209,33 @@ int valid_name(char *s)
         i++;
     }
     return (1);
+}
+
+int	complete_pipe(char *buff)
+{
+	int	i;
+	int	c;
+	int	k;
+
+	i = 0;
+	c = 0;
+	k = 0;
+	while (buff[i])
+	{
+		if (!is_white_space(buff[i]))
+		{
+			c = buff[i];
+			if (c == '|')
+			{
+				if (++k > 1)
+					return (1);
+			}
+			else if (k)
+				k--;
+		}
+		i++;
+	}
+	if (c == '|')
+		return (1);
+	return (0);
 }

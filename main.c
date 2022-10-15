@@ -6,42 +6,13 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 21:12:51 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 21:15:02 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_var;
-
-int	complete_pipe(char *buff)
-{
-	int	i;
-	int	c;
-	int	k;
-
-	i = 0;
-	c = 0;
-	k = 0;
-	while (buff[i])
-	{
-		if (!is_white_space(buff[i]))
-		{
-			c = buff[i];
-			if (c == '|')
-			{
-				if (++k > 1)
-					return (1);
-			}
-			else if (k)
-				k--;
-		}
-		i++;
-	}
-	if (c == '|')
-		return (1);
-	return (0);
-}
 
 int	empty_cmd(char *buff)
 {
