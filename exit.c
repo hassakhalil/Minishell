@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 04:06:55 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/15 04:16:45 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 21:12:15 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	ft_exit(t_exec *node)
 		if (k > 2)
 		{
 			write(2, "exit: too many arguments\n", 26);
-			GLOBAL = 1;
+			g_var = 1;
 			return ;
 		}
 		exit(ft_atoi(node->argv[1]));
 	}
-	exit(GLOBAL);
+	exit(g_var);
 }

@@ -6,13 +6,13 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 20:20:51 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 21:12:51 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	GLOBAL;
+int	g_var;
 
 int	complete_pipe(char *buff)
 {
@@ -60,7 +60,7 @@ int	empty_cmd(char *buff)
 void	handler(int sig)
 {
 	sig = 0;
-	GLOBAL = 1;
+	g_var = 1;
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	write(1, "\n", 1);
@@ -76,7 +76,7 @@ char	*ft_read(t_envvar **env_list)
 	{
 		free_env(env_list);
 		write(1, "exit\n", 5);
-		exit (GLOBAL);
+		exit (g_var);
 	}
 	if (buff && *buff)
 		add_history(buff);
@@ -100,15 +100,14 @@ void	ft_child(char *buff, t_envvar **env_list)
 		signal(SIGINT, SIG_DFL);
 		tree = parsecmd(buff, env_list, 1);
 		free(buff);
-        //parsing_tester(tree);
 		executor(tree, &flag_out, &flag_in, env_list);
 	}
 	signal(SIGINT, SIG_IGN);
 	wait(&exits);
-	if ((WTERMSIG(exits) == 3 || WTERMSIG(exits) == 2) && GLOBAL != -1)
-		GLOBAL = 128 + WTERMSIG(exits);
+	if ((WTERMSIG(exits) == 3 || WTERMSIG(exits) == 2) && g_var != -1)
+		g_var = 128 + WTERMSIG(exits);
 	else
-	GLOBAL = WEXITSTATUS(exits);
+	g_var = WEXITSTATUS(exits);
 }
 
 int	main(int argc, char **argv, char **env)

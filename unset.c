@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 05:24:09 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/15 07:11:50 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 21:12:15 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	ft_unset(t_exec *cmd, t_envvar **env)
 	{
 		if (!valid_name(cmd->argv[i]))
 		{
-			GLOBAL = -2;
+			g_var = -2;
 			printf("unset: `%s': not a valid identifier\n", cmd->argv[i]);
 		}
 		else

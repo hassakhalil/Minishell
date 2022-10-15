@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 04:32:05 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/15 04:41:33 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 21:12:15 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_cd(t_exec *cmd, t_envvar *env)
 		{
 			write(2, "cd: ", 5);
 			perror(cmd->argv[1]);
-			GLOBAL = 1;
+			g_var = 1;
 			return ;
 		}
 	}
@@ -32,6 +32,6 @@ void	ft_cd(t_exec *cmd, t_envvar *env)
 				chdir(env->value);
 			env = env->next;
 		}
-		GLOBAL = 0;
+		g_var = 0;
 	}
 }

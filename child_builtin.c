@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 20:58:55 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 21:12:15 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	child_builtin_export(t_exec *tree3, t_envvar **env_list)
 	if (!ft_strcmp(tree3->argv[0], "export"))
 	{
 		ft_export(tree3, env_list);
-		if (GLOBAL == -2)
+		if (g_var == -2)
 			exit(1);
 		exit(0);
 	}
@@ -41,7 +41,7 @@ int	child_builtin_unset(t_exec *tree3, t_envvar **env_list)
 	if (!ft_strcmp(tree3->argv[0], "unset"))
 	{
 		ft_unset(tree3, env_list);
-		if (GLOBAL == -2)
+		if (g_var == -2)
 			exit(1);
 		exit (0);
 	}
@@ -55,7 +55,7 @@ void	child_builtin(t_exec *tree3, t_envvar **env_list)
 	if (!ft_strcmp(tree3->argv[0], "exit"))
 	{
 		ft_exit(tree3);
-		exit(GLOBAL);
+		exit(g_var);
 	}
 	else if (child_builtin_cd(tree3, env_list))
 		;

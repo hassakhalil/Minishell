@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 20:21:24 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 21:12:15 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 #define REDIR 2
 #define PIPE 3
 
-extern int GLOBAL;
+extern int g_var;
 
 typedef struct s_envvar
 {

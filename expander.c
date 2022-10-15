@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/15 03:26:33 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 21:12:15 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	expand_exit_code(char **arg, int *i)
 	char	*number;
 	char	*new_arg;
 
-	if (GLOBAL == 58)
-		GLOBAL = 258;
-	number = ft_itoa(GLOBAL);
+	if (g_var == 58)
+		g_var = 258;
+	number = ft_itoa(g_var);
 	new_arg = ft_strjoin3(ft_strjoin3(ft_substr(*arg, 0, *i),
 				number), &(*arg)[*i + 2]);
 	free(number);

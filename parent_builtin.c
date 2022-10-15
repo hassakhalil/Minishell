@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:41:25 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/15 20:47:54 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 21:12:15 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ int	parent_builtin_unset(t_cmd *tree, t_envvar **env)
 	if (!ft_strcmp(cmd->argv[0], "unset"))
 	{
 		ft_unset(cmd, env);
-		if (GLOBAL == -2)
-			GLOBAL = 1;
+		if (g_var == -2)
+			g_var = 1;
 		else
-			GLOBAL = 0;
+			g_var = 0;
 		clean(tree);
 		return (1);
 	}
@@ -66,10 +66,10 @@ int	parent_builtin_export(t_cmd *tree, t_envvar **env)
 	if (!ft_strcmp(cmd->argv[0], "export"))
 	{
 		ft_export(cmd, env);
-		if (GLOBAL == -2)
-			GLOBAL = 1;
+		if (g_var == -2)
+			g_var = 1;
 		else
-			GLOBAL = 0;
+			g_var = 0;
 		clean(tree);
 		return (1);
 	}

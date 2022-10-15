@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 00:22:59 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/15 01:01:48 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 21:12:15 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_wait(int id)
 	{
 		if ((WTERMSIG(mid) == 3 || WTERMSIG(mid) == 2)
 			&& (WTERMSIG(last) != 3 && WTERMSIG(last) != 2))
-		GLOBAL = -1;
+		g_var = -1;
 	}
 	exit(WEXITSTATUS(last));
 }

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 07:14:38 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/15 09:06:22 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 21:12:15 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	global_env(t_envvar **env, char *s, t_envvar *addr)
 				ft_lstadd_new(ft_strdup(v[0]), ft_strdup(v[1])));
 		else
 		{
-			GLOBAL = -2;
+			g_var = -2;
 			printf("export: `%s': not a valid identifier\n", s);
 		}
 	}
@@ -139,7 +139,7 @@ void	local_env(t_envvar **env, char *s, t_envvar	*addr)
 			ft_lstadd_new(ft_strdup(s), NULL));
 	else
 	{
-		GLOBAL = -2;
+		g_var = -2;
 		printf("export: `%s': not a valid identifier\n", s);
 	}
 }
