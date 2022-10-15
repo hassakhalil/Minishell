@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 03:26:25 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 04:29:56 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,4 +181,11 @@ int	is_white_space(int c)
 		|| c == '\t' || c == '\f' || c == '\r')
 		return (1);
 	return (0);
+}
+
+int	ft_tolower(int c)
+{
+	if (c >= 'A' && c <= 'Z')
+		return (c + 32);
+	return (c);
 }

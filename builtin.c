@@ -6,18 +6,11 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 04:18:05 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 04:30:01 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_tolower(int c)
-{
-	if (c >= 'A' && c <= 'Z')
-		return (c + 32);
-	return (c);
-}
 
 int valid_name(char *s)
 {
@@ -404,57 +397,4 @@ void ft_unset(t_exec *cmd, t_envvar **env)
             if_exist_delete(env, cmd->argv[i]);
         i++;
     }
-}
-
-//echo
-
-int ft_check_for_echo(char *s)
-{
-    if (ft_strlen(s) != 4)
-        return(0);
-    if (ft_tolower(s[0]) == 'e' && ft_tolower(s[1]) == 'c' && ft_tolower(s[2]) == 'h' && ft_tolower(s[3]) == 'o')
-        return(1);
-    return (0);
-}
-
-int options(char *s)
-{
-    int i = 0;
-
-    if (s[i] != '-')
-        return(0);
-    i++;
-    while (s[i])
-    {
-        if (s[i] != 'n')
-            return (0);
-        i++;
-    }
-    return (1);
-    
-}
-
-void ft_echo(t_exec *cmd)
-{
-    int i = 1;
-    int noption = 0;
-
-    if (cmd->argv[i])
-    {
-        while (options(cmd->argv[i]))
-        {
-            noption = 1;
-            i++;
-        }
-        while (cmd->argv[i])
-        {
-            printf("%s", cmd->argv[i]);
-            i++;
-            if (cmd->argv[i])
-                printf(" ");
-        }
-    }
-    if (noption == 0)
-        printf("\n");
-    exit(0);
 }

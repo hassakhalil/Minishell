@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 03:28:40 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 04:30:30 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	ft_atoi(const char *nptr);
 int	ft_isdigit(int c);
 int	ft_isalpha(int c);
 int is_white_space(int c);
+int	ft_tolower(int c);
 void	ft_lstadd_back(t_envvar **head, t_envvar *new);
 t_envvar *ft_lstadd_new(void *n, void *v);
 int	ft_lstsize(t_envvar *lst);
