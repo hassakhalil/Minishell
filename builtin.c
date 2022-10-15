@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 04:07:44 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 04:18:05 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,6 @@ void    executor_builtin(t_exec *tree3, t_envvar **env_list)
         exit (0);
     }
 }
-//exit
-
 
 //env
 
