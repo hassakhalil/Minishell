@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 04:44:09 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 04:48:15 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,35 +117,6 @@ void    executor_builtin(t_exec *tree3, t_envvar **env_list)
     }
 }
 
-//env
-
-int ft_check_for_env(char *s)
-{
-    if (ft_strlen(s) != 3)
-        return(0);
-    if (ft_tolower(s[0]) == 'e' && ft_tolower(s[1]) == 'n' && ft_tolower(s[2]) == 'v')
-        return(1);
-    return (0);
-}
-
-void ft_env(t_exec *cmd, t_envvar *env)
-{
-    if (cmd->argv[1])
-    {
-        printf("env: %s: No such file or directory\n", cmd->argv[1]);
-        exit(127);
-    } 
-    else
-    {
-        while (env)
-        {
-            //if(env->value)
-                printf("%s=%s\n", env->name, env->value);
-            env = env->next;
-        }
-    }
-    exit(0);
-}
 //export
 
 int if_exist_add(t_envvar **env, char **s)
