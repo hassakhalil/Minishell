@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 00:28:34 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 01:07:07 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ void    parsing_tester(t_cmd *result_tree);
 void     check_in_files(t_cmd *redir);
 void    find_in_redir(t_cmd *tree);
 void    ft_pipe(t_cmd *tree, int *flag_out, int *flag_in, t_envvar **env_list);
+void    ft_redir(t_cmd *tree, int *flag_out, int *flag_in, t_envvar **env_list);
 
 //parser
 t_cmd* parsepipe(char **ps, char *es, t_envvar **env, int flag);
