@@ -6,102 +6,102 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 17:10:50 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/12 19:53:31 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 03:26:33 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_isalpha(int c)
+void	expand_exit_code(char **arg, int *i)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1);
-	return (0);
+	char	*number;
+	char	*new_arg;
+
+	if (GLOBAL == 58)
+		GLOBAL = 258;
+	number = ft_itoa(GLOBAL);
+	new_arg = ft_strjoin3(ft_strjoin3(ft_substr(*arg, 0, *i),
+				number), &(*arg)[*i + 2]);
+	free(number);
+	free(*arg);
+	*arg = ft_strdup(new_arg);
+	free(new_arg);
+	(*i)++;
 }
 
-int is_white_space(int c)
+void	found_env(char **arg, int *i, t_envvar *env, char *c)
 {
-    if (c == ' ' || c == '\n' || c == '\v'|| c == '\t' || c == '\f' || c == '\r')
-        return (1);
-    return (0);
+	char	*v;
+	char	*new_arg;
+
+	v = ft_strdup(my_getenv(c, env));
+	new_arg = ft_strjoin3(ft_strjoin3(ft_substr(*arg, 0, *i), v),
+			&(*arg)[*i + ft_strlen(c) + 1]);
+	free(*arg);
+	*arg = ft_strdup(new_arg);
+	free(new_arg);
+	*i = *i + ft_strlen(v);
+	free(v);
 }
 
-char    *ft_env_name(char *s)
+void	expand_env(char **arg, int *i, t_envvar *env)
 {
-    int i = 0;
+	char	*new_arg;
+	char	*c;
 
-    while (s[i] && (s[i] != '$' && !is_white_space(s[i]) && s[i] != '\'' && s[i] != '\"') && (ft_isalpha(s[i]) || ft_isdigit(s[i]) || s[i] == '_'))
-        i++;
-    return (ft_substr(s, 0, i));
+	c = ft_env_name(&(*arg)[*i + 1]);
+	if (my_getenv(c, env))
+		found_env(arg, i, env, c);
+	else if (c[0])
+	{
+		new_arg = ft_strjoin3(ft_substr(*arg, 0, *i),
+				&(*arg)[*i + ft_strlen(c) + 1]);
+		free(*arg);
+		*arg = ft_strdup(new_arg);
+		free(new_arg);
+	}
+	else if ((*arg)[*i + 1] && ((*arg)[*i + 1] == '\''
+				|| (*arg)[*i + 1] == '\"'))
+	{
+		new_arg = ft_strjoin3(ft_substr(*arg, 0, *i), &(*arg)[*i + 1]);
+		free(*arg);
+		*arg = ft_strdup(new_arg);
+		free(new_arg);
+	}
+	else
+		(*i)++;
+	free(c);
 }
 
-char    *expander(char *arg, t_envvar *env)
+void	expand(char **arg, int *i, t_envvar *env)
 {
-    char    *new_arg;
-    char    *v;
-    char    *c;
-    int     i = 0;
-    int     quote = 0;
-    char    *number;
+	if ((*arg)[*i + 1] && (*arg)[*i + 1] == '?')
+		expand_exit_code(arg, i);
+	else
+		expand_env(arg, i, env);
+}
 
-    while (arg[i])
-    {
-        if (arg[i] == '\'' || arg[i] == '\"')
-        {
-            if (!quote)
-                quote = arg[i];
-            else
-                if (arg[i] == quote)
-                    quote = 0;
-        }
-        if (quote != '\'' && arg[i] == '$')
-        {
-                if (arg[i + 1] && arg[i + 1] == '?')
-                {
-                    if (GLOBAL == 58)
-                        GLOBAL = 258;
-                    number = ft_itoa(GLOBAL);
-                    new_arg = ft_strjoin3(ft_strjoin3(ft_substr(arg, 0, i), number),&arg[i + 2]);
-                    free(number);
-                    free(arg);
-                    arg = ft_strdup(new_arg);
-                    free(new_arg);
-                    i++;
-                }
-                else
-                {
-                    c = ft_env_name(&arg[i + 1]);
-                    if (my_getenv(c, env))
-                    {
-                        v = ft_strdup(my_getenv(c, env));
-                        new_arg = ft_strjoin3(ft_strjoin3(ft_substr(arg, 0, i), v), &arg[i + ft_strlen(c) + 1]);
-                        free(arg);
-                        arg = ft_strdup(new_arg);
-                        free(new_arg);
-                        i = i + ft_strlen(v);
-                        free(v);
-                    }
-                    else if (c[0])
-                    {
-                        new_arg = ft_strjoin3(ft_substr(arg, 0, i), &arg[i + ft_strlen(c) +1]);
-                        free(arg);
-                        arg = ft_strdup(new_arg);
-                        free(new_arg);
-                    }
-                    else if(arg[i + 1] && (arg[i + 1] == '\'' || arg[i + 1] == '\"'))
-                    {
-                        new_arg = ft_strjoin3(ft_substr(arg, 0, i), &arg[i + 1]);
-                        free(arg);
-                        arg = ft_strdup(new_arg);
-                        free(new_arg);
-                    }
-                    else
-                        i++;
-                    free(c);
-                }
-        }
-        else
-            i++;
-    }
-    return (arg);
+char	*expander(char *arg, t_envvar *env)
+{
+	int	i;
+	int	quote;
+
+	i = 0;
+	quote = 0;
+	while (arg[i])
+	{
+		if (arg[i] == '\'' || arg[i] == '\"')
+		{
+			if (!quote)
+				quote = arg[i];
+			else
+				if (arg[i] == quote)
+					quote = 0;
+		}
+		if (quote != '\'' && arg[i] == '$')
+			expand(&arg, &i, env);
+		else
+			i++;
+	}
+	return (arg);
 }

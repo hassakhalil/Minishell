@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/13 01:28:35 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 03:26:25 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,4 +154,31 @@ char    *my_getenv(char *s, t_envvar *env)
         env = env->next;
     }
     return (0);
+}
+
+char	*ft_env_name(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && (s[i] != '$' && !is_white_space(s[i])
+			&& s[i] != '\'' && s[i] != '\"')
+		&& (ft_isalpha(s[i]) || ft_isdigit(s[i]) || s[i] == '_'))
+		i++;
+	return (ft_substr(s, 0, i));
+}
+
+int	ft_isalpha(int c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
+}
+
+int	is_white_space(int c)
+{
+	if (c == ' ' || c == '\n' || c == '\v'
+		|| c == '\t' || c == '\f' || c == '\r')
+		return (1);
+	return (0);
 }

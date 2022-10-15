@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 01:18:02 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 03:28:40 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 int	ft_atoi(const char *nptr);
 int	ft_isdigit(int c);
 int	ft_isalpha(int c);
+int is_white_space(int c);
 void	ft_lstadd_back(t_envvar **head, t_envvar *new);
 t_envvar *ft_lstadd_new(void *n, void *v);
 int	ft_lstsize(t_envvar *lst);
@@ -102,6 +103,7 @@ int empty_cmd(char *buff);
 int complete_pipe(char *buff);
 char    **list_to_table(t_envvar *env);
 char    *my_getenv(char *s, t_envvar *env);
+char	*ft_env_name(char *s);
 
 // path
 char **envpath(t_envvar *env);
@@ -145,7 +147,7 @@ int       peek(char **ps, char *es, char *toks);
 
 //expander
 char  *expander(char *arg, t_envvar *env);
-int is_white_space(int c);
+
 
 //quotes
 char    *quote_remover(char *s);
