@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 10:51:44 by iakry             #+#    #+#             */
-/*   Updated: 2022/09/17 18:38:06 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 21:01:55 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ char	*ft_strjoin2(char const *s1, char *s2)
 	i = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	str = malloc (sizeof(char) * (ft_strlen((char *)s1) + ft_strlen((char *)s2) + 2));
+	str = malloc (sizeof(char) * (ft_strlen((char *)s1)
+				+ ft_strlen((char *)s2) + 2));
 	if (!str)
 		return (NULL);
 	while (s1[i] != '\0')
