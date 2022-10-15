@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 01:14:08 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/15 01:47:08 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 20:21:24 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	ft_exec(t_cmd *tree, t_envvar **env_list)
 	char	*str;
 
 	tree3 = (t_exec *)tree;
-	executor_builtin(tree3, env_list);
+	child_builtin(tree3, env_list);
 	check_for_dir(tree3->argv[0]);
 	str = get_path(tree3, env_list);
 	execve(str, tree3->argv, list_to_table(*env_list));

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/14 20:37:00 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 20:20:51 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	main(int argc, char **argv, char **env)
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, handler);
 		buff = ft_read(&env_list);
-		if (!empty_cmd(buff) || builtin(buff, &env_list))
+		if (!empty_cmd(buff) || parent_builtin(buff, &env_list))
 		{
 			free(buff);
 			continue ;
