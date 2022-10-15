@@ -6,12 +6,11 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:00:15 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/15 01:08:00 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 01:19:49 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void check_in_files(t_cmd *redir)
 {
@@ -46,10 +45,6 @@ void find_in_redir(t_cmd *tree)
 
 void    executor(t_cmd *tree, int *flag_out, int *flag_in, t_envvar **env_list)
 {
-    char    *s;
-    int     i;
-    t_exec    *tree3;
-
     if (tree->type != PIPE)
         find_in_redir(tree);
     if (tree->type == PIPE)
@@ -57,40 +52,5 @@ void    executor(t_cmd *tree, int *flag_out, int *flag_in, t_envvar **env_list)
     else if (tree->type == REDIR)
         ft_redir(tree, flag_out, flag_in, env_list);
     else
-    {
-        DIR *dir;
-        char *str = NULL;
-        tree3 = (t_exec *)tree;
-        executor_builtin(tree3, env_list);
-        dir = opendir(tree3->argv[0]);
-        if (dir)
-        {
-            closedir(dir);
-            errors(tree3->argv[0], 4);
-        }
-        if (ft_strchr(tree3->argv[0], '/'))
-        {   
-            if(access(tree3->argv[0], F_OK) != -1)
-                str = ft_strdup(tree3->argv[0]);
-            else
-                errors(tree3->argv[0], 4);
-        }
-        else
-        {
-            i = -1;
-            char    **path = envpath(*env_list);
-            while (path && path[++i])
-            {
-                s  = ft_strjoin3(ft_strjoin(path[i], "/"), tree3->argv[0]);
-                if (access(s, F_OK) != -1)
-                    str = ft_strdup(s);
-                free(s);
-            }
-            if (!str)
-                   str = ft_strdup(tree3->argv[0]);
-        }
-        execve(str, tree3->argv, list_to_table(*env_list));
-        free(str);
-        errors(tree3->argv[0], 0);
-    }
+        ft_exec(tree, env_list);
 }
