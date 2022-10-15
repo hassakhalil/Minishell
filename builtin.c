@@ -6,32 +6,11 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 13:02:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 04:48:15 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/15 05:42:37 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int valid_name(char *s)
-{
-    int i = 0;
-
-    if (!ft_isalpha(s[i]))
-    {
-        GLOBAL = -2;
-        return(0);
-    }
-    while (s[i])
-    {
-        if (!ft_isalpha(s[i]) && !ft_isdigit(s[i]) && s[i] != '_')
-        {
-            GLOBAL = -2;
-            return (0);
-        }
-        i++;
-    }
-    return (1);
-}
 
 int builtin(char *buff, t_envvar **env)
 {
@@ -257,72 +236,3 @@ void ft_export(t_exec *cmd, t_envvar **env)
     }
 }
 
-//unset
-
-
-char *if_exist_delete(t_envvar **env, char *s)
-{
-    t_envvar    *tmp;
-    t_envvar    *prev;
-    t_envvar    *next;
-    t_envvar    *list;
-    int         i = 0;
-    int         n = ft_lstsize(*env);
-
-    prev = *env;
-    list = *env;
-    while (list)
-    {
-        tmp= list;
-        if (!ft_strcmp(list->name, s))
-        {
-            if (i == 0)
-             {
-                tmp = list;
-                env = &(list->next);
-                free(tmp->name);
-                free(tmp->value);
-                free(tmp);
-            }
-            else if (i + 1 == n)
-            {
-                tmp = list;
-                free(tmp->name);
-                free(tmp->value);
-                free(tmp);
-                prev->next = NULL;
-            }
-            else
-            {
-                tmp = list;
-                next = list->next;
-                free(tmp->name);
-                free(tmp->value);
-                free(tmp);
-                prev->next=next;
-            }
-            break;
-        }
-        prev = list;
-        list = list->next;
-        i++;
-    }
-    return (0);
-}
-
-void ft_unset(t_exec *cmd, t_envvar **env)
-{
-    int i = 1;
-
-    while (cmd->argv[i])
-    {
-        if (!valid_name(cmd->argv[i]))
-        {
-            GLOBAL = -2;
-            printf("unset: `%s': not a valid identifier\n",cmd->argv[i]);
-        }
-        else
-            if_exist_delete(env, cmd->argv[i]);
-        i++;
-    }
-}

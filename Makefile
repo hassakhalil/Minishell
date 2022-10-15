@@ -6,13 +6,13 @@
 #    By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/23 11:34:27 by iakry             #+#    #+#              #
-#    Updated: 2022/10/15 04:48:57 by hkhalil          ###   ########.fr        #
+#    Updated: 2022/10/15 05:24:59 by hkhalil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC	= env.c pwd.c cd.c echo.c exit.c exec.c redir.c pipe.c utils/env_utils.c builtin.c clean.c errors.c quote_remover.c expander.c executor.c main.c lexer.c parser.c path.c\
+SRC	= unset.c env.c pwd.c cd.c echo.c exit.c exec.c redir.c pipe.c utils/env_utils.c builtin.c clean.c errors.c quote_remover.c expander.c executor.c main.c lexer.c parser.c path.c\
 	utils/libft/utils0.c utils/libft/utils1.c utils/libft/utils2.c utils/libft/utils3.c utils/libft/utils4.c utils/utils.c \
 
 OBJ	= $(SRC:.c=.o)
