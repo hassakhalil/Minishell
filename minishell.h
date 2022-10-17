@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/17 08:33:26 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 09:48:30 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,4 +169,5 @@ void    free_env(t_envvar **env);
 char    *ft_read(t_envvar **env_list);
 //errors
 void errors(char *name, int flag);
+void	errors5(int flag);
 #endif
