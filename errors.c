@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:13:17 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/14 20:54:47 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 03:06:27 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,23 @@ void	errors3(char *name)
 		exit(126);
 }
 
+void	errors4(char *name, int flag)
+{
+	write(2, name, ft_strlen(name));
+	if (flag == 10)
+		write(2, ": Permission denied\n", 21);
+	else
+		write(2, ": No such file or directory\n", 29);
+	g_var = 1;
+}
+
 void	errors(char *name, int flag)
 {
+	if (flag == 10 || flag == 11)
+	{
+		errors4(name, flag);
+		return ;
+	}
 	if (flag == 4 && errno != 2)
 		errors1(name);
 	if (flag == 2 || flag == 3)
