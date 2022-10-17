@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/17 08:32:16 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 09:09:46 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,52 +75,6 @@ t_cmd   *pipecmd(t_cmd *left, t_cmd *right)
     cmd->left = left;
     cmd->right = right;
     return ((t_cmd*)cmd);
-}
-
-void    hd_handler(int sig)
-{
-        sig = 1;
-        write(1, "\n", 1);
-        exit(sig);
-}
-
-char    *create_heredoc(char *delimiter)
-{
-    int fd;
-    int id;
-    char *buff;
-    char *path;
-    int exits;
-
-    path = ft_strjoin("/tmp/", delimiter);
-    id  = forkk();
-    if (id == 0)
-    {
-        signal(SIGQUIT,SIG_IGN);
-	    signal(SIGINT, hd_handler);
-        fd = open(path, O_WRONLY|O_CREAT|O_TRUNC, 0666);
-        free(path);
-        buff = readline("> ");
-        while (buff && ft_strcmp(buff, delimiter))
-        {
-            write(fd, buff, ft_strlen(buff));
-            write(fd, "\n", 1);
-            free(buff);
-            buff = readline("> ");
-        }
-        free(delimiter);
-        close(fd);
-        if (buff)
-            free(buff);
-        exit(0);
-    }
-    free(delimiter);
-    signal(SIGQUIT, SIG_IGN);
-    signal(SIGINT, SIG_IGN);
-    waitpid(id, &exits, 0);
-    if (WEXITSTATUS(exits) == 1)
-        exit(1);
-	return (path);
 }
 
 char    **list_to_table(t_envvar *env)
