@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:21:13 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/17 09:21:57 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 09:36:19 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,26 @@ int	ft_tolower(int c)
 	return (c);
 }
 
-int valid_name(char *s)
+int	valid_name(char *s)
 {
-    int i = 0;
+	int	i;
 
-    if (!ft_isalpha(s[i]) && s[i] != '_')
-    {
-        g_var = -2;
-        return(0);
-    }
-    while (s[i])
-    {
-        if (!ft_isalpha(s[i]) && !ft_isdigit(s[i]) && s[i] != '_')
-        {
-            g_var = -2;
-            return (0);
-        }
-        i++;
-    }
-    return (1);
+	i = 0;
+	if (!ft_isalpha(s[i]) && s[i] != '_')
+	{
+		g_var = -2;
+		return (0);
+	}
+	while (s[i])
+	{
+		if (!ft_isalpha(s[i]) && !ft_isdigit(s[i]) && s[i] != '_')
+		{
+			g_var = -2;
+			return (0);
+		}
+		i++;
+	}
+	return (1);
 }
 
 int	complete_pipe(char *buff)
