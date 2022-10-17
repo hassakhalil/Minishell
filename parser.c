@@ -6,13 +6,11 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/17 07:27:53 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 07:46:52 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//add a little expander to remove $ and quote remover 
 
 char    *expand_file(char *arg)
 {
@@ -44,10 +42,7 @@ t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es, t_envvar **env)
 
     tok = gettoken(ss, es, 0, 0);
     if (gettoken(ss, es, &q, &eq) != 'a')
-    {
-            perror("missing file for redirection");
-            exit(EXIT_FAILURE);
-    }
+		errors(NULL, 20);
     if (tok == '<')
         cmd = redircmd(cmd, quote_remover(expander(mkcopy(q, eq), *env)), O_RDONLY, tok);
     else if (tok == '>')
@@ -86,17 +81,11 @@ t_cmd* parseexec(char **ss, char *es, t_envvar **env)
         while (peek(ss, es, "<>"))
             ret = parseredirs(ret, ss, es, env);
         if (tok != 'a')
-        {
-                perror("syntax error");
-                exit(EXIT_FAILURE);
-        }                                                                                                                                                                                                                                                                                   
+			errors(NULL, 21);
         cmd->argv[argc] = quote_remover(expander(mkcopy(q, eq), *env));
         argc++;
         if(argc >= MAXARGS)
-        {
-                perror("Too many args");
-                exit(EXIT_FAILURE);
-        }
+			errors(NULL, 22);
     }
     cmd->argv[argc] = 0;
     return ret;
@@ -115,10 +104,7 @@ t_cmd* parsepipe(char **ss, char *es, t_envvar **env)
         tt = ss;
         check_empty = (t_exec *)cmd;
         if (!check_empty->argv[0] || !empty_cmd(*tt) || complete_pipe(*tt))
-        {
-                write(2, "syntax error near unexpected token `|'\n", 40);
-                exit(58);
-        }
+			errors(NULL, 23);
         cmd = pipecmd(cmd, parsepipe(ss, es, env));
     }
     return cmd;
@@ -133,11 +119,7 @@ t_cmd   *parsecmd(char *s, t_envvar **env)
     cmd = parsepipe(&s, es, env);
     peek(&s, es, "");
     if(s != es)
-    { 
-            write(2, "Leftovers: ", 12);
-            write(2, s, ft_strlen(s));
-            exit(EXIT_FAILURE);
-    }
+		errors(s, 24);
     return cmd;
 }
 
