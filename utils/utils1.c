@@ -6,40 +6,43 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:19:32 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/17 09:22:11 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 09:33:58 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char    **list_to_table(t_envvar *env)
+char	**list_to_table(t_envvar *env)
 {
-    int n = ft_lstsize(env);
-    int i = 0;
-    char    **tab=malloc(sizeof(char *) * (n +1));
+	int		n;
+	int		i;
+	char	**tab;
 
-    while (env)
-    {
-        if (env->value)
-        {
-            tab[i] = ft_strjoin3(ft_strjoin(env->name, "="), env->value);
-            i++;
-        }
-        env = env->next;
-    }
-    tab[i] = 0;
-    return(tab);
+	n = ft_lstsize(env);
+	i = 0;
+	tab = malloc(sizeof(char *) * (n +1));
+	while (env)
+	{
+		if (env->value)
+		{
+			tab[i] = ft_strjoin3(ft_strjoin(env->name, "="), env->value);
+			i++;
+		}
+		env = env->next;
+	}
+	tab[i] = 0;
+	return (tab);
 }
 
-char    *my_getenv(char *s, t_envvar *env)
+char	*my_getenv(char *s, t_envvar *env)
 {
-    while (env)
-    {
-        if (!ft_strcmp(env->name, s))
-            return(env->value);
-        env = env->next;
-    }
-    return (0);
+	while (env)
+	{
+		if (!ft_strcmp(env->name, s))
+			return (env->value);
+		env = env->next;
+	}
+	return (0);
 }
 
 char	*ft_env_name(char *s)
