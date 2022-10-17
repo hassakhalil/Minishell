@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:13:17 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/17 07:46:24 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 07:50:42 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	errors4(char *name, int flag)
 	g_var = 1;
 }
 
-void	errors5(char *s, int flag)
+void	errors5(int flag)
 {
 	if (flag == 20)
 	{
@@ -83,18 +83,12 @@ void	errors5(char *s, int flag)
 		write(2, "syntax error near unexpected token `|'\n", 40);
         exit(58);
 	}
-	if (flag == 24)
-	{
-		write(2, "Leftovers: ", 12);
-        write(2, s, ft_strlen(s));
-        exit(EXIT_FAILURE);
-	}
 }
 
 void	errors(char *name, int flag)
 {
-	if (flag == 20 || flag == 21 || flag == 22 || flag == 23 || flag == 24)
-		errors5(name, flag);
+	if (flag == 20 || flag == 21 || flag == 22 || flag == 23)
+		errors5(flag);
 	if (flag == 10 || flag == 11)
 	{
 		errors4(name, flag);

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/17 07:46:52 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 07:50:19 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ t_cmd   *parsecmd(char *s, t_envvar **env)
     cmd = parsepipe(&s, es, env);
     peek(&s, es, "");
     if(s != es)
-		errors(s, 24);
+		exit(EXIT_FAILURE);
     return cmd;
 }
 
