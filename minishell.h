@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/17 09:48:30 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 09:55:14 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void  ft_env(t_exec *cmd, t_envvar *env_list);
 int ft_check_for_env(char *s);
 void ft_export(t_exec *cmd, t_envvar **env);
 void ft_unset(t_exec *cmd, t_envvar **env);
+void	export_noargs(t_envvar **env);
 
 // executor
 void    executor(t_cmd *tree, int *flag_out, int *flag_in, t_envvar **env_list);
