@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 07:14:38 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/17 18:22:05 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 19:06:28 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ int	if_exist_add(t_envvar **env, char **s, int flag)
 		if (!ft_strcmp((*env)->name, s[0]))
 		{
 			if (flag && s[1])
+			{
+				if ((*env)->value)
+					free((*env)->value);
 				(*env)->value = ft_strdup(s[1]);
+			}
 			return (1);
 		}
 		(*env) = (*env)->next;
