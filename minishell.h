@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 21:12:15 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 07:18:00 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,14 +137,14 @@ void    ft_redir(t_cmd *tree, int *flag_out, int *flag_in, t_envvar **env_list);
 
 
 //parser
-t_cmd* parsepipe(char **ps, char *es, t_envvar **env, int flag);
-t_cmd* parsecmd(char *s, t_envvar **env, int flag);
-t_cmd* parseexec(char **ss, char *es, t_envvar **env, int flag);
-t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es, int flag, t_envvar **env);
+t_cmd* parsepipe(char **ps, char *es, t_envvar **env);
+t_cmd* parsecmd(char *s, t_envvar **env);
+t_cmd* parseexec(char **ss, char *es, t_envvar **env);
+t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es, t_envvar **env);
 void    ft_exec(t_cmd *tree, t_envvar **env_list);
 
 //lexer
-int       gettoken(char **ps, char *es, char **q, char **eq, int flag);
+int       gettoken(char **ps, char *es, char **q, char **eq);
 int       peek(char **ps, char *es, char *toks);
 
 //expander

@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:41:25 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/17 05:06:58 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 07:23:44 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,24 @@ int	parent_builtin(char *buff, t_envvar **env)
 {
 	t_cmd	*tree;
 	t_cmd	*tmp;
+	int		id;
+	int		exits;
 	int 	flag = 0;
 
-	//if pipe exist return->0
-	tree = parsecmd(buff, env, 0);
+	id = forkk();
+	if (id == 0)
+	{
+		g_var = -100;
+		tree = parsecmd(buff, env);
+		exit(0);
+	}
+	wait(&exits);
+	if (WEXITSTATUS(exits))
+	{
+		g_var = WEXITSTATUS(exits);
+		return (1);
+	}
+	tree = parsecmd(buff, env);
 	tmp = tree;
 	if (tree->type != PIPE)
 	{

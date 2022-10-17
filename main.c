@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 10:20:10 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 21:15:02 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 07:18:19 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	ft_child(char *buff, t_envvar **env_list)
 	{
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
-		tree = parsecmd(buff, env_list, 1);
+		tree = parsecmd(buff, env_list);
 		free(buff);
 		executor(tree, &flag_out, &flag_in, env_list);
 	}

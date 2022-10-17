@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/14 20:39:00 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 07:26:19 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char    *expand_file(char *arg)
     return (arg);
 }
 
-t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es, int flag, t_envvar **env)
+t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es, t_envvar **env)
 {
     char    *s;
     int tok;
@@ -42,55 +42,31 @@ t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es, int flag, t_envvar **env)
     char    *heredoc;
 
 
-    while (peek(ss, es, "<>"))
+    tok = gettoken(ss, es, 0, 0);
+    if (gettoken(ss, es, &q, &eq) != 'a')
     {
-        tok = gettoken(ss, es, 0, 0, flag);
-        if (gettoken(ss, es, &q, &eq, flag) != 'a')
-        {
-            //cleaning should be done here
-            if (flag)
-            {
-                perror("missing file for redirection");
-                exit(EXIT_FAILURE);
-            }
-        }
-        if (tok == '<')
-        {
-            //parse quotes and remove $ before quotes
-            cmd = redircmd(cmd, quote_remover(expander(mkcopy(q, eq), *env)), O_RDONLY, tok);
-            break;
-        }
-        else if (tok == '>')
-        {
-            cmd = redircmd(cmd, quote_remover(expander(mkcopy(q, eq), *env)), O_WRONLY|O_CREAT|O_TRUNC, tok);
-            break;
-        }
-        else if (tok == '+')
-        {
-            cmd = redircmd(cmd, quote_remover(expander(mkcopy(q, eq), *env)), O_WRONLY|O_CREAT|O_APPEND, tok);
-            break;
-        }
-        else if (tok == '*')
-        {
-            if (flag)
-            {
-                
-                //just remove dollar before quotes
-                create_heredoc(quote_remover(expand_file(mkcopy(q, eq))));
-                s = quote_remover(expand_file(mkcopy(q, eq)));
-                heredoc = ft_strjoin("/tmp/", s);
-                free(s);
-            }
-            else
-                heredoc = ft_strdup("heredoc");
-            cmd = redircmd(cmd, heredoc, O_RDONLY, tok);
-            break;
-        }
+            perror("missing file for redirection");
+            exit(EXIT_FAILURE);
+    }
+     if (tok == '<')
+        cmd = redircmd(cmd, quote_remover(expander(mkcopy(q, eq), *env)), O_RDONLY, tok);
+    else if (tok == '>')
+        cmd = redircmd(cmd, quote_remover(expander(mkcopy(q, eq), *env)), O_WRONLY|O_CREAT|O_TRUNC, tok);
+    else if (tok == '+')
+        cmd = redircmd(cmd, quote_remover(expander(mkcopy(q, eq), *env)), O_WRONLY|O_CREAT|O_APPEND, tok);
+    else if (tok == '*')
+    {
+        if (g_var == -100)
+            create_heredoc(quote_remover(expand_file(mkcopy(q, eq))));
+        s = quote_remover(expand_file(mkcopy(q, eq)));
+        heredoc = ft_strjoin("/tmp/", s);
+        free(s);
+        cmd = redircmd(cmd, heredoc, O_RDONLY, tok);
     }
     return cmd;
 }
 
-t_cmd* parseexec(char **ss, char *es, t_envvar **env, int flag)
+t_cmd* parseexec(char **ss, char *es, t_envvar **env)
 {
     char *q, *eq;
     int tok, argc;
@@ -101,81 +77,66 @@ t_cmd* parseexec(char **ss, char *es, t_envvar **env, int flag)
     cmd = (t_exec*)ret;
     argc = 0;
     while (peek(ss, es, "<>"))
-        ret = parseredirs(ret, ss, es, flag, env);
+        ret = parseredirs(ret, ss, es, env);
     while (!peek(ss, es, "|"))
     {
-        tok = gettoken(ss, es, &q, &eq, flag);
+        tok = gettoken(ss, es, &q, &eq);
         if (tok == 0)
             break;
         while (peek(ss, es, "<>"))
-            ret = parseredirs(ret, ss, es, flag, env);
+            ret = parseredirs(ret, ss, es, env);
         if (tok != 'a')
         {
-            //cleaning should be done here
-            if (flag)
-            {
                 perror("syntax error");
                 exit(EXIT_FAILURE);
-            }
         }                                                                                                                                                                                                                                                                                   
         cmd->argv[argc] = quote_remover(expander(mkcopy(q, eq), *env));
         argc++;
         if(argc >= MAXARGS)
         {
-            //cleaning should be done here 
-            if (flag)
-            {
                 perror("Too many args");
                 exit(EXIT_FAILURE);
-            }
         }
     }
     cmd->argv[argc] = 0;
     return ret;
 }
 
-t_cmd* parsepipe(char **ss, char *es, t_envvar **env, int flag)
+t_cmd* parsepipe(char **ss, char *es, t_envvar **env)
 {
     t_cmd *cmd;
     t_exec *check_empty;
     char    **tt;
     
-    cmd = parseexec(ss, es, env, flag);
+    cmd = parseexec(ss, es, env);
     if(peek(ss, es, "|"))
     {
-        gettoken(ss, es, 0, 0, flag);
+        gettoken(ss, es, 0, 0);
         tt = ss;
         check_empty = (t_exec *)cmd;
         if (!check_empty->argv[0] || !empty_cmd(*tt) || complete_pipe(*tt))
         {
-            //cleaning should be done here
-            if (flag)
-            {
                 write(2, "syntax error near unexpected token `|'\n", 40);
                 exit(58);
-            }
         }
-        cmd = pipecmd(cmd, parsepipe(ss, es, env, flag));
+        cmd = pipecmd(cmd, parsepipe(ss, es, env));
     }
     return cmd;
 }
 
-t_cmd   *parsecmd(char *s, t_envvar **env, int flag)
+t_cmd   *parsecmd(char *s, t_envvar **env)
 {
     t_cmd *cmd;
     char *es;
 
     es = s + ft_strlen(s);
-    cmd = parsepipe(&s, es, env, flag);
+    cmd = parsepipe(&s, es, env);
     peek(&s, es, "");
     if(s != es)
     { 
-        if (flag)
-        {
             write(2, "Leftovers: ", 12);
             write(2, s, ft_strlen(s));
             exit(EXIT_FAILURE);
-        }
     }
     return cmd;
 }
