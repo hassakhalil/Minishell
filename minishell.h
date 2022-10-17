@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/17 10:10:21 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 10:53:13 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,11 @@ int			ft_check_for_env(char *s);
 void		ft_export(t_exec *cmd, t_envvar **env);
 void		ft_unset(t_exec *cmd, t_envvar **env);
 void		export_noargs(t_envvar **env);
+void		parent_builtin_cd(t_cmd *tree, t_envvar **env, int *flag);
+void		parent_builtin_exit(t_cmd *tree, int *flag);
+void		open_files(t_cmd *tree, t_envvar **env_list);
+void		find_in_redir0(t_cmd *tree, int *flag);
+void		check_in_files0(t_cmd *redir, int *flag);
 
 // executor
 void		executor(t_cmd *tree, int *flag_out,
