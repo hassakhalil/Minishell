@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/17 07:29:00 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 08:32:16 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void    hd_handler(int sig)
         exit(sig);
 }
 
-void    create_heredoc(char *delimiter)
+char    *create_heredoc(char *delimiter)
 {
     int fd;
     int id;
@@ -115,12 +115,12 @@ void    create_heredoc(char *delimiter)
         exit(0);
     }
     free(delimiter);
-    free(path);
     signal(SIGQUIT, SIG_IGN);
     signal(SIGINT, SIG_IGN);
     waitpid(id, &exits, 0);
     if (WEXITSTATUS(exits) == 1)
         exit(1);
+	return (path);
 }
 
 char    **list_to_table(t_envvar *env)

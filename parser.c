@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/17 08:23:47 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 08:36:49 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,26 @@ char	*expand_file(char *arg)
 
 t_cmd	*parseredirs(t_cmd *cmd, char **ss, char *es, t_envvar **env)
 {
-	char	*s;
 	int		tok;
 	char	*q;
 	char	*eq;
-	char	*heredoc;
 
 	tok = gettoken(ss, es, 0, 0);
 	if (gettoken(ss, es, &q, &eq) != 'a')
 		errors(NULL, 20);
 	if (tok == '<')
-		cmd = redircmd(cmd, quote_remover(expander(mkcopy(q, eq), *env)), O_RDONLY, tok);
+		cmd = redircmd(cmd,
+				quote_remover(expander(mkcopy(q, eq), *env)), O_RDONLY, tok);
 	else if (tok == '>')
-		cmd = redircmd(cmd, quote_remover(expander(mkcopy(q, eq), *env)), O_WRONLY | O_CREAT | O_TRUNC, tok);
+		cmd = redircmd(cmd, quote_remover(expander(mkcopy(q, eq), *env)),
+				O_WRONLY | O_CREAT | O_TRUNC, tok);
 	else if (tok == '+')
-		cmd = redircmd(cmd, quote_remover(expander(mkcopy(q, eq), *env)), O_WRONLY | O_CREAT | O_APPEND, tok);
+		cmd = redircmd(cmd, quote_remover(expander(mkcopy(q, eq), *env)),
+				O_WRONLY | O_CREAT | O_APPEND, tok);
 	else if (tok == '*' && g_var == -100)
-	{
-		create_heredoc(quote_remover(expand_file(mkcopy(q, eq))));
-		s = quote_remover(expand_file(mkcopy(q, eq)));
-		heredoc = ft_strjoin("/tmp/", s);
-		free(s);
-		cmd = redircmd(cmd, heredoc, O_RDONLY, tok);
-	}
+		cmd = redircmd(cmd,
+				create_heredoc(quote_remover(expand_file(mkcopy(q, eq)))),
+				O_RDONLY, tok);
 	return (cmd);
 }
 
