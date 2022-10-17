@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/17 10:53:13 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 10:58:19 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct s_execcmd
 }	t_exec;
 
 // libft utils
-char		*ft_strnstr(char	**big, char *little, size_t l);
 void		*ft_memcpy(void *dest, const void *src, size_t n);
 char		**ft_split(char const *s, char c);
 char		*ft_strjoin(char const *s1, char const *s2);
