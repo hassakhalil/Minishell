@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/17 10:58:19 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 17:52:23 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char		**ft_split(char const *s, char c);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strjoin2(char const *s1, char *s2);
 char		*ft_strjoin3(char const *s1, char const *s2);
+char		*ft_strjoin4(char const *s1, char const *s2);
 char		*ft_strdup(const char *str);
 size_t		ft_strlen(const char *s);
 char		*ft_strchr(const char *s, int c);

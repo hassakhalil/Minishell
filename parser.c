@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/17 08:36:49 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 17:51:07 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,16 @@ t_cmd	*parseredirs(t_cmd *cmd, char **ss, char *es, t_envvar **env)
 	else if (tok == '+')
 		cmd = redircmd(cmd, quote_remover(expander(mkcopy(q, eq), *env)),
 				O_WRONLY | O_CREAT | O_APPEND, tok);
-	else if (tok == '*' && g_var == -100)
-		cmd = redircmd(cmd,
-				create_heredoc(quote_remover(expand_file(mkcopy(q, eq)))),
-				O_RDONLY, tok);
+	else if (tok == '*')
+	{ 
+		if (g_var == -100)
+			cmd = redircmd(cmd,
+					create_heredoc(quote_remover(expand_file(mkcopy(q, eq)))),
+					O_RDONLY, tok);
+		else
+			cmd = redircmd(cmd, 
+				ft_strjoin4("/tmp/", quote_remover(expand_file(mkcopy(q, eq)))), O_RDONLY, '<');
+	}
 	return (cmd);
 }
 
