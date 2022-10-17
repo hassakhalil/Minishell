@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:41:25 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/17 04:09:41 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 04:38:35 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	parent_builtin_exit(t_cmd *tree, int *flag)
 	if (!ft_strcmp(cmd->argv[0], "exit"))
 	{
 		ft_exit(cmd);
-		clean(tree);
 		*flag = 1;
 	}
 }
@@ -79,7 +78,6 @@ void	parent_builtin_cd(t_cmd *tree, t_envvar **env, int *flag)
 	if (!ft_strcmp(cmd->argv[0], "cd"))
 	{
 		ft_cd(cmd, *env);
-		clean(tree);
 		*flag = 1;
 	}
 }
@@ -96,7 +94,6 @@ void	parent_builtin_unset(t_cmd *tree, t_envvar **env, int *flag)
 			g_var = 1;
 		else
 			g_var = 0;
-		clean(tree);
 		*flag = 1;
 	}
 }
@@ -113,7 +110,6 @@ void	parent_builtin_export(t_cmd *tree, t_envvar **env, int *flag)
 				g_var = 1;
 			else
 				g_var = 0;
-			clean(tree);
 			*flag = 1;
 	}
 }
@@ -135,7 +131,7 @@ int	parent_builtin(char *buff, t_envvar **env)
 		if (tree->type == REDIR)
 			open_files(tree, env);
 		tree = *addr;
-		while (tree->type == REDIR)
+		while (tree->type != EXEC)
 			tree = ((t_redir *)tree)->cmd;
 		parent_builtin_exit(tree, &flag);
 		parent_builtin_cd(tree, env, &flag);
