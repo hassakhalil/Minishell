@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 04:06:55 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/15 21:12:15 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 18:31:32 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,11 @@ void	ft_exit(t_exec *node)
 	if (node->argv[1])
 	{
 		i = 0;
-		while (node->argv[1][i])
-		{
-			if (!ft_isdigit(node->argv[1][i]))
-				exit_error(node->argv[1]);
+		if (node->argv[1][0] == '-')
 			i++;
-		}
+		while (node->argv[1][i])
+			if (!ft_isdigit(node->argv[1][i++]))
+				exit_error(node->argv[1]);
 		if (k > 2)
 		{
 			write(2, "exit: too many arguments\n", 26);
