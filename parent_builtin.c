@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:41:25 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/17 07:23:44 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 10:13:01 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,12 @@ void	parent_builtin_export(t_cmd *tree, t_envvar **env, int *flag)
 	cmd = (t_exec *)tree;
 	if (!ft_strcmp(cmd->argv[0], "export") && cmd->argv[1])
 	{
-			ft_export(cmd, env);
-			if (g_var == -2)
-				g_var = 1;
-			else
-				g_var = 0;
-			*flag = 1;
+		ft_export(cmd, env);
+		if (g_var == -2)
+			g_var = 1;
+		else
+			g_var = 0;
+		*flag = 1;
 	}
 }
 
@@ -120,8 +120,9 @@ int	parent_builtin(char *buff, t_envvar **env)
 	t_cmd	*tmp;
 	int		id;
 	int		exits;
-	int 	flag = 0;
+	int		flag;
 
+	flag = 0;
 	id = forkk();
 	if (id == 0)
 	{
