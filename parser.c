@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/17 07:26:19 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 07:27:53 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_cmd* parseredirs(t_cmd *cmd, char **ss, char *es, t_envvar **env)
             perror("missing file for redirection");
             exit(EXIT_FAILURE);
     }
-     if (tok == '<')
+    if (tok == '<')
         cmd = redircmd(cmd, quote_remover(expander(mkcopy(q, eq), *env)), O_RDONLY, tok);
     else if (tok == '>')
         cmd = redircmd(cmd, quote_remover(expander(mkcopy(q, eq), *env)), O_WRONLY|O_CREAT|O_TRUNC, tok);

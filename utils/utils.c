@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 21:14:56 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 07:29:00 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,6 @@ void    create_heredoc(char *delimiter)
     id  = forkk();
     if (id == 0)
     {
-        //debug
-        dprintf(2, "child 2 pid = { %d }\n", getpid());
-        //end debug
         signal(SIGQUIT,SIG_IGN);
 	    signal(SIGINT, hd_handler);
         fd = open(path, O_WRONLY|O_CREAT|O_TRUNC, 0666);
