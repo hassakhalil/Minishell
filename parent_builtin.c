@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:41:25 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/17 04:38:35 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 05:06:58 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,28 +117,33 @@ void	parent_builtin_export(t_cmd *tree, t_envvar **env, int *flag)
 int	parent_builtin(char *buff, t_envvar **env)
 {
 	t_cmd	*tree;
-	t_cmd	**addr;
+	t_cmd	*tmp;
 	int 	flag = 0;
 
 	//if pipe exist return->0
 	tree = parsecmd(buff, env, 0);
-	addr = &tree;
+	tmp = tree;
 	if (tree->type != PIPE)
 	{
-		find_in_redir0(tree, &flag);
-		if (flag)
-			return (1);
-		if (tree->type == REDIR)
-			open_files(tree, env);
-		tree = *addr;
-		while (tree->type != EXEC)
-			tree = ((t_redir *)tree)->cmd;
-		parent_builtin_exit(tree, &flag);
-		parent_builtin_cd(tree, env, &flag);
-		parent_builtin_unset(tree, env, &flag);
-		parent_builtin_export(tree, env, &flag);
+		find_in_redir0(tmp, &flag);
+		if (!flag)
+		{
+			tmp = tree;
+			if (tree->type == REDIR)
+				open_files(tmp, env);
+			tmp = tree;
+			while (tmp->type != EXEC)
+				tmp = ((t_redir *)tmp)->cmd;
+			parent_builtin_exit(tmp, &flag);
+			if (!flag)
+				parent_builtin_cd(tmp, env, &flag);
+			if (!flag)
+				parent_builtin_unset(tmp, env, &flag);
+			if (!flag)
+				parent_builtin_export(tmp, env, &flag);
+		}
 	}
-	clean(*addr);
+	clean(tree);
 	if (flag)
 		return (1);
 	return (0);
