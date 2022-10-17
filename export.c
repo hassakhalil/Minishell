@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 07:14:38 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/17 09:54:05 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 18:22:05 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ void	global_env(t_envvar **env, char *s, t_envvar *addr)
 	char	**v;
 
 	v = ft_split(s, '=');
-	if (!v[1])
+	if (v && v[0] && !v[1])
 	{
 		free(v[1]);
 		v[1] = ft_strdup("");
 	}
-	if (if_exist_add(&addr, v, 1))
+	if (v && v[0] && if_exist_add(&addr, v, 1))
 		;
 	else
 	{
-		if (valid_name(v[0]))
+		if (v && v[0] && valid_name(v[0]))
 			ft_lstadd_back(env,
 				ft_lstadd_new(ft_strdup(v[0]), ft_strdup(v[1])));
 		else
