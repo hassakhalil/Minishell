@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:26:29 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/17 07:17:22 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 07:53:19 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,7 @@ int gettoken(char **ss, char *es, char **q, char **eq)
                 while(s < es && *s != c)
                     s++;
                 if (s == es)
-                {
-                        write(2, "syntax error\n", 14);
-                        exit(1);
-                }
+					errors(NULL, 21);
             }
             if (s!= es)
                 s++;
