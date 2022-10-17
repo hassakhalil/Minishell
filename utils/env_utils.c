@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 16:17:14 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/15 04:19:49 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 09:41:56 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,34 +40,34 @@ void	ft_lstadd_back(t_envvar **head, t_envvar *new)
 	temp->next = new;
 }
 
-t_envvar *ft_lstadd_new(void *n, void *v)
+t_envvar	*ft_lstadd_new(void *n, void *v)
 {
-    t_envvar *env;
-    
-    env = malloc(sizeof(*env));
-    if (!env)
-        return NULL;
-    env->name = n;
-    env->value = v;
-    env->next = NULL;
-    return (env);
+	t_envvar	*env;
+
+	env = malloc(sizeof(*env));
+	if (!env)
+		return (NULL);
+	env->name = n;
+	env->value = v;
+	env->next = NULL;
+	return (env);
 }
 
-t_envvar *init_envvar(char **env)
+t_envvar	*init_envvar(char **env)
 {
-    char **p;
-    int i = 0;
-    t_envvar *new;
+	char		**p;
+	int			i;
+	t_envvar	*new;
 
-    new = NULL;
-    printf("\e[1;1H\e[2J");
-    while (env[i])
-    {
-        p = ft_split(env[i], '=');
-        ft_lstadd_back(&new, ft_lstadd_new(p[0], p[1]));
-        free(p);
-        i++;
-    }
-    return (new);
+	new = NULL;
+	i = 0;
+	printf("\e[1;1H\e[2J");
+	while (env[i])
+	{
+		p = ft_split(env[i], '=');
+		ft_lstadd_back(&new, ft_lstadd_new(p[0], p[1]));
+		free(p);
+		i++;
+	}
+	return (new);
 }
-
