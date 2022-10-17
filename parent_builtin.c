@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:41:25 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/17 03:18:02 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 04:09:41 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	open_files(t_cmd *tree, t_envvar **env_list)
 		open_files(tree2->cmd, env_list);
 }
 
-int	parent_builtin_exit(t_cmd *tree)
+void	parent_builtin_exit(t_cmd *tree, int *flag)
 {
 	t_exec	*cmd;
 
@@ -67,12 +67,11 @@ int	parent_builtin_exit(t_cmd *tree)
 	{
 		ft_exit(cmd);
 		clean(tree);
-		return (1);
+		*flag = 1;
 	}
-	return (0);
 }
 
-int	parent_builtin_cd(t_cmd *tree, t_envvar **env)
+void	parent_builtin_cd(t_cmd *tree, t_envvar **env, int *flag)
 {
 	t_exec	*cmd;
 
@@ -81,12 +80,11 @@ int	parent_builtin_cd(t_cmd *tree, t_envvar **env)
 	{
 		ft_cd(cmd, *env);
 		clean(tree);
-		return (1);
+		*flag = 1;
 	}
-	return (0);
 }
 
-int	parent_builtin_unset(t_cmd *tree, t_envvar **env)
+void	parent_builtin_unset(t_cmd *tree, t_envvar **env, int *flag)
 {
 	t_exec	*cmd;
 
@@ -99,12 +97,11 @@ int	parent_builtin_unset(t_cmd *tree, t_envvar **env)
 		else
 			g_var = 0;
 		clean(tree);
-		return (1);
+		*flag = 1;
 	}
-	return (0);
 }
 
-int	parent_builtin_export(t_cmd *tree, t_envvar **env)
+void	parent_builtin_export(t_cmd *tree, t_envvar **env, int *flag)
 {
 	t_exec	*cmd;
 
@@ -117,9 +114,8 @@ int	parent_builtin_export(t_cmd *tree, t_envvar **env)
 			else
 				g_var = 0;
 			clean(tree);
-			return (1);
+			*flag = 1;
 	}
-	return (0);
 }
 
 int	parent_builtin(char *buff, t_envvar **env)
@@ -128,11 +124,11 @@ int	parent_builtin(char *buff, t_envvar **env)
 	t_cmd	**addr;
 	int 	flag = 0;
 
+	//if pipe exist return->0
 	tree = parsecmd(buff, env, 0);
 	addr = &tree;
 	if (tree->type != PIPE)
 	{
-		//check builtin
 		find_in_redir0(tree, &flag);
 		if (flag)
 			return (1);
@@ -141,15 +137,13 @@ int	parent_builtin(char *buff, t_envvar **env)
 		tree = *addr;
 		while (tree->type == REDIR)
 			tree = ((t_redir *)tree)->cmd;
-		if (parent_builtin_exit(tree))
-			return (1);
-		else if (parent_builtin_cd(tree, env))
-			return (1);
-		else if (parent_builtin_unset(tree, env))
-			return (1);
-		else if (parent_builtin_export(tree, env))
-			return (1);
+		parent_builtin_exit(tree, &flag);
+		parent_builtin_cd(tree, env, &flag);
+		parent_builtin_unset(tree, env, &flag);
+		parent_builtin_export(tree, env, &flag);
 	}
-	clean(tree);
+	clean(*addr);
+	if (flag)
+		return (1);
 	return (0);
 }
