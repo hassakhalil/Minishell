@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:21:13 by hkhalil           #+#    #+#             */
-/*   Updated: 2022/10/17 09:50:23 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 17:59:49 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,25 @@ void	errors5(int flag)
 		write(2, "syntax error near unexpected token `|'\n", 40);
 		exit(58);
 	}
+}
+
+char	*expand_file(char *arg)
+{
+	int		i;
+	char	*new_arg;
+
+	i = 0;
+	while (arg[i])
+	{
+		if (arg[i] == '$' && arg[i + 1]
+			&& (arg[i + 1] == '\'' || arg[i + 1] == '\"'))
+		{
+			new_arg = ft_strjoin3(ft_substr(arg, 0, i), &arg[i + 1]);
+			free(arg);
+			arg = ft_strdup(new_arg);
+			free(new_arg);
+		}
+		i++;
+	}
+	return (arg);
 }

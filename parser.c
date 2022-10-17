@@ -6,31 +6,23 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:44:55 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/17 17:51:07 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 18:01:44 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*expand_file(char *arg)
+t_cmd	*hd(t_cmd *cmd, char *s, int tok)
 {
-	int		i;
-	char	*new_arg;
-
-	i = 0;
-	while (arg[i])
-	{
-		if (arg[i] == '$' && arg[i + 1]
-			&& (arg[i + 1] == '\'' || arg[i + 1] == '\"'))
-		{
-			new_arg = ft_strjoin3(ft_substr(arg, 0, i), &arg[i + 1]);
-			free(arg);
-			arg = ft_strdup(new_arg);
-			free(new_arg);
-		}
-		i++;
-	}
-	return (arg);
+	if (g_var == -100)
+			cmd = redircmd(cmd,
+				create_heredoc(quote_remover(expand_file(s))),
+				O_RDONLY, tok);
+	else
+		cmd = redircmd(cmd,
+				ft_strjoin4("/tmp/", quote_remover(expand_file(s))),
+				O_RDONLY, '<');
+	return (cmd);
 }
 
 t_cmd	*parseredirs(t_cmd *cmd, char **ss, char *es, t_envvar **env)
@@ -52,15 +44,7 @@ t_cmd	*parseredirs(t_cmd *cmd, char **ss, char *es, t_envvar **env)
 		cmd = redircmd(cmd, quote_remover(expander(mkcopy(q, eq), *env)),
 				O_WRONLY | O_CREAT | O_APPEND, tok);
 	else if (tok == '*')
-	{ 
-		if (g_var == -100)
-			cmd = redircmd(cmd,
-					create_heredoc(quote_remover(expand_file(mkcopy(q, eq)))),
-					O_RDONLY, tok);
-		else
-			cmd = redircmd(cmd, 
-				ft_strjoin4("/tmp/", quote_remover(expand_file(mkcopy(q, eq)))), O_RDONLY, '<');
-	}
+		cmd = hd(cmd, mkcopy(q, eq), tok);
 	return (cmd);
 }
 

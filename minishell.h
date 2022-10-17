@@ -6,7 +6,7 @@
 /*   By: hkhalil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:34:23 by iakry             #+#    #+#             */
-/*   Updated: 2022/10/17 17:52:23 by hkhalil          ###   ########.fr       */
+/*   Updated: 2022/10/17 18:00:56 by hkhalil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ char		**list_to_table(t_envvar *env);
 char		*my_getenv(char *s, t_envvar *env);
 char		*ft_env_name(char *s);
 int			valid_name(char *s);
+char		*expand_file(char *arg);
 
 // path
 char		**envpath(t_envvar *env);
